@@ -1,5 +1,7 @@
+import "./App.css";
+import RouterNavigation from "./config/navigation";
 const App = () => {
-  return <div> hello </div>;
+  return <RouterNavigation />;
 };
 
 export default App;

@@ -1,4 +1,3 @@
-import React from "react";
 import { Layout } from "../../components";
 import Grid from "@mui/material/Grid";
 import "./index.css";
@@ -51,14 +50,14 @@ const Faqs = () => {
       text: "Please contact us at info@mypaintgenie.com. Our support team will guide you through the return process and provide the necessary assistance.      ",
     },
     {
-      heading: "What if the item(s) I received are defective/incorrect/damaged?      ",
+      heading:
+        "What if the item(s) I received are defective/incorrect/damaged?      ",
       text: "If you receive merchandise that is defective, incorrect, or damaged, please contact us immediately. Provide us with your order number, along with photographs of the item(s) and any relevant details. We will work diligently to resolve the matter and provide a suitable solution.      ",
     },
     {
       heading: "When will I receive my refund?      ",
       text: "Refunds will be credited to your original form of payment. If you made the payment using a credit or debit card, the refund will be processed and sent to the card-issuing bank within 7-10 business days after we receive the returned item or cancellation request. Please contact your card-issuing bank for more information regarding the timeline for the credit to be posted to your account. If you haven't received a credit for your return yet, please follow these steps: Contact your bank/credit card company for assistance, as it may take some time for the refund to appear in your account.      ",
     },
-
   ];
   return (
     <Layout>
