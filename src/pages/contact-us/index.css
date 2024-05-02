@@ -1,0 +1,209 @@
+.contact-heading {
+  font-family: "Poppins";
+  font-size: 40px;
+  font-weight: 700;
+  text-align: center;
+  color: #000;
+  margin-top: 20px;
+}
+.contact-text {
+  color: #717171;
+  font-family: "Poppins";
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 27px;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 50px;
+}
+.contact-left-section {
+  background-color: #577cdd;
+  border-radius: 10px;
+  position: relative;
+  padding: 20px;
+}
+.contact-left-section-img {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  max-width: 100%;
+  max-height: 100%;
+}
+.contact-left-section > h1 {
+  font-family: "Poppins";
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 42px;
+  text-align: left;
+  color: #fff;
+}
+.contact-left-section > p {
+  color: #c9c9c9;
+  font-family: "Poppins";
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+  text-align: left;
+  margin-bottom: 100px;
+}
+.contact-left-section-data {
+  display: flex;
+  align-items: flex-start;
+  color: #fff;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  margin-bottom: 25px;
+}
+.contact-left-section-data > p {
+  margin-left: 15px;
+}
+.contact-footer-socail {
+  display: flex;
+  align-items: center;
+  margin-top: 100px;
+}
+.contact-footer-socail > a {
+  background-color: #1b1b1b;
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+}
+.contact-footer-socail > a:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+.contact-from {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.contact-from > div {
+  border-bottom-width: 0.8;
+  border-bottom-style: solid;
+  width: 48%;
+  padding-bottom: 10px;
+  margin-top: 30px;
+
+}
+.contact-from > div > p {
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+.contact-from > div > input {
+  border: none;
+  outline: none;
+  background: none;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: left;
+  color: #000000;
+  width: 100%;
+}
+.contact-textarea {
+  border: none;
+  outline: none;
+  background: none;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: left;
+  color: #000000;
+  width: 100%;
+}
+.contact-sub-heading {
+  margin-top: 30px;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: left;
+  color: #000;
+}
+.contact-sub-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+.contact-sub-list > button {
+  border: none;
+  outline: none;
+  background: none;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contact-send-btn-main {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+.contact-send-btn {
+  background-color: #587bdd !important;
+  height: 54px !important;
+  color: #fff !important;
+  font-family: "Poppins" !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 24px !important;
+  text-align: center !important;
+  text-transform: none !important;
+  width: 214px !important;
+}
+
+@media only screen and (max-width: 500px) {
+  .contact-heading {
+    font-size: 25px;
+    margin-top: 0px;
+  }
+  .contact-text {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .contact-left-section > h1 {
+    font-size: 20px;
+    line-height: 35px;
+  }
+  .contact-left-section > p {
+    color: #c9c9c9;
+    font-family: "Poppins";
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+    text-align: left;
+    margin-bottom: 100px;
+  }
+  .contact-from {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .contact-from > div {
+    width: 100%;
+  }
+}

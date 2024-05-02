@@ -1,0 +1,67 @@
+.img-art-gen-container {
+  min-height: 500px;
+  background-image: url("./../../../assets/art-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: 150px;
+}
+.img-art-gen-heading {
+  color: #171717;
+  font-family: "Roboto";
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  text-align: center;
+}
+.img-art-gen-text {
+  color: #404040;
+  font-family: "Roboto";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: center;
+  margin-top: 15px;
+}
+.img-art-gen-btn-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+.img-art-gen-btn {
+  background-color: #587cdd !important;
+  height: 72px !important;
+  width: 202px !important;
+  border-radius: 100px !important;
+  color: #fff !important;
+  font-family: "Roboto" !important;
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  line-height: 28px !important;
+}
+.img-art-gen-btn-icon {
+  margin-left: 10px;
+  width: 42px;
+  height: 42px;
+}
+.img-art-gen-img {
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 200px;
+}
+
+@media only screen and (max-width: 700px) {
+  .img-art-gen-img {
+    margin-bottom: 150px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .img-art-gen-heading {
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .img-art-gen-container {
+    margin-top: 80px;
+  }
+}

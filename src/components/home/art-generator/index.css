@@ -1,0 +1,31 @@
+.art-generator-container {
+  background-color: #f7f7f8;
+  border-radius: 16px;
+  padding: 20px;
+}
+.art-generator-heading {
+  color: #18191b;
+  font-family: "Roboto";
+  font-size: 30px;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+.art-generator-text {
+  color: #404040;
+  font-family: "Roboto";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+}
+.art-generator-text>span{
+    color: #587CDD;
+}
+@media only screen and (max-width: 600px) {
+    .art-generator-heading {
+        font-size: 20px;
+      }
+      .art-generator-text {
+        font-size: 14px;
+        line-height: 25px;
+      }
+}

@@ -1,0 +1,43 @@
+.gen-img-from-txt-heading {
+  color: #18191b;
+  font-family: "Roboto";
+  font-size: 36px;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.gen-img-from-txt-img{
+    width: 100%;
+    height: 212px;
+    margin: 0 auto;
+}
+.gen-img-from-txt-card{
+    /* border: 1px solid green; */
+}
+.gen-img-from-txt-card>h1{
+    color: #18191B;
+    font-family: 'Roboto';
+font-size: 19.84px;
+font-weight: 700;
+line-height: 25px;
+text-align: center;
+margin-bottom: 10px;
+}
+.gen-img-from-txt-card>p{
+    color: #404040;
+    font-family: 'Roboto';
+font-size: 16px;
+font-weight: 400;
+line-height: 28px;
+text-align: center;
+
+}
+
+@media only screen and (max-width: 600px) {
+    .gen-img-from-txt-heading {
+        font-size: 20px;
+        margin-top: 30px;
+        margin-bottom: 0px;
+      }
+}
