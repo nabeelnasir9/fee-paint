@@ -1,6 +1,8 @@
 import Home from "./home";
 import Generate from "./generate";
 import PrivacyPolicy from "./privacy-policy";
+import Login from "./login";
+import Signup from "./signup";
 import TermsConditions from "./terms-conditions";
 import RefundPolicy from "./refund-policy";
 import Faqs from "./faqs";
@@ -17,4 +19,6 @@ export {
   ContactUs,
   TrackYourOrder,
   Payment,
+  Login,
+  Signup,
 };
