@@ -1,5 +1,5 @@
-import React,{useEffect,useLayoutEffect} from "react";
-import { BrowserRouter, Route, Routes ,useLocation } from "react-router-dom";
+import { useEffect, useLayoutEffect } from "react";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import {
   Home,
   Generate,
@@ -27,10 +27,9 @@ function ScrollToTop() {
   return null;
 }
 const RouterNavigation = () => {
-  
   return (
     <BrowserRouter>
-          <ScrollToTop />
+      <ScrollToTop />
 
       <Routes>
         <Route path="/" element={<Home />} />
