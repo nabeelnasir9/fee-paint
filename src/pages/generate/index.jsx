@@ -1,96 +1,105 @@
-import { useEffect, useState } from "react";
+import { useState, useContext } from "react";
+import Loader from "../../components/loader";
+import axios from "axios";
 import { Layout } from "../../components";
+import toast from "react-hot-toast";
 import Grid from "@mui/material/Grid";
 import "./index.css";
 import { Button } from "@mui/material";
 import HelpIcon from "./../../assets/svg/help.svg";
 import BlubIcon from "./../../assets/svg/blub.svg";
-import StyleImage1 from "./../../assets/style-1.png";
-import StyleImage2 from "./../../assets/style-2.png";
-import StyleImage3 from "./../../assets/style-3.png";
-import GalleryImage1 from "./../../assets/gallery-1.png";
-import GalleryImage2 from "./../../assets/gallery-2.png";
-import GalleryImage3 from "./../../assets/gallery-3.png";
-import GalleryImage4 from "./../../assets/gallery-4.png";
-import GalleryImage5 from "./../../assets/gallery-5.png";
-import GalleryImage6 from "./../../assets/gallery-6.png";
-import GalleryImage7 from "./../../assets/gallery-7.png";
-import GalleryImage8 from "./../../assets/gallery-8.png";
+import { useMutation } from "@tanstack/react-query";
+
 import { BsImageAlt } from "react-icons/bs";
 import { BsCart } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../config/AuthContext";
+import { StyleList, chooseStyleList, List } from "../../utils/Utils";
+
 const Generate = () => {
   const navigate = useNavigate();
-  const [selectedType, setSelectedType] = useState("Paint Generation");
-  const [selectedStyle, setSelectedStyle] = useState(0);
-  const [imageStyle, setImageStyle] = useState(0);
-  useEffect(() => {
-    console.log("selectedStyle LOG:", selectedStyle);
-    console.log("imageStyle LOG:", imageStyle);
-  }, [selectedStyle, imageStyle]);
+  const {
+    selectedType,
+    setSelectedType,
+    selectedStyle,
+    setSelectedStyle,
+    imageStyle,
+    setImageStyle,
+    results,
+    setResults,
+  } = useContext(AuthContext);
+  const [textAreaValue, setTextAreaValue] = useState("");
+  const [imagesToMake, setImagesToMake] = useState(1);
+  const [selectedDimension, setSelectedDimension] = useState("8:11");
 
-  const StyleList = [
-    {
-      img: StyleImage1,
-      title: "Realistic",
+  const handleTextAreaChange = (event) => {
+    setTextAreaValue(event.target.value);
+  };
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["generate"],
+    mutationFn: (data) => {
+      return axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/api/generate/multi`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
     },
-    {
-      img: StyleImage2,
-      title: "Cartoonish",
+    onSuccess: (data) => {
+      setResults((prevData) => [...prevData, ...data.data]);
+      toast.success("Image Generated Successfully");
     },
-    {
-      img: StyleImage3,
-      title: "Abstract",
+    onError: (error) => {
+      console.error("Mutation error:", error);
     },
-  ];
-  const List = [
-    GalleryImage1,
-    GalleryImage2,
-    GalleryImage3,
-    GalleryImage4,
-    GalleryImage5,
-    GalleryImage6,
-    GalleryImage7,
-    GalleryImage8,
-    GalleryImage5,
-    GalleryImage6,
-    GalleryImage7,
-    GalleryImage8,
-  ];
-  const chooseStyleList = [
-    {
-      title: "Cartoon",
-      url: "https://img.freepik.com/free-photo/people-making-hands-heart-shape-silhouette-sunset_53876-15987.jpg?size=626&ext=jpg&ga=GA1.1.1488620777.1712534400&semt=sph",
-    },
-    {
-      title: "Anime",
-      url: "https://static.vecteezy.com/system/resources/thumbnails/022/385/025/small_2x/a-cute-surprised-black-haired-anime-girl-under-the-blooming-sakura-ai-generated-photo.jpg",
-    },
-    {
-      title: "Vintage",
-      url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ48n_iZbblN-8miARuLvlgpE95nQAn97t67PCS7cVwmg&s",
-    },
-    {
-      title: "Comic Book",
-      url: "https://preview.redd.it/seek-hyperreal-a-custom-model-for-hyper-realistic-v0-71k65ddlam3a1.jpg?width=640&crop=smart&auto=webp&s=75a5f53bd0943737db86fe0c7aede38cafc220e1",
-    },
-    {
-      title: "Cyberpunk",
-      url: "https://vradenburg.net/wp-content/uploads/2017/01/P1220026.jpg",
-    },
-    {
-      title: "Fairy Tale",
-      url: "https://thumbs.dreamstime.com/b/cinema-22717238.jpg",
-    },
-    {
-      title: "Elf",
-      url: "https://thumbs.dreamstime.com/b/cinema-22717238.jpg",
-    },
-    {
-      title: "Oil Painting",
-      url: "https://thumbs.dreamstime.com/b/cinema-22717238.jpg",
-    },
-  ];
+  });
+
+  const handleGenerate = () => {
+    const selectedStyles = StyleList.filter((style) =>
+      selectedStyle.includes(style.id),
+    );
+    const selectedStyleTitles =
+      selectedStyles.length > 0 ? selectedStyles[0].title : "";
+    mutate({
+      selectedstyle: selectedStyleTitles,
+      prompt: textAreaValue,
+      dimensions: selectedDimension,
+      images: imagesToMake,
+    });
+  };
+  // const handleGenerate = () => {
+  //   const selectedStyles = StyleList.filter((style) =>
+  //     selectedStyle.includes(style.id),
+  //   );
+  //   const selectedStyleTitles =
+  //     selectedStyles.length > 0 ? selectedStyles[0].title : "";
+  //   axios
+  //     .post(
+  //       `${import.meta.env.VITE_SERVER_URL}/api/generate/multi`,
+  //       {
+  //         selectedstyle: selectedStyleTitles,
+  //         prompt: textAreaValue,
+  //         dimensions: selectedDimension,
+  //         images: imagesToMake,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       },
+  //     )
+  //     .then((response) => {
+  //       console.log("Response from server:", response.data);
+  //       setResults(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+  // };
+
   return (
     <Layout>
       <div className="gradient-bg-img">
@@ -138,11 +147,15 @@ const Generate = () => {
                             : "Upload Image"}
                         </p>
                         <Button variant="text" className="generate-help-btn">
-                          <img src={HelpIcon} />
+                          <img src={HelpIcon} alt="Help Icon" />
                         </Button>
                       </div>
                       <Button variant="text" className="generate-idea-btn">
-                        <img src={BlubIcon} style={{ marginRight: "5px" }} />
+                        <img
+                          src={BlubIcon}
+                          alt="Blub Icon"
+                          style={{ marginRight: "5px" }}
+                        />
                         AI ideas
                       </Button>
                     </div>
@@ -150,7 +163,11 @@ const Generate = () => {
                     {selectedType === "Paint Generation" ? (
                       <>
                         <div className="generate-textarea">
-                          <textarea placeholder="What should AI paint?"></textarea>
+                          <textarea
+                            placeholder="What should AI paint?"
+                            value={textAreaValue}
+                            onChange={handleTextAreaChange}
+                          ></textarea>
                         </div>
                         <div className="generate-style-header">
                           <Button
@@ -161,11 +178,11 @@ const Generate = () => {
                           </Button>
                         </div>
                         <Grid container spacing={1.5}>
-                          {StyleList.map((v, i) => {
+                          {StyleList.map((v) => {
                             return (
                               <Grid
                                 item
-                                key={i}
+                                key={v.id}
                                 xs={4}
                                 sm={3}
                                 md={3}
@@ -174,14 +191,14 @@ const Generate = () => {
                               >
                                 <Button
                                   variant="text"
-                                  onClick={() => setSelectedStyle(i)}
+                                  onClick={() => setSelectedStyle(v.id)}
                                   className={
-                                    selectedStyle === i
+                                    selectedStyle === v.id
                                       ? "generate-selected-style"
                                       : "generate-un-selected-style"
                                   }
                                 >
-                                  <img src={v.img} />
+                                  <img src={v.img} alt={v.title} />
                                 </Button>
                                 <p className="generate-selected-style-title">
                                   {v.title}
@@ -190,6 +207,44 @@ const Generate = () => {
                             );
                           })}
                         </Grid>
+                        <div className="generate-make-main">
+                          <p>Images To Make</p>
+                          <div>
+                            <input
+                              placeholder="max 10"
+                              value={imagesToMake}
+                              onChange={(e) => setImagesToMake(e.target.value)}
+                            />
+                          </div>
+                        </div>
+                        <div className="generate-dimensions-main">
+                          <div>
+                            <p>Dimensions</p>
+                            <Button
+                              variant="text"
+                              className="generate-help-btn"
+                            >
+                              <img src={HelpIcon} alt="Help Icon" />
+                            </Button>
+                          </div>
+                          <select
+                            value={selectedDimension}
+                            onChange={(e) =>
+                              setSelectedDimension(e.target.value)
+                            }
+                          >
+                            <option value="8:11">Small</option>
+                            <option value="15:19">Medium</option>
+                            <option value="1:2">Large</option>
+                          </select>
+                        </div>
+                        <Button
+                          variant="text"
+                          className="generate-left-gen-btn"
+                          onClick={handleGenerate}
+                        >
+                          Generate
+                        </Button>
                       </>
                     ) : (
                       <>
@@ -207,11 +262,11 @@ const Generate = () => {
                           </Button>
                         </div>
                         <Grid container spacing={1.5}>
-                          {chooseStyleList.map((v, i) => {
+                          {chooseStyleList.map((v) => {
                             return (
                               <Grid
                                 item
-                                key={i}
+                                key={v.id}
                                 xs={6}
                                 sm={3}
                                 md={3}
@@ -221,14 +276,14 @@ const Generate = () => {
                                 <div className="generate-photo-general-1-main">
                                   <Button
                                     variant="text"
-                                    onClick={() => setImageStyle(i)}
+                                    onClick={() => setImageStyle(v.id)}
                                     className={
-                                      imageStyle === i
+                                      imageStyle === v.id
                                         ? "generate-selected-style"
                                         : "generate-un-selected-style"
                                     }
                                   >
-                                    <img src={v.url} />
+                                    <img src={v.url} alt={v.title} />
                                   </Button>
                                   <p>{v.title}</p>
                                 </div>
@@ -236,61 +291,129 @@ const Generate = () => {
                             );
                           })}
                         </Grid>
+                        <div className="generate-make-main">
+                          <p>Images To Make</p>
+                          <div>
+                            <input
+                              placeholder="max 10"
+                              value={imagesToMake}
+                              onChange={(e) => setImagesToMake(e.target.value)}
+                            />
+                          </div>
+                        </div>
+                        <div className="generate-dimensions-main">
+                          <div>
+                            <p>Dimensions</p>
+                            <Button
+                              variant="text"
+                              className="generate-help-btn"
+                            >
+                              <img src={HelpIcon} alt="Help Icon" />
+                            </Button>
+                          </div>
+                          <select
+                            value={selectedDimension}
+                            onChange={(e) =>
+                              setSelectedDimension(e.target.value)
+                            }
+                          >
+                            <option value="8:11">Small</option>
+                            <option value="15:19">Medium</option>
+                            <option value="1:2">Large</option>
+                          </select>
+                        </div>
+                        <Button
+                          variant="text"
+                          className="generate-left-gen-btn"
+                          onClick={handleGenerate}
+                        >
+                          Generate
+                        </Button>
                       </>
                     )}
-                    <div className="generate-make-main">
-                      <p>Images To Make</p>
-                      <div>
-                        <input placeholder="12" />
-                      </div>
-                    </div>
-                    <div className="generate-dimensions-main">
-                      <div>
-                        <p>Dimensions</p>
-                        <Button variant="text" className="generate-help-btn">
-                          <img src={HelpIcon} />
-                        </Button>
-                      </div>
-                      <select>
-                        <option>Small</option>
-                        <option>Medium</option>
-                        <option>Large</option>
-                      </select>
-                    </div>
-                    <Button
-                      variant="text"
-                      className="generate-left-gen-btn"
-                      onClick={() => navigate("/payment")}
-                    >
-                      Generate
-                    </Button>
                   </div>
                 </Grid>
-                <Grid item xs={12} sm={12} md={7} lg={8} xl={8}>
-                  <div className="generate-right-sec">
-                    <Grid container spacing={2}>
-                      {List.map((v, i) => {
-                        return (
-                          <Grid item key={i} xs={6} sm={4} md={4} lg={3} xl={3}>
-                            <div className="generate-right-card">
-                              <img src={v} className="gallery-image" />
-                              <div className="generate-right-card-inner">
-                                <Button
-                                  variant="text"
-                                  className="generate-add-cart-btn"
-                                  onClick={() => navigate("/payment")}
-                                >
-                                  <BsCart style={{ marginRight: "5px" }} />
-                                  Add Cart
-                                </Button>
+                {selectedType === "Paint Generation" ? (
+                  <Grid item xs={12} sm={12} md={7} lg={8} xl={8}>
+                    <div className="generate-right-sec">
+                      {isPending ? (
+                        <Loader />
+                      ) : (
+                        <Grid container spacing={2}>
+                          {results?.map((v, i) => {
+                            return (
+                              <Grid
+                                item
+                                key={i}
+                                xs={6}
+                                sm={4}
+                                md={4}
+                                lg={3}
+                                xl={3}
+                              >
+                                <div className="generate-right-card">
+                                  <img
+                                    src={v?.uri}
+                                    className="gallery-image"
+                                    alt="Gallery"
+                                  />
+                                  <div className="generate-right-card-inner">
+                                    <Button
+                                      variant="text"
+                                      className="generate-add-cart-btn"
+                                      onClick={() => navigate("/payment")}
+                                    >
+                                      <BsCart style={{ marginRight: "5px" }} />
+                                      Add Cart
+                                    </Button>
+                                  </div>
+                                </div>
+                              </Grid>
+                            );
+                          })}
+                        </Grid>
+                      )}
+                    </div>
+                  </Grid>
+                ) : (
+                  <Grid item xs={12} sm={12} md={7} lg={8} xl={8}>
+                    <div className="generate-right-sec">
+                      <Grid container spacing={2}>
+                        {List.map((v, i) => {
+                          return (
+                            <Grid
+                              item
+                              key={i}
+                              xs={6}
+                              sm={4}
+                              md={4}
+                              lg={3}
+                              xl={3}
+                            >
+                              <div className="generate-right-card">
+                                <img
+                                  src={v}
+                                  className="gallery-image"
+                                  alt="Gallery"
+                                />
+                                <div className="generate-right-card-inner">
+                                  <Button
+                                    variant="text"
+                                    className="generate-add-cart-btn"
+                                    onClick={() => navigate("/payment")}
+                                  >
+                                    <BsCart style={{ marginRight: "5px" }} />
+                                    Add Cart
+                                  </Button>
+                                </div>
                               </div>
-                            </div>
-                          </Grid>
-                        );
-                      })}
-                    </Grid>
-                  </div>
-                </Grid>
+                            </Grid>
+                          );
+                        })}
+                      </Grid>
+                    </div>
+                  </Grid>
+                )}
               </Grid>
             </div>
           </Grid>
@@ -300,4 +423,5 @@ const Generate = () => {
     </Layout>
   );
 };
+
 export default Generate;
