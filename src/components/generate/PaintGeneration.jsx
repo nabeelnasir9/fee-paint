@@ -26,7 +26,7 @@ const PaintGeneration = ({ handleGenerate }) => {
     inputValue = inputValue.replace(/\D/g, "");
     if (
       inputValue !== "" &&
-      (parseInt(inputValue) < 1 || parseInt(inputValue) > 10)
+      (parseInt(inputValue) < 1 || parseInt(inputValue) > 8)
     ) {
       inputValue = "";
     }
@@ -59,7 +59,7 @@ const PaintGeneration = ({ handleGenerate }) => {
                     : "generate-un-selected-style"
                 }
               >
-                <img src={v.img} alt={v.title} />
+                <img src={v.img} className="object-cover" alt={v.title} />
               </Button>
               <p className="generate-selected-style-title">{v.title}</p>
             </Grid>
@@ -70,7 +70,7 @@ const PaintGeneration = ({ handleGenerate }) => {
         <p>Images To Make</p>
         <div>
           <input
-            placeholder="max 10"
+            placeholder="max 8"
             value={imagesToMake}
             onChange={handleChangeImages}
           />

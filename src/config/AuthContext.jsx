@@ -10,12 +10,15 @@ export const AuthProvider = ({ children }) => {
   const [textAreaValue, setTextAreaValue] = useState("");
   const [selectedStyle, setSelectedStyle] = useState("");
   const [imagesToMake, setImagesToMake] = useState(1);
+  const [imagesToMake2, setImagesToMake2] = useState(1);
   const [selectedDimension, setSelectedDimension] = useState("8:11");
+  const [selectedDimension2, setSelectedDimension2] = useState("8:11");
   const [imageStyle, setImageStyle] = useState("");
   const [results, setResults] = useState([]);
+  const [results2, setResults2] = useState([]);
 
   const { mutate, isPending } = useMutation({
-    mutationKey: ["generate"],
+    mutationKey: ["paint"],
     mutationFn: (data) => {
       return axios.post(
         `${import.meta.env.VITE_SERVER_URL}/api/generate/multi`,
@@ -49,10 +52,16 @@ export const AuthProvider = ({ children }) => {
     results,
     setResults,
     setSelectedType,
+    imagesToMake2,
+    setImagesToMake2,
     selectedStyle,
     setSelectedStyle,
     imageStyle,
+    selectedDimension2,
+    setSelectedDimension2,
     setImageStyle,
+    results2,
+    setResults2,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

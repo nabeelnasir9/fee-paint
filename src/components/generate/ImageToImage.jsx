@@ -1,33 +1,35 @@
-import { BsImageAlt } from "react-icons/bs";
+import Accept from "../dropzone";
 import HelpIcon from "../../assets/svg/help.svg";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { chooseStyleList } from "../../utils/Utils";
 import { AuthContext } from "../../config/AuthContext";
 
 const ImageToImage = () => {
-  const [imagesToMake, setImagesToMake] = useState(1);
-  const [selectedDimension, setSelectedDimension] = useState("8:11");
-  const { imageStyle, setImageStyle } = useContext(AuthContext);
+  const {
+    imageStyle,
+    setImageStyle,
+    selectedDimension2,
+    setSelectedDimension2,
+    imagesToMake2,
+    setImagesToMake2,
+  } = useContext(AuthContext);
+
   const handleChangeImages = (event) => {
     let inputValue = event.target.value;
     inputValue = inputValue.replace(/\D/g, "");
     if (
       inputValue !== "" &&
-      (parseInt(inputValue) < 1 || parseInt(inputValue) > 10)
+      (parseInt(inputValue) < 1 || parseInt(inputValue) > 8)
     ) {
       inputValue = "";
     }
-    setImagesToMake(inputValue);
+    setImagesToMake2(inputValue);
   };
   return (
     <>
-      <label className="generate-upload-button">
-        <input type="file" hidden />
-
-        <BsImageAlt />
-      </label>
+      <Accept />
       <div className="generate-style-header">
         <Button variant="text" className="generate-style-header-btn">
           Choose Style
@@ -47,7 +49,7 @@ const ImageToImage = () => {
                       : "generate-un-selected-style"
                   }
                 >
-                  <img src={v.url} alt={v.title} />
+                  <img src={v.url} alt={v.title} className="object-cover" />
                 </Button>
                 <p>{v.title}</p>
               </div>
@@ -59,8 +61,8 @@ const ImageToImage = () => {
         <p>Images To Make</p>
         <div>
           <input
-            placeholder="max 10"
-            value={imagesToMake}
+            placeholder="max 8"
+            value={imagesToMake2}
             onChange={handleChangeImages}
           />
         </div>
@@ -73,8 +75,8 @@ const ImageToImage = () => {
           </Button>
         </div>
         <select
-          value={selectedDimension}
-          onChange={(e) => setSelectedDimension(e.target.value)}
+          value={selectedDimension2}
+          onChange={(e) => setSelectedDimension2(e.target.value)}
         >
           <option value="8:11">Small</option>
           <option value="15:19">Medium</option>
