@@ -106,7 +106,7 @@ const Generate = () => {
         <Grid container spacing={0}>
           <Grid item xs={1} sm={1} md={1} lg={1} xl={2}></Grid>
           <Grid xs={10} sm={10} md={10} lg={10} xl={8}>
-            <div className="pages-data-container">
+            <div className="pages-data-container animate-fade-up">
               <Grid container spacing={5}>
                 <Grid item xs={12} sm={12} md={5} lg={4} xl={4}>
                   <h1 className="generate-heading">My Paint Genie</h1>
@@ -343,6 +343,7 @@ const Generate = () => {
                           {results?.map((v, i) => {
                             return (
                               <Grid
+                                className="animate-fade animate-duration-500"
                                 item
                                 key={i}
                                 xs={6}
@@ -354,7 +355,7 @@ const Generate = () => {
                                 <div className="generate-right-card">
                                   <img
                                     src={v?.uri}
-                                    className="gallery-image"
+                                    className="gallery-image cursor-pointer"
                                     alt="Gallery"
                                   />
                                   <div className="generate-right-card-inner">
@@ -377,7 +378,7 @@ const Generate = () => {
                   </Grid>
                 ) : (
                   <Grid item xs={12} sm={12} md={7} lg={8} xl={8}>
-                    <div className="generate-right-sec">
+                    <div className="generate-right-sec animate-fade animate-duration-500">
                       <Grid container spacing={2}>
                         {List.map((v, i) => {
                           return (

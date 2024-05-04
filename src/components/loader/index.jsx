@@ -18,7 +18,9 @@ const Loader = () => {
   return (
     <div className="flex items-center justify-center flex-col w-full h-[50vh] ml-20">
       <InfinitySpin color="#587cdd" width="200" visible={true} />
-      <p className="text-3xl italic font-semibold">{loadingText}</p>
+      <p className="text-3xl italic font-semibold text-black/60">
+        {loadingText}
+      </p>
     </div>
   );
 };
