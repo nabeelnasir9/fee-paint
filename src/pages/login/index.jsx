@@ -1,16 +1,19 @@
-import { useState } from "react";
 import toast from "react-hot-toast";
 import logo from "../../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [progress, setProgress] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (data) => {
+    setProgress(true);
     try {
       const response = await fetch(
         `${import.meta.env.VITE_SERVER_URL}/api/auth/login`,
@@ -19,27 +22,24 @@ export default function Login() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
+          body: JSON.stringify(data),
         },
       );
 
-      const data = await response.json();
+      const responseData = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Failed to login");
+        throw new Error(responseData.message || "Failed to login");
       }
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("email", email);
-
-      toast.success("Login successful!");
+      localStorage.setItem("token", responseData.token);
+      localStorage.setItem("email", data.email);
+      setProgress(false);
+      toast.success("Login Successful!");
       navigate("/generate");
     } catch (error) {
       console.error("Login failed:", error.message);
-      toast.error("Something Failed");
+      toast.error("Invalid credentials. Please try again.");
     }
   };
 
@@ -55,7 +55,7 @@ export default function Login() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow-xl sm:rounded-lg sm:px-12">
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label
                   htmlFor="email"
@@ -69,11 +69,18 @@ export default function Login() {
                     name="email"
                     type="email"
                     autoComplete="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    {...register("email", {
+                      required: true,
+                      minLength: 3,
+                      maxLength: 50,
+                    })}
+                    className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.email ? "border-red-500" : ""}`}
                   />
+                  {errors.email && (
+                    <span className="text-red-500 text-xs">
+                      {errors.email.message || "Email is required"}
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -90,11 +97,18 @@ export default function Login() {
                     name="password"
                     type="password"
                     autoComplete="current-password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    {...register("password", {
+                      required: true,
+                      minLength: 3,
+                      maxLength: 50,
+                    })}
+                    className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.password ? "border-red-500" : ""}`}
                   />
+                  {errors.password && (
+                    <span className="text-red-500 text-xs">
+                      {errors.password.message || "Password is required"}
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -118,7 +132,8 @@ export default function Login() {
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-[#587cdd] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  disabled={progress}
+                  className="flex w-full justify-center rounded-md bg-[#587cdd] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600  disabled:bg-[#c4c4c4] disabled:text-[#787878]"
                 >
                   Log in
                 </button>

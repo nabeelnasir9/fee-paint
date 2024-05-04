@@ -1,22 +1,20 @@
-import { useState } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import logo from "../../assets/logo.png";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 export default function Signup() {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+  const [progress, setProgress] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const navigate = useNavigate();
-  const handleSubmit = async (e) => {
-    if (!fullName || !email || !password) {
-      alert("Please fill all fields correctly.");
-      return;
-    }
-    e.preventDefault();
 
+  const onSubmit = async (data) => {
+    setProgress(true);
     try {
       const response = await fetch(
         `${import.meta.env.VITE_SERVER_URL}/api/auth/signup`,
@@ -25,24 +23,21 @@ export default function Signup() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            fullName,
-            email,
-            password,
-          }),
+          body: JSON.stringify(data),
         },
       );
 
-      const data = await response.json();
+      const responseData = await response.json();
       if (!response.ok) {
-        throw new Error(data.message || "Something went wrong");
+        throw new Error(responseData.message || "Something went wrong");
       }
-      toast.success("Signup successful!");
+      setProgress(false);
+      toast.success("Signup Successful!");
+
       navigate("/login");
     } catch (error) {
       console.error("Signup failed:", error.message);
-      toast.error("Something Failed");
-      // Handle error - maybe show an error message to the user
+      toast.error("Invalid credential details. Please try again.");
     }
   };
 
@@ -58,7 +53,7 @@ export default function Signup() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow-xl sm:rounded-lg sm:px-12">
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label
                   htmlFor="fullName"
@@ -72,10 +67,18 @@ export default function Signup() {
                     name="fullName"
                     autoComplete="name"
                     required
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    {...register("fullName", {
+                      required: true,
+                      minLength: 3,
+                      maxLength: 50,
+                    })}
+                    className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.fullName ? "border-red-500" : ""}`}
                   />
+                  {errors.fullName && (
+                    <span className="text-red-500 text-xs">
+                      {errors.fullName.message || "Full Name is required"}
+                    </span>
+                  )}
                 </div>
               </div>
               <div>
@@ -92,10 +95,18 @@ export default function Signup() {
                     type="email"
                     autoComplete="email"
                     required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    {...register("email", {
+                      required: true,
+                      minLength: 3,
+                      maxLength: 50,
+                    })}
+                    className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.email ? "border-red-500" : ""}`}
                   />
+                  {errors.email && (
+                    <span className="text-red-500 text-xs">
+                      {errors.email.message || "Email is required"}
+                    </span>
+                  )}
                 </div>
               </div>
               <div>
@@ -112,16 +123,25 @@ export default function Signup() {
                     type="password"
                     autoComplete="current-password"
                     required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    {...register("password", {
+                      required: true,
+                      minLength: 3,
+                      maxLength: 50,
+                    })}
+                    className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.password ? "border-red-500" : ""}`}
                   />
+                  {errors.password && (
+                    <span className="text-red-500 text-xs">
+                      {errors.password.message || "Password is required"}
+                    </span>
+                  )}
                 </div>
               </div>
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-[#587cdd] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="flex w-full justify-center rounded-md bg-[#587cdd] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-[#c4c4c4] disabled:text-[#787878]"
+                  disabled={progress}
                 >
                   Sign up
                 </button>

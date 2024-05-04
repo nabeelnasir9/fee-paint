@@ -1,4 +1,6 @@
 import { useContext } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
 import ImageToImage from "../../components/generate/ImageToImage";
 import PaintGeneration from "../../components/generate/PaintGeneration";
 import Loader from "../../components/loader";
@@ -9,12 +11,10 @@ import { Button } from "@mui/material";
 import HelpIcon from "./../../assets/svg/help.svg";
 import BlubIcon from "./../../assets/svg/blub.svg";
 import { BsCart } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../config/AuthContext";
-import { StyleList, List } from "../../utils/Utils";
+import { StyleList } from "../../utils/Utils";
 
 const Generate = () => {
-  const navigate = useNavigate();
   const {
     selectedType,
     setSelectedType,
@@ -24,6 +24,7 @@ const Generate = () => {
     results,
     textAreaValue,
     selectedDimension,
+    imgtoImgMutation,
     imagesToMake,
     results2,
   } = useContext(AuthContext);
@@ -40,6 +41,19 @@ const Generate = () => {
       dimensions: selectedDimension,
       images: imagesToMake,
     });
+  };
+
+  const addSelectedImage = async (image) => {
+    const url = `${import.meta.env.VITE_SERVER_URL}/api/auth/selected`;
+    const email = localStorage.getItem("email");
+    try {
+      await axios.post(url, { email, image });
+
+      toast.success("Image added to account!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Error Occurred.Reload and try again.");
+    }
   };
 
   return (
@@ -138,7 +152,7 @@ const Generate = () => {
                                     <Button
                                       variant="text"
                                       className="generate-add-cart-btn"
-                                      onClick={() => navigate("/payment")}
+                                      onClick={() => addSelectedImage(v?.uri)}
                                     >
                                       <BsCart style={{ marginRight: "5px" }} />
                                       Add Cart
@@ -155,39 +169,44 @@ const Generate = () => {
                 ) : (
                   <Grid item xs={12} sm={12} md={7} lg={8} xl={8}>
                     <div className="generate-right-sec animate-fade animate-duration-500">
-                      <Grid container spacing={2}>
-                        {results2?.map((v, i) => {
-                          return (
-                            <Grid
-                              item
-                              key={i}
-                              xs={6}
-                              sm={4}
-                              md={4}
-                              lg={3}
-                              xl={3}
-                            >
-                              <div className="generate-right-card">
-                                <img
-                                  src={v?.uri}
-                                  className="gallery-image"
-                                  alt="Gallery"
-                                />
-                                <div className="generate-right-card-inner">
-                                  <Button
-                                    variant="text"
-                                    className="generate-add-cart-btn"
-                                    onClick={() => navigate("/payment")}
-                                  >
-                                    <BsCart style={{ marginRight: "5px" }} />
-                                    Add Cart
-                                  </Button>
+                      {imgtoImgMutation.isPending ? (
+                        <Loader />
+                      ) : (
+                        <Grid container spacing={2}>
+                          {results2?.map((v, i) => {
+                            return (
+                              <Grid
+                                className="animate-fade animate-duration-500"
+                                item
+                                key={i}
+                                xs={6}
+                                sm={4}
+                                md={4}
+                                lg={3}
+                                xl={3}
+                              >
+                                <div className="generate-right-card">
+                                  <img
+                                    src={v?.uri}
+                                    className="gallery-image cursor-pointer"
+                                    alt="Gallery"
+                                  />
+                                  <div className="generate-right-card-inner">
+                                    <Button
+                                      variant="text"
+                                      className="generate-add-cart-btn"
+                                      onClick={() => addSelectedImage(v?.uri)}
+                                    >
+                                      <BsCart style={{ marginRight: "5px" }} />
+                                      Add Cart
+                                    </Button>
+                                  </div>
                                 </div>
-                              </div>
-                            </Grid>
-                          );
-                        })}
-                      </Grid>
+                              </Grid>
+                            );
+                          })}
+                        </Grid>
+                      )}
                     </div>
                   </Grid>
                 )}

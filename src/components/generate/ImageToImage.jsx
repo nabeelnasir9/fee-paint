@@ -29,6 +29,8 @@ const ImageToImage = () => {
       imgtoImgMutation.mutate({
         imgUrl: uploadImage,
         style: imageStylesTitle,
+        dimensions: selectedDimension2,
+        images: imagesToMake2,
       });
     } catch (error) {
       console.log(error);
@@ -104,6 +106,7 @@ const ImageToImage = () => {
       </div>
       <Button
         variant="text"
+        disabled={imgtoImgMutation.isPending}
         className="generate-left-gen-btn"
         onClick={handleGenerate}
       >

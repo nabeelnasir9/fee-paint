@@ -58,7 +58,7 @@ export default function Accept() {
     });
 
   const thumbs = files.map((file) => (
-    <div className="flex w-32 h-32 mt-10   rounded-xl" key={file.name}>
+    <div className="flex w-32 h-32 mt-5 mb-10 rounded-xl" key={file.name}>
       <div className="thumb-inner">
         <img
           src={file.preview}
