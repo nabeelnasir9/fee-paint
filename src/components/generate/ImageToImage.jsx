@@ -13,8 +13,27 @@ const ImageToImage = () => {
     selectedDimension2,
     setSelectedDimension2,
     imagesToMake2,
+    imgtoImgMutation,
     setImagesToMake2,
+    uploadImage,
   } = useContext(AuthContext);
+
+  const handleGenerate = () => {
+    try {
+      const imageStyles = chooseStyleList.filter((style) =>
+        imageStyle.includes(style.id),
+      );
+      const imageStylesTitle =
+        imageStyles.length > 0 ? imageStyles[0].title : "";
+
+      imgtoImgMutation.mutate({
+        imgUrl: uploadImage,
+        style: imageStylesTitle,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChangeImages = (event) => {
     let inputValue = event.target.value;
@@ -86,7 +105,7 @@ const ImageToImage = () => {
       <Button
         variant="text"
         className="generate-left-gen-btn"
-        onClick={() => {}}
+        onClick={handleGenerate}
       >
         Generate
       </Button>

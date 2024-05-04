@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -16,6 +17,34 @@ export const AuthProvider = ({ children }) => {
   const [imageStyle, setImageStyle] = useState("");
   const [results, setResults] = useState([]);
   const [results2, setResults2] = useState([]);
+  const [uploadImage, setUploadImage] = useState([]);
+
+  useEffect(() => {
+    console.log(results2);
+  }, [results2]);
+
+  const imgtoImgMutation = useMutation({
+    mutationKey: ["imgtoimg"],
+    mutationFn: (data) => {
+      return axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/api/generate/imgtoimg`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+    },
+    onSuccess: (data) => {
+      setResults2((prevData) => [...prevData, ...data.data]);
+      toast.success("Image Generated Successfully");
+    },
+    onError: (error) => {
+      console.error("Mutation error:", error);
+      toast.error("Error occurred while generating image");
+    },
+  });
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["paint"],
@@ -36,6 +65,7 @@ export const AuthProvider = ({ children }) => {
     },
     onError: (error) => {
       console.error("Mutation error:", error);
+      toast.error("Error occurred while generating image");
     },
   });
 
@@ -56,12 +86,15 @@ export const AuthProvider = ({ children }) => {
     setImagesToMake2,
     selectedStyle,
     setSelectedStyle,
+    imgtoImgMutation,
     imageStyle,
     selectedDimension2,
     setSelectedDimension2,
     setImageStyle,
     results2,
     setResults2,
+    uploadImage,
+    setUploadImage,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -7,7 +7,7 @@ import { AuthContext } from "../../config/AuthContext";
 
 // eslint-disable-next-line react/prop-types
 export default function Accept() {
-  const { setResults2 } = useContext(AuthContext);
+  const { setUploadImage } = useContext(AuthContext);
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
 
@@ -44,7 +44,7 @@ export default function Accept() {
             .then((data) => {
               toast.success("Image uploaded successfully");
               console.log("Uploaded image URL:", data.data.url);
-              setResults2(data.data.url);
+              setUploadImage(data.data.url);
             })
             .catch((error) => {
               toast.error("Error uploading Image!");

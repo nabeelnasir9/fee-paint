@@ -25,6 +25,7 @@ const Generate = () => {
     textAreaValue,
     selectedDimension,
     imagesToMake,
+    results2,
   } = useContext(AuthContext);
 
   const handleGenerate = () => {
@@ -155,7 +156,7 @@ const Generate = () => {
                   <Grid item xs={12} sm={12} md={7} lg={8} xl={8}>
                     <div className="generate-right-sec animate-fade animate-duration-500">
                       <Grid container spacing={2}>
-                        {List.map((v, i) => {
+                        {results2?.map((v, i) => {
                           return (
                             <Grid
                               item
@@ -168,7 +169,7 @@ const Generate = () => {
                             >
                               <div className="generate-right-card">
                                 <img
-                                  src={v}
+                                  src={v?.uri}
                                   className="gallery-image"
                                   alt="Gallery"
                                 />
