@@ -1,20 +1,17 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
+import ImageToImage from "../../components/generate/ImageToImage";
+import PaintGeneration from "../../components/generate/PaintGeneration";
 import Loader from "../../components/loader";
-import axios from "axios";
 import { Layout } from "../../components";
-import toast from "react-hot-toast";
 import Grid from "@mui/material/Grid";
 import "./index.css";
 import { Button } from "@mui/material";
 import HelpIcon from "./../../assets/svg/help.svg";
 import BlubIcon from "./../../assets/svg/blub.svg";
-import { useMutation } from "@tanstack/react-query";
-
-import { BsImageAlt } from "react-icons/bs";
 import { BsCart } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../config/AuthContext";
-import { StyleList, chooseStyleList, List } from "../../utils/Utils";
+import { StyleList, List } from "../../utils/Utils";
 
 const Generate = () => {
   const navigate = useNavigate();
@@ -22,40 +19,13 @@ const Generate = () => {
     selectedType,
     setSelectedType,
     selectedStyle,
-    setSelectedStyle,
-    imageStyle,
-    setImageStyle,
+    mutate,
+    isPending,
     results,
-    setResults,
+    textAreaValue,
+    selectedDimension,
+    imagesToMake,
   } = useContext(AuthContext);
-  const [textAreaValue, setTextAreaValue] = useState("");
-  const [imagesToMake, setImagesToMake] = useState(1);
-  const [selectedDimension, setSelectedDimension] = useState("8:11");
-
-  const handleTextAreaChange = (event) => {
-    setTextAreaValue(event.target.value);
-  };
-  const { mutate, isPending } = useMutation({
-    mutationKey: ["generate"],
-    mutationFn: (data) => {
-      return axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/api/generate/multi`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
-    },
-    onSuccess: (data) => {
-      setResults((prevData) => [...prevData, ...data.data]);
-      toast.success("Image Generated Successfully");
-    },
-    onError: (error) => {
-      console.error("Mutation error:", error);
-    },
-  });
 
   const handleGenerate = () => {
     const selectedStyles = StyleList.filter((style) =>
@@ -70,35 +40,6 @@ const Generate = () => {
       images: imagesToMake,
     });
   };
-  // const handleGenerate = () => {
-  //   const selectedStyles = StyleList.filter((style) =>
-  //     selectedStyle.includes(style.id),
-  //   );
-  //   const selectedStyleTitles =
-  //     selectedStyles.length > 0 ? selectedStyles[0].title : "";
-  //   axios
-  //     .post(
-  //       `${import.meta.env.VITE_SERVER_URL}/api/generate/multi`,
-  //       {
-  //         selectedstyle: selectedStyleTitles,
-  //         prompt: textAreaValue,
-  //         dimensions: selectedDimension,
-  //         images: imagesToMake,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       },
-  //     )
-  //     .then((response) => {
-  //       console.log("Response from server:", response.data);
-  //       setResults(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error:", error);
-  //     });
-  // };
 
   return (
     <Layout>
@@ -161,175 +102,9 @@ const Generate = () => {
                     </div>
 
                     {selectedType === "Paint Generation" ? (
-                      <>
-                        <div className="generate-textarea">
-                          <textarea
-                            placeholder="What should AI paint?"
-                            value={textAreaValue}
-                            onChange={handleTextAreaChange}
-                          ></textarea>
-                        </div>
-                        <div className="generate-style-header">
-                          <Button
-                            variant="text"
-                            className="generate-style-header-btn"
-                          >
-                            Choose Style
-                          </Button>
-                        </div>
-                        <Grid container spacing={1.5}>
-                          {StyleList.map((v) => {
-                            return (
-                              <Grid
-                                item
-                                key={v.id}
-                                xs={4}
-                                sm={3}
-                                md={3}
-                                lg={3}
-                                xl={3}
-                              >
-                                <Button
-                                  variant="text"
-                                  onClick={() => setSelectedStyle(v.id)}
-                                  className={
-                                    selectedStyle === v.id
-                                      ? "generate-selected-style"
-                                      : "generate-un-selected-style"
-                                  }
-                                >
-                                  <img src={v.img} alt={v.title} />
-                                </Button>
-                                <p className="generate-selected-style-title">
-                                  {v.title}
-                                </p>
-                              </Grid>
-                            );
-                          })}
-                        </Grid>
-                        <div className="generate-make-main">
-                          <p>Images To Make</p>
-                          <div>
-                            <input
-                              placeholder="max 10"
-                              value={imagesToMake}
-                              onChange={(e) => setImagesToMake(e.target.value)}
-                            />
-                          </div>
-                        </div>
-                        <div className="generate-dimensions-main">
-                          <div>
-                            <p>Dimensions</p>
-                            <Button
-                              variant="text"
-                              className="generate-help-btn"
-                            >
-                              <img src={HelpIcon} alt="Help Icon" />
-                            </Button>
-                          </div>
-                          <select
-                            value={selectedDimension}
-                            onChange={(e) =>
-                              setSelectedDimension(e.target.value)
-                            }
-                          >
-                            <option value="8:11">Small</option>
-                            <option value="15:19">Medium</option>
-                            <option value="1:2">Large</option>
-                          </select>
-                        </div>
-                        <Button
-                          variant="text"
-                          className="generate-left-gen-btn"
-                          onClick={handleGenerate}
-                        >
-                          Generate
-                        </Button>
-                      </>
+                      <PaintGeneration handleGenerate={handleGenerate} />
                     ) : (
-                      <>
-                        <label className="generate-upload-button">
-                          <input type="file" hidden />
-
-                          <BsImageAlt />
-                        </label>
-                        <div className="generate-style-header">
-                          <Button
-                            variant="text"
-                            className="generate-style-header-btn"
-                          >
-                            Choose Style
-                          </Button>
-                        </div>
-                        <Grid container spacing={1.5}>
-                          {chooseStyleList.map((v) => {
-                            return (
-                              <Grid
-                                item
-                                key={v.id}
-                                xs={6}
-                                sm={3}
-                                md={3}
-                                lg={3}
-                                xl={3}
-                              >
-                                <div className="generate-photo-general-1-main">
-                                  <Button
-                                    variant="text"
-                                    onClick={() => setImageStyle(v.id)}
-                                    className={
-                                      imageStyle === v.id
-                                        ? "generate-selected-style"
-                                        : "generate-un-selected-style"
-                                    }
-                                  >
-                                    <img src={v.url} alt={v.title} />
-                                  </Button>
-                                  <p>{v.title}</p>
-                                </div>
-                              </Grid>
-                            );
-                          })}
-                        </Grid>
-                        <div className="generate-make-main">
-                          <p>Images To Make</p>
-                          <div>
-                            <input
-                              placeholder="max 10"
-                              value={imagesToMake}
-                              onChange={(e) => setImagesToMake(e.target.value)}
-                            />
-                          </div>
-                        </div>
-                        <div className="generate-dimensions-main">
-                          <div>
-                            <p>Dimensions</p>
-                            <Button
-                              variant="text"
-                              className="generate-help-btn"
-                            >
-                              <img src={HelpIcon} alt="Help Icon" />
-                            </Button>
-                          </div>
-                          <select
-                            value={selectedDimension}
-                            onChange={(e) =>
-                              setSelectedDimension(e.target.value)
-                            }
-                          >
-                            <option value="8:11">Small</option>
-                            <option value="15:19">Medium</option>
-                            <option value="1:2">Large</option>
-                          </select>
-                        </div>
-                        <Button
-                          variant="text"
-                          className="generate-left-gen-btn"
-                          onClick={handleGenerate}
-                        >
-                          Generate
-                        </Button>
-                      </>
+                      <ImageToImage />
                     )}
                   </div>
                 </Grid>

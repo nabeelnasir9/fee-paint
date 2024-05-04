@@ -239,6 +239,13 @@
   text-align: center !important;
   text-transform: none !important;
 }
+
+.generate-left-gen-btn:disabled {
+  background-color: #c4c4c4 !important; /* Adjusted background color for disabled state */
+  color: #787878 !important; /* Adjusted text color for disabled state */
+  cursor: not-allowed !important; /* Change cursor to indicate disabled state */
+}
+
 .generate-right-sec {
   margin-top: 100px;
 }
@@ -290,7 +297,7 @@
   font-weight: 500;
   color: #1d1d1d;
 }
-.generate-selected-style-title{
+.generate-selected-style-title {
   text-align: center;
   margin-top: 10px;
   font-family: "Roboto";
