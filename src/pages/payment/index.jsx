@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Layout } from "../../components";
 import Grid from "@mui/material/Grid";
 import "./index.css";
@@ -13,7 +13,6 @@ import { FaCircleCheck } from "react-icons/fa6";
 import PaypalIcon from "./../../assets/svg/paypal-3.svg";
 import VisaIcon from "./../../assets/svg/visa-2.svg";
 import { IoIosHelpCircleOutline } from "react-icons/io";
-
 
 const Payment = () => {
   const navigate = useNavigate();
@@ -218,7 +217,7 @@ const Payment = () => {
                       <div className="payment-expiration-main">
                         <div className="payment-expiration-inner">
                           <p className="payment-input-title">Expiration</p>
-                          <div  className="payment-expiration-inner-2">
+                          <div className="payment-expiration-inner-2">
                             <div>
                               <div className="payent-input-main">
                                 <input placeholder="03" type="number" />
@@ -234,10 +233,18 @@ const Payment = () => {
                         </div>
                         <div className="payment-cvc-main">
                           <div className="svc-header">
-                          <p className="payment-input-title" style={{marginTop:"0px"}}>CVC</p>
-                          <div className="cvc-help-btn">
-                            <IoIosHelpCircleOutline size={17} color="#72747C"/>
-                          </div>
+                            <p
+                              className="payment-input-title"
+                              style={{ marginTop: "0px" }}
+                            >
+                              CVC
+                            </p>
+                            <div className="cvc-help-btn">
+                              <IoIosHelpCircleOutline
+                                size={17}
+                                color="#72747C"
+                              />
+                            </div>
                           </div>
                           <div className="payent-input-main">
                             <input placeholder="123" type="number" />

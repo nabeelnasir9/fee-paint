@@ -1,6 +1,7 @@
 import Home from "./home";
 import Generate from "./generate";
 import PrivacyPolicy from "./privacy-policy";
+import Cart from "./cart";
 import Login from "./login";
 import Signup from "./signup";
 import TermsConditions from "./terms-conditions";
@@ -19,6 +20,7 @@ export {
   ContactUs,
   TrackYourOrder,
   Payment,
+  Cart,
   Login,
   Signup,
 };

@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { IoCartOutline } from "react-icons/io5";
 import Logo from "./../../assets/logo.png";
 import Grid from "@mui/material/Grid";
 import { PiSignOutBold } from "react-icons/pi";
@@ -33,7 +34,7 @@ const Navbar = ({ contact }) => {
                 {contact ? (
                   <Button
                     variant="text"
-                    className="navbar-track-btn"
+                    className="home-generate-btn"
                     onClick={() => navigate("/contact-us")}
                   >
                     Contact
@@ -41,19 +42,20 @@ const Navbar = ({ contact }) => {
                 ) : (
                   <Button
                     variant="text"
-                    className="home-generate-btn"
-                    onClick={() => navigate("/track-your-order")}
+                    className="home-generate-btn gap-2"
+                    onClick={() => navigate("/cart")}
                   >
-                    Track order
+                    <IoCartOutline size={20}></IoCartOutline>
+                    Cart
                   </Button>
                 )}
                 {!login ? (
                   <Button
                     variant="text"
                     className="home-generate-btn"
-                    onClick={() => navigate("/signup")}
+                    onClick={() => navigate("/login")}
                   >
-                    Sign up
+                    Log in
                   </Button>
                 ) : (
                   <Button

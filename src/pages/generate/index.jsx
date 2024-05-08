@@ -146,6 +146,7 @@ const Generate = () => {
                                   <img
                                     src={v?.uri}
                                     className="gallery-image cursor-pointer"
+                                    onContextMenu={(e) => e.preventDefault()}
                                     alt="Gallery"
                                   />
                                   <div className="generate-right-card-inner">
@@ -190,6 +191,7 @@ const Generate = () => {
                                     src={v?.uri}
                                     className="gallery-image cursor-pointer"
                                     alt="Gallery"
+                                    onContextMenu={(e) => e.preventDefault()}
                                   />
                                   <div className="generate-right-card-inner">
                                     <Button

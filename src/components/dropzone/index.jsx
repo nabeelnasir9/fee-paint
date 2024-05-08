@@ -87,7 +87,7 @@ export default function Accept() {
         {uploading ? (
           <InfinitySpin color="#587cdd" width="200" visible={true} />
         ) : (
-          <BsImageAlt className="animate-fade" />
+          <BsImageAlt className="animate-fade animate-duration-200" />
         )}
         {isDragAccept && <p className="text-base mt-1">Supported</p>}
         {isDragReject && (

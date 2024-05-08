@@ -21,6 +21,7 @@ const PaintGeneration = ({ handleGenerate }) => {
   const handleTextAreaChange = (event) => {
     setTextAreaValue(event.target.value);
   };
+
   const handleChangeImages = (event) => {
     let inputValue = event.target.value;
     inputValue = inputValue.replace(/\D/g, "");
