@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
+import axios from "axios";
 import { Layout } from "../../components";
+import { useQuery } from "@tanstack/react-query";
 import Grid from "@mui/material/Grid";
 import "./index.css";
 import Paper from "@mui/material/Paper";
@@ -10,41 +12,63 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useNavigate } from "react-router-dom";
 import { IoSearchSharp } from "react-icons/io5";
-import { FaCircle } from "react-icons/fa";
+import { InfinitySpin } from "react-loader-spinner";
 
 const columns = [
-  { id: "OrderID", label: "Order ID", minWidth: 100 },
-  { id: "Ordernuber", label: "Order nuber", minWidth: 120 },
+  { id: "Order Number", label: "order Number", minWidth: 50 },
+  {
+    id: "items",
+    label: "Items",
+    minWidth: 110,
+  },
   {
     id: "status",
     label: "Status",
-    minWidth: 150,
+    minWidth: 30,
   },
   {
-    id: "item",
-    label: "item",
+    id: "quantity",
+    label: "Quantity",
+    minWidth: 30,
+  },
+  {
+    id: "delivery",
+    label: "Delivery Status",
     minWidth: 50,
   },
   {
-    id: "customername",
-    label: "customer name",
-    minWidth: 150,
-  },
-  {
-    id: "Shippingservice",
-    label: "Shipping service",
-    minWidth: 150,
-  },
-  {
-    id: "Trackingcode",
-    label: "Tracking code",
-    minWidth: 150,
+    id: "Price",
+    label: "Price",
+    minWidth: 30,
   },
 ];
 const TrackYourOrder = () => {
-  const navigate = useNavigate();
+  const getOrders = useQuery({
+    queryKey: ["orders"],
+    queryFn: async () => {
+      try {
+        const email = localStorage.getItem("email");
+        const response = await axios.get(
+          `${import.meta.env.VITE_SERVER_URL}/api/auth/orders/`,
+          {
+            params: {
+              userEmail: email,
+            },
+          },
+        );
+        if (response.status === 200) {
+          console.log("User orders:", response.data);
+          return response.data;
+        }
+      } catch (error) {
+        console.error("There was a problem fetching the user's orders:", error);
+        return null;
+      }
+    },
+  });
+
+  // Return loader if loading
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const handleChangeRowsPerPage = (event) => {
@@ -52,7 +76,7 @@ const TrackYourOrder = () => {
     setPage(0);
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (newPage) => {
     setPage(newPage);
   };
   const StatusList = [
@@ -62,197 +86,6 @@ const TrackYourOrder = () => {
     "Cancelled",
     "Rejected",
     "Draft",
-  ];
-  const OrdersList = [
-    {
-      orderId: 59217,
-      orderNum: 59217342,
-      status: "New order",
-      item: 1,
-      customerName: "Cody Fisher",
-      shippingService: "Standard",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 59213,
-      orderNum: 59217343,
-      status: "Inproduction",
-      item: 2,
-      customerName: "Kristin Watson",
-      shippingService: "Priority",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 59219,
-      orderNum: 59217344,
-      status: "Shipped",
-      item: 12,
-      customerName: "Esther Howard",
-      shippingService: "Express",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 59220,
-      orderNum: 59217345,
-      status: "Cancelled",
-      item: 22,
-      customerName: "Jenny Wilson",
-      shippingService: "Express",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 59223,
-      orderNum: 59217346,
-      status: "Rejected",
-      item: 32,
-      customerName: "Jenny Wilson",
-      shippingService: "Express",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 592182,
-      orderNum: 59217346,
-      status: "Draft",
-      item: 41,
-      customerName: " Kristin Watson ",
-      shippingService: "Express",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 592182,
-      orderNum: 59217346,
-      status: "Draft",
-      item: 41,
-      customerName: " Kristin Watson ",
-      shippingService: "Priority",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 59217,
-      orderNum: 59217342,
-      status: "New order",
-      item: 1,
-      customerName: "Cody Fisher",
-      shippingService: "Standard",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 59213,
-      orderNum: 59217343,
-      status: "Inproduction",
-      item: 2,
-      customerName: "Kristin Watson",
-      shippingService: "Priority",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 59219,
-      orderNum: 59217344,
-      status: "Shipped",
-      item: 12,
-      customerName: "Esther Howard",
-      shippingService: "Express",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 59220,
-      orderNum: 59217345,
-      status: "Cancelled",
-      item: 22,
-      customerName: "Jenny Wilson",
-      shippingService: "Express",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 59223,
-      orderNum: 59217346,
-      status: "Rejected",
-      item: 32,
-      customerName: "Jenny Wilson",
-      shippingService: "Express",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 592182,
-      orderNum: 59217346,
-      status: "Draft",
-      item: 41,
-      customerName: " Kristin Watson ",
-      shippingService: "Express",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 592182,
-      orderNum: 59217346,
-      status: "Draft",
-      item: 41,
-      customerName: " Kristin Watson ",
-      shippingService: "Priority",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 59217,
-      orderNum: 59217342,
-      status: "New order",
-      item: 1,
-      customerName: "Cody Fisher",
-      shippingService: "Standard",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 59213,
-      orderNum: 59217343,
-      status: "Inproduction",
-      item: 2,
-      customerName: "Kristin Watson",
-      shippingService: "Priority",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 59219,
-      orderNum: 59217344,
-      status: "Shipped",
-      item: 12,
-      customerName: "Esther Howard",
-      shippingService: "Express",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 59220,
-      orderNum: 59217345,
-      status: "Cancelled",
-      item: 22,
-      customerName: "Jenny Wilson",
-      shippingService: "Express",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 59223,
-      orderNum: 59217346,
-      status: "Rejected",
-      item: 32,
-      customerName: "Jenny Wilson",
-      shippingService: "Express",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 592182,
-      orderNum: 59217346,
-      status: "Draft",
-      item: 41,
-      customerName: " Kristin Watson ",
-      shippingService: "Express",
-      trackingCode: "940010010936113003113",
-    },
-    {
-      orderId: 592182,
-      orderNum: 59217346,
-      status: "Draft",
-      item: 41,
-      customerName: " Kristin Watson ",
-      shippingService: "Priority",
-      trackingCode: "940010010936113003113",
-    },
   ];
   return (
     <Layout contact={true}>
@@ -291,7 +124,7 @@ const TrackYourOrder = () => {
                   sx={{ width: "100%" }}
                   style={{ backgroundColor: "#fff" }}
                 >
-                  <TableContainer sx={{ maxHeight: "65vh" }}>
+                  <TableContainer sx={{ maxHeight: "65vh", height: "65vh" }}>
                     <Table stickyHeader aria-label="sticky table">
                       <TableHead>
                         <TableRow>
@@ -312,117 +145,137 @@ const TrackYourOrder = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody style={{ backgroundColor: "#fff" }}>
-                        {OrdersList.slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage
-                        ).map((row, i) => {
-                          return (
-                            <TableRow
-                              hover
-                              role="checkbox"
-                              tabIndex={-1}
-                              key={row.code}
-                            >
-                              <TableCell>
-                                <p className="track-your-order-table-text">
-                                  {row.orderId}
-                                </p>
-                              </TableCell>
-                              <TableCell>
-                                <p className="track-your-order-table-text">
-                                  {row.orderNum}
-                                </p>
-                              </TableCell>
-                              <TableCell>
-                                <div className="track-your-order-table-status">
-                                  <div
-                                    style={{
-                                      backgroundColor:
-                                        row.status === "New order"
-                                          ? "#DBEAFE"
-                                          : row.status === "Inproduction"
-                                          ? "#FEF3C7"
-                                          : row.status === "Shipped"
-                                          ? "#D1FAE5"
-                                          : row.status === "Cancelled"
-                                          ? "#FCE7F3"
-                                          : row.status === "Rejected"
-                                          ? "#FEE2E2"
-                                          : "#F3F4F6",
-                                      color:
-                                        row.status === "New order"
-                                          ? "#1E40AF"
-                                          : row.status === "Inproduction"
-                                          ? "#92400E"
-                                          : row.status === "Shipped"
-                                          ? "#065F46"
-                                          : row.status === "Cancelled"
-                                          ? "#9D174D"
-                                          : row.status === "Rejected"
-                                          ? "#991B1B"
-                                          : "#1F2937",
-                                      borderColor:
-                                        row.status === "New order"
-                                          ? "#93C5FD"
-                                          : row.status === "Inproduction"
-                                          ? "#FCD34D"
-                                          : row.status === "Shipped"
-                                          ? "#6EE7B7"
-                                          : row.status === "Cancelled"
-                                          ? "#F9A8D4"
-                                          : row.status === "Rejected"
-                                          ? "#FCA5A5"
-                                          : "#D1D5DB",
-                                    }}
-                                  >
-                                    {row.status}
-                                  </div>
-                                </div>
-                              </TableCell>
-                              <TableCell>
-                                <p className="track-your-order-table-text">
-                                  {row.item}
-                                </p>
-                              </TableCell>
-                              <TableCell>
-                                <p className="track-your-order-table-text">
-                                  {row.customerName}
-                                </p>
-                              </TableCell>
-                              <TableCell>
-                                <div className="track-your-order-table-ship-ser">
-                                  <FaCircle
-                                    style={{
-                                      color:
-                                        row.shippingService === "Standard"
-                                          ? "#A78BFA"
-                                          : row.shippingService === "Priority"
-                                          ? "#22D3EE"
-                                          : "#F87171",
-                                      height: "8px",
-                                      marginRight: "5px",
-                                    }}
-                                  />
+                        {getOrders.isLoading ? (
+                          <TableRow>
+                            <TableCell colSpan={columns.length} align="center">
+                              <div className="flex items-center justify-center">
+                                <InfinitySpin color="#587cdd" />
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ) : (
+                          getOrders?.data
+                            ?.slice(
+                              page * rowsPerPage,
+                              page * rowsPerPage + rowsPerPage,
+                            )
+                            .map((order, i) => (
+                              <TableRow
+                                className="animate-fade"
+                                hover
+                                role="checkbox"
+                                tabIndex={-1}
+                                key={order._id}
+                              >
+                                <TableCell>
                                   <p className="track-your-order-table-text">
-                                    {row.shippingService}
+                                    {i + 1}
                                   </p>
-                                </div>
-                              </TableCell>
-                              <TableCell>
-                                <p className="track-your-order-table-text">
-                                  {row.trackingCode}
-                                </p>
-                              </TableCell>
-                            </TableRow>
-                          );
-                        })}
+                                </TableCell>
+                                <TableCell>
+                                  <div className="flex gap-2 w-30 h-30 flex-wrap">
+                                    {order.lineItems.map((item, index) => (
+                                      <img
+                                        className="object-cover w-20 h-20 rounded-lg mb-2"
+                                        key={index}
+                                        src={
+                                          item.price_data.product_data.images[0]
+                                        }
+                                        alt={`Item ${index}`}
+                                      />
+                                    ))}
+                                  </div>
+                                </TableCell>
+                                <TableCell>
+                                  <p className="track-your-order-table-text">
+                                    Completed
+                                  </p>
+                                </TableCell>
+                                <TableCell>
+                                  <p className="track-your-order-table-text">
+                                    {order.lineItems.length}
+                                  </p>
+                                </TableCell>
+                                <TableCell>
+                                  <div className="track-your-order-table-status">
+                                    <div
+                                      style={{
+                                        backgroundColor:
+                                          order.delivery_status === "Expected"
+                                            ? "#DBEAFE"
+                                            : order.delivery_status ===
+                                                "Inproduction"
+                                              ? "#FEF3C7"
+                                              : order.delivery_status ===
+                                                  "Shipped"
+                                                ? "#D1FAE5"
+                                                : order.delivery_status ===
+                                                    "Cancelled"
+                                                  ? "#FCE7F3"
+                                                  : order.delivery_status ===
+                                                      "Rejected"
+                                                    ? "#FEE2E2"
+                                                    : "#F3F4F6",
+                                        color:
+                                          order.delivery_status === "Expected"
+                                            ? "#1E40AF"
+                                            : order.delivery_status ===
+                                                "Inproduction"
+                                              ? "#92400E"
+                                              : order.delivery_status ===
+                                                  "Shipped"
+                                                ? "#065F46"
+                                                : order.delivery_status ===
+                                                    "Cancelled"
+                                                  ? "#9D174D"
+                                                  : order.delivery_status ===
+                                                      "Rejected"
+                                                    ? "#991B1B"
+                                                    : "#1F2937",
+                                        borderColor:
+                                          order.delivery_status === "Expected"
+                                            ? "#93C5FD"
+                                            : order.delivery_status ===
+                                                "Inproduction"
+                                              ? "#FCD34D"
+                                              : order.delivery_status ===
+                                                  "Shipped"
+                                                ? "#6EE7B7"
+                                                : order.delivery_status ===
+                                                    "Cancelled"
+                                                  ? "#F9A8D4"
+                                                  : order.delivery_status ===
+                                                      "Rejected"
+                                                    ? "#FCA5A5"
+                                                    : "#D1D5DB",
+                                      }}
+                                    >
+                                      {order.delivery_status}
+                                    </div>
+                                  </div>
+                                </TableCell>
+                                <TableCell>
+                                  <p className="track-your-order-table-text">
+                                    $
+                                    {(
+                                      order.lineItems.reduce(
+                                        (total, item) =>
+                                          total + item.price_data.unit_amount,
+                                        0,
+                                      ) / 100
+                                    ).toFixed(2)}
+                                  </p>
+                                </TableCell>
+                              </TableRow>
+                            ))
+                        )}
                       </TableBody>
                     </Table>
                   </TableContainer>
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25, 100]}
                     component="div"
-                    count={OrdersList.length}
+                    count={getOrders?.data?.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}

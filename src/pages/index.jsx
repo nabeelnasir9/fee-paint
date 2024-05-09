@@ -1,4 +1,6 @@
 import Home from "./home";
+import Success from "./success";
+import Cancel from "./cancel";
 import Generate from "./generate";
 import PrivacyPolicy from "./privacy-policy";
 import Cart from "./cart";
@@ -22,5 +24,7 @@ export {
   Payment,
   Cart,
   Login,
+  Success,
+  Cancel,
   Signup,
 };

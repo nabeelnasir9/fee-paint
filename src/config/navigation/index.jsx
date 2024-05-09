@@ -5,6 +5,8 @@ import { Toaster } from "react-hot-toast";
 import {
   Home,
   Cart,
+  Success,
+  Cancel,
   Login,
   Signup,
   Generate,
@@ -44,6 +46,8 @@ const RouterNavigation = () => {
             <Route path="/generate" element={<Generate />} />
             <Route path="/track-your-order" element={<TrackYourOrder />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/success" element={<Success />} />
+            <Route path="/cancel" element={<Cancel />} />
             <Route path="/payment" element={<Payment />} />
           </Route>
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
