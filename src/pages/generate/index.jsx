@@ -48,7 +48,6 @@ const Generate = () => {
     const email = localStorage.getItem("email");
     try {
       await axios.post(url, { email, image });
-
       toast.success("Image added to account!");
     } catch (error) {
       console.log(error);
