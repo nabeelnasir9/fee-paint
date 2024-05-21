@@ -22,6 +22,13 @@ const Navbar = ({ contact }) => {
                 <img src={Logo} className="navbar-logo" />
               </Button>
               <div className="flex gap-4 items-center justify-center">
+                <Button
+                  variant="text"
+                  className="home-generate-btn gap-2"
+                  onClick={() => navigate("/track-your-order")}
+                >
+                  Track Order
+                </Button>
                 {contact ? (
                   <Button
                     variant="text"
