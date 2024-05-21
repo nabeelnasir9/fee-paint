@@ -11,6 +11,8 @@ export const AuthProvider = ({ children }) => {
   const [textAreaValue, setTextAreaValue] = useState("");
   const [selectedStyle, setSelectedStyle] = useState("");
   const [imagesToMake, setImagesToMake] = useState(1);
+  const [orders, setOrders] = useState([]);
+  const [trackingId, setTrackingId] = useState("");
   const [imagesToMake2, setImagesToMake2] = useState(1);
   const [selectedDimension, setSelectedDimension] = useState("8:11");
   const [selectedDimension2, setSelectedDimension2] = useState("8:11");
@@ -18,10 +20,6 @@ export const AuthProvider = ({ children }) => {
   const [results, setResults] = useState([]);
   const [results2, setResults2] = useState([]);
   const [uploadImage, setUploadImage] = useState([]);
-
-  useEffect(() => {
-    console.log(results2);
-  }, [results2]);
 
   const imgtoImgMutation = useMutation({
     mutationKey: ["imgtoimg"],
@@ -38,6 +36,8 @@ export const AuthProvider = ({ children }) => {
     },
     onSuccess: (data) => {
       setResults2((prevData) => [...prevData, ...data.data]);
+      // __AUTO_GENERATED_PRINT_VAR_START__
+      console.log("AuthProvider#(anon) setResults2: %s", setResults2); // __AUTO_GENERATED_PRINT_VAR_END__
       toast.success("Image Generated Successfully");
     },
     onError: (error) => {
@@ -61,6 +61,8 @@ export const AuthProvider = ({ children }) => {
     },
     onSuccess: (data) => {
       setResults((prevData) => [...prevData, ...data.data]);
+      // __AUTO_GENERATED_PRINT_VAR_START__
+      console.log("AuthProvider#(anon) setResults: %s", setResults); // __AUTO_GENERATED_PRINT_VAR_END__
       toast.success("Image Generated Successfully");
     },
     onError: (error) => {
@@ -68,6 +70,9 @@ export const AuthProvider = ({ children }) => {
       toast.error("Error occurred while generating image");
     },
   });
+  useEffect(() => {
+    console.log("orders", orders);
+  }, [orders]);
 
   const value = {
     mutate,
@@ -95,6 +100,10 @@ export const AuthProvider = ({ children }) => {
     setResults2,
     uploadImage,
     setUploadImage,
+    orders,
+    setOrders,
+    trackingId,
+    setTrackingId,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

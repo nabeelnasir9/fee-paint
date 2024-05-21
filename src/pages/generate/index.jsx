@@ -1,11 +1,10 @@
 import { useContext } from "react";
-import toast from "react-hot-toast";
-import axios from "axios";
 import ImageToImage from "../../components/generate/ImageToImage";
 import PaintGeneration from "../../components/generate/PaintGeneration";
 import Loader from "../../components/loader";
 import { Layout } from "../../components";
 import Grid from "@mui/material/Grid";
+import toast from "react-hot-toast";
 import "./index.css";
 import { Button } from "@mui/material";
 import HelpIcon from "./../../assets/svg/help.svg";
@@ -19,6 +18,7 @@ const Generate = () => {
     selectedType,
     setSelectedType,
     selectedStyle,
+    setOrders,
     mutate,
     isPending,
     results,
@@ -43,16 +43,15 @@ const Generate = () => {
     });
   };
 
-  const addSelectedImage = async (image) => {
-    const url = `${import.meta.env.VITE_SERVER_URL}/api/auth/selected`;
-    const email = localStorage.getItem("email");
-    try {
-      await axios.post(url, { email, image });
-      toast.success("Image added to account!");
-    } catch (error) {
-      console.log(error);
-      toast.error("Error Occurred.Reload and try again.");
-    }
+  const addToCart = (v) => {
+    setOrders((prevOrders) => {
+      if (prevOrders.includes(v?.uri)) {
+        toast.error("Already in cart");
+        return prevOrders;
+      }
+      toast.success("Added to cart!");
+      return [...prevOrders, v?.uri];
+    });
   };
 
   return (
@@ -152,7 +151,7 @@ const Generate = () => {
                                     <Button
                                       variant="text"
                                       className="generate-add-cart-btn"
-                                      onClick={() => addSelectedImage(v?.uri)}
+                                      onClick={() => addToCart(v)}
                                     >
                                       <BsCart style={{ marginRight: "5px" }} />
                                       Add Cart
@@ -196,7 +195,7 @@ const Generate = () => {
                                     <Button
                                       variant="text"
                                       className="generate-add-cart-btn"
-                                      onClick={() => addSelectedImage(v?.uri)}
+                                      onClick={() => addToCart(v)}
                                     >
                                       <BsCart style={{ marginRight: "5px" }} />
                                       Add Cart

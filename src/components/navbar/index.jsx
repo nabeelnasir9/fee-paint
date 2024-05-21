@@ -2,20 +2,11 @@
 import { IoCartOutline } from "react-icons/io5";
 import Logo from "./../../assets/logo.png";
 import Grid from "@mui/material/Grid";
-import { PiSignOutBold } from "react-icons/pi";
 import "./index.css";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 const Navbar = ({ contact }) => {
   const navigate = useNavigate();
-  const login = localStorage.getItem("email");
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("email");
-    toast.success("Logout Successful");
-    navigate("/");
-  };
   return (
     <div className="navbar-container">
       <div className="navbar-main">
@@ -47,24 +38,6 @@ const Navbar = ({ contact }) => {
                   >
                     <IoCartOutline size={20}></IoCartOutline>
                     Cart
-                  </Button>
-                )}
-                {!login ? (
-                  <Button
-                    variant="text"
-                    className="home-generate-btn"
-                    onClick={() => navigate("/login")}
-                  >
-                    Log in
-                  </Button>
-                ) : (
-                  <Button
-                    variant="text"
-                    className="home-generate-btn gap-2"
-                    onClick={() => handleLogout()}
-                  >
-                    <PiSignOutBold size={20}></PiSignOutBold>
-                    Logout
                   </Button>
                 )}
               </div>

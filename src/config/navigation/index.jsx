@@ -1,5 +1,4 @@
 import { useEffect, useLayoutEffect } from "react";
-import ProtectedRoute from "../ProtectedRoutes";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import {
@@ -41,15 +40,12 @@ const RouterNavigation = () => {
 
         <Routes>
           <Route path="/" element={<Home />} />
-
-          <Route element={<ProtectedRoute />}>
-            <Route path="/generate" element={<Generate />} />
-            <Route path="/track-your-order" element={<TrackYourOrder />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/success" element={<Success />} />
-            <Route path="/cancel" element={<Cancel />} />
-            <Route path="/payment" element={<Payment />} />
-          </Route>
+          <Route path="/generate" element={<Generate />} />
+          <Route path="/track-your-order" element={<TrackYourOrder />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/cancel" element={<Cancel />} />
+          <Route path="/payment" element={<Payment />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -60,7 +56,7 @@ const RouterNavigation = () => {
         </Routes>
       </BrowserRouter>
       <Toaster
-        position="bottom-right"
+        // position="bottom-center"
         toastOptions={{
           style: {
             background: "white",
