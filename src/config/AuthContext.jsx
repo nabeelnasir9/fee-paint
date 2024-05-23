@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
@@ -36,8 +36,6 @@ export const AuthProvider = ({ children }) => {
     },
     onSuccess: (data) => {
       setResults2((prevData) => [...prevData, ...data.data]);
-      // __AUTO_GENERATED_PRINT_VAR_START__
-      console.log("AuthProvider#(anon) setResults2: %s", setResults2); // __AUTO_GENERATED_PRINT_VAR_END__
       toast.success("Image Generated Successfully");
     },
     onError: (error) => {
@@ -61,8 +59,6 @@ export const AuthProvider = ({ children }) => {
     },
     onSuccess: (data) => {
       setResults((prevData) => [...prevData, ...data.data]);
-      // __AUTO_GENERATED_PRINT_VAR_START__
-      console.log("AuthProvider#(anon) setResults: %s", setResults); // __AUTO_GENERATED_PRINT_VAR_END__
       toast.success("Image Generated Successfully");
     },
     onError: (error) => {
@@ -70,9 +66,6 @@ export const AuthProvider = ({ children }) => {
       toast.error("Error occurred while generating image");
     },
   });
-  useEffect(() => {
-    console.log("orders", orders);
-  }, [orders]);
 
   const value = {
     mutate,
