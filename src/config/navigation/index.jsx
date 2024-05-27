@@ -1,6 +1,12 @@
-import { useEffect, useLayoutEffect } from "react";
+import { useContext, useEffect, useLayoutEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import {
+  FirstPopup,
+  SecondPopup,
+  ThirdPopup,
+  FourthPopup,
+} from "../../components";
 import {
   Home,
   Cart,
@@ -17,27 +23,52 @@ import {
   TrackYourOrder,
   Payment,
 } from "../../pages";
+import { AuthContext } from "../AuthContext";
+
 function ScrollToTop() {
   const { pathname } = useLocation();
+  const { setPopupState } = useContext(AuthContext);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setPopupState((prevState) => ({ ...prevState, firstPopupVisible: true }));
+    }, 7000);
 
-  // useEffect is used to scroll to the top when the pathname changes
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const scrollHeight = document.documentElement.scrollHeight;
+      if (scrollPosition / scrollHeight > 0.7) {
+        setPopupState((prevState) => ({
+          ...prevState,
+          firstPopupVisible: true,
+        }));
+        window.removeEventListener("scroll", handleScroll);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [setPopupState]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  // useLayoutEffect is used to scroll to the top when the component mounts
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return null;
 }
+
 const RouterNavigation = () => {
   return (
     <>
       <BrowserRouter>
         <ScrollToTop />
-
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/generate" element={<Generate />} />
@@ -56,7 +87,6 @@ const RouterNavigation = () => {
         </Routes>
       </BrowserRouter>
       <Toaster
-        // position="bottom-center"
         toastOptions={{
           style: {
             background: "white",
@@ -64,7 +94,12 @@ const RouterNavigation = () => {
           },
         }}
       />
+      <FirstPopup />
+      <SecondPopup />
+      <ThirdPopup />
+      <FourthPopup />
     </>
   );
 };
+
 export default RouterNavigation;

@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -8,6 +7,21 @@ export const AuthContext = createContext();
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const [selectedType, setSelectedType] = useState("Paint Generation");
+  const resetPopupState = () => {
+    setPopupState({
+      firstPopupVisible: false,
+      secondPopupVisible: false,
+      thirdPopupVisible: false,
+      fourthPopupVisible: false,
+    });
+  };
+  const [popupState, setPopupState] = useState({
+    firstPopupVisible: false,
+    secondPopupVisible: false,
+    thirdPopupVisible: false,
+    fourthPopupVisible: false,
+  });
+
   const [textAreaValue, setTextAreaValue] = useState("");
   const [selectedStyle, setSelectedStyle] = useState("");
   const [imagesToMake, setImagesToMake] = useState(1);
@@ -97,6 +111,9 @@ export const AuthProvider = ({ children }) => {
     setOrders,
     trackingId,
     setTrackingId,
+    popupState,
+    setPopupState,
+    resetPopupState,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
