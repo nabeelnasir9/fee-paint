@@ -37,6 +37,7 @@ const TrackYourOrder = () => {
         `${import.meta.env.VITE_SERVER_URL}/api/auth/order/${searchUuid}`,
       );
       setOrderData(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching order:", error);
       setOrderData(null);
@@ -141,14 +142,16 @@ const TrackYourOrder = () => {
                             </TableCell>
                             <TableCell>
                               <div className="flex gap-2 w-30 h-30 flex-wrap">
-                                {orderData.lineItems.map((item, index) => (
-                                  <img
-                                    className="object-cover w-20 h-20 rounded-lg mb-2"
-                                    key={index}
-                                    src={item.price_data.product_data.images[0]}
-                                    alt={`Item ${index}`}
-                                  />
-                                ))}
+                                {orderData.lineItems[0].price_data?.product_data?.images.map(
+                                  (item, index) => (
+                                    <img
+                                      className="object-cover w-20 h-20 rounded-lg mb-2"
+                                      key={index}
+                                      src={item}
+                                      alt={`Item ${index}`}
+                                    />
+                                  ),
+                                )}
                               </div>
                             </TableCell>
                             <TableCell>

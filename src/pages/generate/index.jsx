@@ -45,12 +45,17 @@ const Generate = () => {
 
   const addToCart = (v) => {
     setOrders((prevOrders) => {
-      if (prevOrders.includes(v?.uri)) {
+      // Check if the item is already in the cart
+      const alreadyInCart = prevOrders.some((item) => item.uri === v.uri);
+
+      if (alreadyInCart) {
         toast.error("Already in cart");
         return prevOrders;
       }
+
+      // Add the item to the cart
       toast.success("Added to cart!");
-      return [...prevOrders, v?.uri];
+      return [...prevOrders, { uri: v.uri, size: v.size }];
     });
   };
 
