@@ -7,36 +7,16 @@ export const AuthContext = createContext();
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const [selectedType, setSelectedType] = useState("Paint Generation");
-  const resetPopupState = () => {
-    setPopupState({
-      firstPopupVisible: false,
-      secondPopupVisible: false,
-      thirdPopupVisible: false,
-      fourthPopupVisible: false,
-    });
-  };
-  const [popupState, setPopupState] = useState({
-    firstPopupVisible: false,
-    secondPopupVisible: false,
-    thirdPopupVisible: false,
-    fourthPopupVisible: false,
-  });
-
   const [textAreaValue, setTextAreaValue] = useState("");
   const [selectedStyle, setSelectedStyle] = useState("");
   const [imagesToMake, setImagesToMake] = useState(1);
-  // const [selectedSize, setSelectedSize] = useState({});
   const [orders, setOrders] = useState([]);
-  // __AUTO_GENERATED_PRINT_VAR_START__
-  console.log("AuthProvider orders: %s", orders); // __AUTO_GENERATED_PRINT_VAR_END__
   const [trackingId, setTrackingId] = useState("");
   const [imagesToMake2, setImagesToMake2] = useState(1);
   const [selectedDimension, setSelectedDimension] = useState("8:11");
   const [selectedDimension2, setSelectedDimension2] = useState("8:11");
   const [imageStyle, setImageStyle] = useState("");
   const [results, setResults] = useState([]);
-  // __AUTO_GENERATED_PRINT_VAR_START__
-  console.log("AuthProvider results: %s", results); // __AUTO_GENERATED_PRINT_VAR_END__
   const [results2, setResults2] = useState([]);
   const [uploadImage, setUploadImage] = useState([]);
 
@@ -116,11 +96,6 @@ export const AuthProvider = ({ children }) => {
     setOrders,
     trackingId,
     setTrackingId,
-    popupState,
-    setPopupState,
-    resetPopupState,
-    // selectedSize,
-    // setSelectedSize,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

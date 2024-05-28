@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { AuthContext } from "../../config/AuthContext";
+import { PopupContext } from "../../config/PopupContext";
 const FirstPopup = () => {
   const { popupState, setPopupState, resetPopupState } =
-    useContext(AuthContext);
+    useContext(PopupContext);
 
   const handleAccept = () => {
     setPopupState({

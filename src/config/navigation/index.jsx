@@ -23,11 +23,11 @@ import {
   TrackYourOrder,
   Payment,
 } from "../../pages";
-import { AuthContext } from "../AuthContext";
+import { PopupContext } from "../PopupContext";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
-  const { setPopupState } = useContext(AuthContext);
+  const { setPopupState } = useContext(PopupContext);
   useEffect(() => {
     const timer = setTimeout(() => {
       setPopupState((prevState) => ({ ...prevState, firstPopupVisible: true }));
@@ -85,6 +85,10 @@ const RouterNavigation = () => {
           <Route path="/faqs" element={<Faqs />} />
           <Route path="/contact-us" element={<ContactUs />} />
         </Routes>
+        <FirstPopup />
+        <SecondPopup />
+        <ThirdPopup />
+        <FourthPopup />
       </BrowserRouter>
       <Toaster
         toastOptions={{
@@ -94,10 +98,6 @@ const RouterNavigation = () => {
           },
         }}
       />
-      <FirstPopup />
-      <SecondPopup />
-      <ThirdPopup />
-      <FourthPopup />
     </>
   );
 };

@@ -1,8 +1,11 @@
 import { useContext } from "react";
-import { AuthContext } from "../../config/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { PopupContext } from "../../config/PopupContext";
 
 const FourthPopup = () => {
-  const { popupState, resetPopupState } = useContext(AuthContext);
+  const { popupState, resetPopupState, popupMutation } = useContext(PopupContext);
+  const navigate = useNavigate();
+
   const handleClose = () => {
     resetPopupState();
   };
@@ -27,10 +30,19 @@ const FourthPopup = () => {
         <div className="text-center">
           <h2 className="text-xl font-semibold mb-4">Thank You!</h2>
           <p className="mb-6">
-            Here is your discount code: <strong>DISCOUNT2024</strong>
+            Here is your discount code:{" "}
+            <strong>
+              {popupMutation.isLoading
+                ? "Processing..."
+                : popupMutation.isError
+                  ? popupMutation.error.response.data.error
+                  : popupMutation.data
+                    ? popupMutation.data.code
+                    : ""}
+            </strong>
           </p>
           <button
-            onClick={handleClose}
+            onClick={() => navigate("/cart")}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
             Apply Discount
