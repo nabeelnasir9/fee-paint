@@ -66,7 +66,7 @@ function ScrollToTop() {
 
 const RouterNavigation = () => {
   return (
-    <>
+    <div className="font-inter">
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
@@ -98,7 +98,7 @@ const RouterNavigation = () => {
           },
         }}
       />
-    </>
+    </div>
   );
 };
 

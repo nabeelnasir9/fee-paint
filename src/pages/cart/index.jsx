@@ -1,5 +1,7 @@
 import { Layout } from "../../components";
 import toast from "react-hot-toast";
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
 import { DeleteForever } from "@mui/icons-material";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -11,6 +13,11 @@ export default function Cart() {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [discount, setDiscount] = useState(0);
+  const [warrantySelected, setWarrantySelected] = useState(false); // New state for warranty
+
+  const addWarranty = () => {
+    setWarrantySelected(!warrantySelected); // Toggle warranty selection
+  };
 
   const couponMutation = useMutation({
     mutationFn: async (couponData) => {
@@ -89,26 +96,32 @@ export default function Cart() {
     return (subtotal * discount) / 100;
   }, [subtotal, discount]);
 
-  const totalPrice = useMemo(() => {
-    return subtotal - discountAmount;
-  }, [subtotal, discountAmount]);
+  let totalPrice = useMemo(() => {
+    let price = subtotal - discountAmount;
+    if (warrantySelected) {
+      price += 500; // Adding $5 (500 cents) for warranty
+    }
+    return price;
+  }, [subtotal, discountAmount, warrantySelected]);
+
   return (
     <Layout>
-      <section className="py-24 relative mt-10">
-        <div className="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto">
+      <section className="py-32 relative mt-10 font-inter">
+        <div className="w-full max-w-6xl px-4 md:px-5 lg-6 mx-auto">
           <h2 className="title font-inter font-bold text-4xl leading-10 mb-8 text-center text-black">
-            Shopping Cart
+            Your Cart
           </h2>
-          <div className="hidden lg:grid grid-cols-2  py-6">
+          <div className="hidden lg:grid grid-cols-2 py-6 justify-items-stretch lg:mx-14">
             <div className="font-normal text-xl leading-8 text-gray-500">
               Product
             </div>
-            <p className="font-normal text-xl leading-8 text-gray-500 flex items-center justify-center">
-              <span className="w-full max-w-[200px] text-center lg:ml-32">
+            <div className="font-normal text-xl leading-8 text-gray-500 text-right">
+              <span className="w-full max-w-[200px] text-center">
                 Total
               </span>
-            </p>
+            </div>
           </div>
+
 
           {orders.map((image, index) => (
             <div
@@ -133,55 +146,72 @@ export default function Cart() {
                 </div>
               </div>
               <div className="flex items-center flex-col min-[550px]:flex-row w-full max-xl:max-w-xl max-xl:mx-auto gap-10 justify-end">
+                <button
+                  className="bg-red-500 text-white text-base px-2 py-2 rounded-md flex items-center gap-2 disabled:bg-[#c4c4c4] disabled:text-[#787878]"
+                  onClick={() => handleRemove(image)}
+                >
+                  <DeleteForever fontSize="medium" />
+                </button>
                 <h6 className="text-[#587cdd] font-inter font-bold text-2xl leading-9 w-full max-w-[176px] text-center">
                   $
                   {(
                     (image.size ? getPriceForSize(image.size) : 6000) / 100
                   ).toFixed(2)}
                 </h6>
-                <button
-                  className="bg-[#587cdd] text-white text-base px-4 py-3 rounded-md flex items-center gap-2 disabled:bg-[#c4c4c4] disabled:text-[#787878]"
-                  onClick={() => handleRemove(image)}
-                >
-                  <DeleteForever fontSize="small" />
-                  Remove
-                </button>
+
               </div>
             </div>
           ))}
 
           <div className="bg-gray-50 rounded-xl p-6 w-full mb-8 max-lg:max-w-xl max-lg:mx-auto">
-            <div className="flex items-center justify-between w-full mb-6">
-              <p className="font-normal text-xl leading-8 text-gray-400">
-                Sub Total
+
+
+            <div className="flex items-center w-full justify-between mb-4">
+              <p className="font-inter font-semibold text-base leading-9 text-gray-900">
+                $5 Life Time Warranty
               </p>
-              <h6 className="font-semibold text-xl leading-8 text-gray-900">
-                {/* ${(totalPrice / 100).toFixed(2)} */}$
-                {(subtotal / 100).toFixed(2)}
-              </h6>
+              <div className="flex items-center gap-10">
+                <button
+                  className=" bg-gray-200 rounded-xl "
+                  onClick={addWarranty}
+                >
+                  {
+                    warrantySelected ? <RemoveIcon fontSize="large" />
+                      : <AddIcon fontSize="large" />
+                  }
+                </button>
+              </div>
             </div>
-            <div className="flex items-center justify-between w-full pb-6 border-b border-gray-200"></div>
             <div className="flex items-center justify-between w-full mb-4">
               <input
                 type="text"
-                className=" w-full rounded-md border-0 pl-2 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="w-10/12 rounded-md border-0 pl-2 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 placeholder="Enter coupon code"
                 value={couponCode}
                 onChange={(e) => setCouponCode(e.target.value)}
               />
               <button
                 onClick={handleCouponApply}
-                className="ml-20 bg-[#587cdd] text-white p-2 rounded-md"
+                className="bg-[#587cdd] text-white p-2 rounded-md"
               >
                 Apply Coupon
               </button>
             </div>
             <div className="flex items-center justify-between w-full mb-4">
-              <p className="font-inter font-medium text-2xl leading-9 text-gray-900">
+              <p className="font-inter font-medium text-xl leading-9 text-gray-900">
                 Discount
               </p>
-              <h6 className="font-inter font-bold text-2xl leading-9 text-[#587cdd]">
+              <h6 className="font-inter font-bold text-xl leading-9 text-[#587cdd]">
                 {discount} %
+              </h6>
+            </div>
+            <div className="flex items-center justify-between w-full pb-6 border-b border-gray-200"></div>
+            <div className="flex items-center justify-between w-full mb-6 mt-2">
+              <p className="font-normal text-xl leading-8 text-gray-400">
+                Sub Total
+              </p>
+              <h6 className="font-semibold text-xl leading-8 text-gray-900">
+                ${(subtotal / 100).toFixed(2)}
               </h6>
             </div>
             <div className="flex items-center justify-between w-full py-6">
@@ -193,6 +223,7 @@ export default function Cart() {
               </h6>
             </div>
           </div>
+
           <div className="flex items-center flex-col sm:flex-row justify-center gap-3 mt-8">
             <button
               className="rounded-md w-full max-w-[280px] py-4 text-center justify-center items-center bg-[#587cdd] font-semibold text-lg text-white flex transition-all duration-500 hover:bg-indigo-600  disabled:bg-[#c4c4c4] disabled:text-[#787878]"
