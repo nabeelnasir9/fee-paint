@@ -1,11 +1,11 @@
 import { Layout } from "../../components";
 import toast from "react-hot-toast";
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 import { DeleteForever } from "@mui/icons-material";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { useContext, useState, useMemo } from "react";
+import { useContext, useEffect, useState, useMemo } from "react";
 import { AuthContext } from "../../config/AuthContext";
 
 export default function Cart() {
@@ -13,10 +13,18 @@ export default function Cart() {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [discount, setDiscount] = useState(0);
-  const [warrantySelected, setWarrantySelected] = useState(false); // New state for warranty
+  const [warrantySelected, setWarrantySelected] = useState(false);
+  const [frameOptions, setFrameOptions] = useState([]);
+
+  useEffect(() => {
+    const defaultFrameOptions = orders.map(() => {
+      return { style: "Detailed", selected: false };
+    });
+    setFrameOptions(defaultFrameOptions);
+  }, [orders]);
 
   const addWarranty = () => {
-    setWarrantySelected(!warrantySelected); // Toggle warranty selection
+    setWarrantySelected(!warrantySelected);
   };
 
   const couponMutation = useMutation({
@@ -28,6 +36,7 @@ export default function Cart() {
       return response.data;
     },
   });
+
   const checkoutMutation = useMutation({
     mutationFn: async (checkoutData) => {
       const response = await axios.post(
@@ -40,10 +49,13 @@ export default function Cart() {
 
   const handleCheckout = async () => {
     try {
-      setCheckoutLoading(true); // set loading state to true
+      setCheckoutLoading(true);
       const response = await checkoutMutation.mutateAsync({
-        images: orders,
-        price: Math.round(totalPrice), // Ensure price is rounded to the nearest cent
+        images: orders.map((order, index) => ({
+          ...order,
+          frame: frameOptions[index] || { style: "", selected: false },
+        })),
+        price: Math.round(totalPrice),
         couponCode: couponCode.length > 0 ? couponCode : null,
       });
       setTrackingId(response.trackingId);
@@ -51,7 +63,6 @@ export default function Cart() {
     } catch (error) {
       console.error("Error during checkout:", error);
     } finally {
-      // set loading state to false
       setCheckoutLoading(false);
     }
   };
@@ -72,25 +83,34 @@ export default function Cart() {
     }
   };
 
-  const getPriceForSize = (size) => {
-    switch (size) {
-      case "Small":
-        return 2499;
-      case "Medium":
-        return 2999;
-      case "Large":
-        return 3499;
-      default:
-        return 6000; // default price if size is not set
+  const getPriceForVariant = (style, size, frameSelected) => {
+    const prices = {
+      Detailed: {
+        Small: { "No Frame": 4499, "DIY Frame": 5999 },
+        Medium: { "No Frame": 5999, "DIY Frame": 7499 },
+        Large: { "No Frame": 7499, "DIY Frame": 8999 },
+      },
+      Exquisite: {
+        Small: { "No Frame": 5499, "DIY Frame": 6999 },
+        Medium: { "No Frame": 7499, "DIY Frame": 8999 },
+        Large: { "No Frame": 10499, "DIY Frame": 11999 },
+      },
+    };
+
+    if (prices[style] && prices[style][size]) {
+      return prices[style][size][frameSelected ? "DIY Frame" : "No Frame"];
     }
+    return 6000; // default price if style or size is not set
   };
 
   const subtotal = useMemo(() => {
-    return orders.reduce((total, order) => {
+    return orders.reduce((total, order, index) => {
+      const style = frameOptions[index]?.style || "";
       const size = order.size || "default";
-      return total + getPriceForSize(size);
+      const frameSelected = frameOptions[index]?.selected || false;
+      return total + getPriceForVariant(style, size, frameSelected);
     }, 0);
-  }, [orders]);
+  }, [orders, frameOptions]);
 
   const discountAmount = useMemo(() => {
     return (subtotal * discount) / 100;
@@ -99,10 +119,16 @@ export default function Cart() {
   let totalPrice = useMemo(() => {
     let price = subtotal - discountAmount;
     if (warrantySelected) {
-      price += 500; // Adding $5 (500 cents) for warranty
+      price += 500;
     }
     return price;
   }, [subtotal, discountAmount, warrantySelected]);
+
+  const updateFrameOptions = (index, style, selected) => {
+    const newFrameOptions = [...frameOptions];
+    newFrameOptions[index] = { style, selected };
+    setFrameOptions(newFrameOptions);
+  };
 
   return (
     <Layout>
@@ -111,17 +137,20 @@ export default function Cart() {
           <h2 className="title font-inter font-bold text-4xl leading-10 mb-8 text-center text-black">
             Your Cart
           </h2>
-          <div className="hidden lg:grid grid-cols-2 py-6 justify-items-stretch lg:mx-14">
+          <div className="hidden lg:flex items-center justify-between ">
             <div className="font-normal text-xl leading-8 text-gray-500">
               Product
             </div>
-            <div className="font-normal text-xl leading-8 text-gray-500 text-right">
-              <span className="w-full max-w-[200px] text-center">
-                Total
-              </span>
+            <div className="font-normal text-xl leading-8  text-gray-500 ml-96">
+              Style
+            </div>
+            <div className="font-normal text-xl  leading-8 text-gray-500">
+              Frame
+            </div>
+            <div className="font-normal text-xl leading-8 text-gray-500 mr-10">
+              Total
             </div>
           </div>
-
 
           {orders.map((image, index) => (
             <div
@@ -152,20 +181,52 @@ export default function Cart() {
                 >
                   <DeleteForever fontSize="medium" />
                 </button>
+                <select
+                  className=" bg-gray-200 rounded-md border-0 pl-2 pr-3 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={frameOptions[index]?.style || ""}
+                  onChange={(e) =>
+                    updateFrameOptions(
+                      index,
+                      e.target.value,
+                      frameOptions[index]?.selected || false,
+                    )
+                  }
+                >
+                  <option selected value="Detailed">
+                    Detailed
+                  </option>
+                  <option value="Exquisite">Exquisite</option>
+                </select>
+                <div className="flex justify-center items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={frameOptions[index]?.selected || false}
+                    className="size-9"
+                    onChange={(e) =>
+                      updateFrameOptions(
+                        index,
+                        frameOptions[index]?.style || "",
+                        e.target.checked,
+                      )
+                    }
+                  />
+                  <label className="">Include DIY Frame</label>
+                </div>
                 <h6 className="text-[#587cdd] font-inter font-bold text-2xl leading-9 w-full max-w-[176px] text-center">
                   $
                   {(
-                    (image.size ? getPriceForSize(image.size) : 6000) / 100
+                    getPriceForVariant(
+                      frameOptions[index]?.style || "",
+                      image.size || "default",
+                      frameOptions[index]?.selected || false,
+                    ) / 100
                   ).toFixed(2)}
                 </h6>
-
               </div>
             </div>
           ))}
 
           <div className="bg-gray-50 rounded-xl p-6 w-full mb-8 max-lg:max-w-xl max-lg:mx-auto">
-
-
             <div className="flex items-center w-full justify-between mb-4">
               <p className="font-inter font-semibold text-base leading-9 text-gray-900">
                 $5 Life Time Warranty
@@ -175,17 +236,18 @@ export default function Cart() {
                   className=" bg-gray-200 rounded-xl "
                   onClick={addWarranty}
                 >
-                  {
-                    warrantySelected ? <RemoveIcon fontSize="large" />
-                      : <AddIcon fontSize="large" />
-                  }
+                  {warrantySelected ? (
+                    <RemoveIcon fontSize="large" />
+                  ) : (
+                    <AddIcon fontSize="large" />
+                  )}
                 </button>
               </div>
             </div>
             <div className="flex items-center justify-between w-full mb-4">
               <input
                 type="text"
-                className="w-10/12 rounded-md border-0 pl-2 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 pl-2 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 placeholder="Enter coupon code"
                 value={couponCode}
                 onChange={(e) => setCouponCode(e.target.value)}

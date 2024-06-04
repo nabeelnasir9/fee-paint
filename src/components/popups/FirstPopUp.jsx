@@ -31,7 +31,7 @@ const FirstPopup = () => {
   return (
     <>
       <div
-        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter"
+        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 font-inter animate-fade animate-duration-150"
         onClick={handleClose}
       >
         <div

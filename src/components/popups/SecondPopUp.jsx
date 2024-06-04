@@ -28,7 +28,7 @@ const SecondPopup = () => {
   if (!popupState.secondPopupVisible) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 animate-fade animate-duration-150 ">
       <div
         className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative"
         onClick={(e) => e.stopPropagation()}
