@@ -34,7 +34,7 @@ const PaintGeneration = ({ handleGenerate }) => {
     setImagesToMake(inputValue);
   };
   return (
-    <>
+    <div className="font-inter">
       <div className="generate-textarea">
         <textarea
           placeholder="What should AI paint?"
@@ -101,7 +101,7 @@ const PaintGeneration = ({ handleGenerate }) => {
       >
         Generate
       </Button>
-    </>
+    </div>
   );
 };
 

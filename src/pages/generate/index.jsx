@@ -1,4 +1,5 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
+import UpsellPopUp from "../../components/MysteryPaintModal/MysteryPaintModal";
 import ImageToImage from "../../components/generate/ImageToImage";
 import PaintGeneration from "../../components/generate/PaintGeneration";
 import Loader from "../../components/loader";
@@ -12,6 +13,7 @@ import BlubIcon from "./../../assets/svg/blub.svg";
 import { BsCart } from "react-icons/bs";
 import { AuthContext } from "../../config/AuthContext";
 import { StyleList } from "../../utils/Utils";
+import MysteryPaintModal from "../../components/MysteryPaintModal/MysteryPaintModal";
 
 const Generate = () => {
   const {
@@ -27,7 +29,11 @@ const Generate = () => {
     imgtoImgMutation,
     imagesToMake,
     results2,
+    setMysteryPaintKit,
   } = useContext(AuthContext);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const handleGenerate = () => {
     const selectedStyles = StyleList.filter((style) =>
@@ -44,21 +50,35 @@ const Generate = () => {
   };
 
   const addToCart = (v) => {
-    setOrders((prevOrders) => {
-      const alreadyInCart = prevOrders.some((item) => item.uri === v.uri);
+    setSelectedItem(v);
+    setModalOpen(true);
+  };
 
-      if (alreadyInCart) {
-        toast.error("Already in cart");
-        return prevOrders;
-      }
-      toast.success("Added to cart!");
-      return [...prevOrders, { uri: v.uri, size: v.size }];
-    });
+  const handleModalConfirm = (size) => {
+    if (selectedItem) {
+      setOrders((prevOrders) => {
+        const alreadyInCart = prevOrders.some(
+          (item) => item.uri === selectedItem.uri,
+        );
+
+        if (alreadyInCart) {
+          toast.error("Already in cart");
+          return prevOrders;
+        }
+        toast.success("Added to cart!");
+        return [
+          ...prevOrders,
+          { uri: selectedItem.uri, size: selectedItem.size },
+        ];
+      });
+      setMysteryPaintKit(size);
+    }
+    setModalOpen(false);
   };
 
   return (
     <Layout>
-      <div className="gradient-bg-img">
+      <div className="gradient-bg-img font-inter">
         <Grid container spacing={0}>
           <Grid item xs={1} sm={1} md={1} lg={1} xl={2}></Grid>
           <Grid xs={10} sm={10} md={10} lg={10} xl={8}>
@@ -70,6 +90,8 @@ const Generate = () => {
                     My Paint Genie and images from text straight from your
                     browser
                   </p>
+                  <UpsellPopUp />
+
                   <div className="generate-left-box">
                     <div className="generate-left-btn-main">
                       <Button
@@ -200,7 +222,7 @@ const Generate = () => {
                                       onClick={() => addToCart(v)}
                                     >
                                       <BsCart style={{ marginRight: "5px" }} />
-                                      Add Cart
+                                      Add to Cart
                                     </Button>
                                   </div>
                                 </div>
@@ -218,6 +240,11 @@ const Generate = () => {
           <Grid item xs={1} sm={1} md={1} lg={1} xl={2}></Grid>
         </Grid>
       </div>
+      <MysteryPaintModal
+        open={modalOpen}
+        handleClose={() => setModalOpen(false)}
+        onConfirm={handleModalConfirm}
+      />
     </Layout>
   );
 };

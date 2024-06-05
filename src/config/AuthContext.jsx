@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 export const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
@@ -19,6 +20,11 @@ export const AuthProvider = ({ children }) => {
   const [results, setResults] = useState([]);
   const [results2, setResults2] = useState([]);
   const [uploadImage, setUploadImage] = useState([]);
+  const [mysteryPaintKit, setMysteryPaintKit] = useState("Large");
+
+  useEffect(() => {
+    console.log("AuthProvider mysteryPaintKit: %s", mysteryPaintKit); // __AUTO_GENERATED_PRINT_VAR_END__
+  }, [mysteryPaintKit]);
 
   const imgtoImgMutation = useMutation({
     mutationKey: ["imgtoimg"],
@@ -96,6 +102,8 @@ export const AuthProvider = ({ children }) => {
     setOrders,
     trackingId,
     setTrackingId,
+    mysteryPaintKit,
+    setMysteryPaintKit,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

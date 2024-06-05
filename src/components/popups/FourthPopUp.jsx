@@ -49,12 +49,6 @@ const FourthPopup = () => {
             alt="first popup"
           />
         </div>
-        <button
-          onClick={handleClose}
-          className="absolute top-2 right-2 text-gray-700 hover:text-gray-900"
-        >
-          &times;
-        </button>
         <div className="text-center">
           <h2 className="text-xl font-semibold mb-4">Thank You!</h2>
           <div className="flex justify-center flex-col">

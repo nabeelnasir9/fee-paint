@@ -56,7 +56,7 @@ const ImageToImage = () => {
           Choose Style
         </Button>
       </div>
-      <Grid container spacing={1.5}>
+      <Grid className="font-inter" container spacing={1.5}>
         {chooseStyleList.map((v) => {
           return (
             <Grid item key={v.id} xs={6} sm={3} md={3} lg={3} xl={3}>

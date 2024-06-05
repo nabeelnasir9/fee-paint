@@ -1,4 +1,5 @@
 import { Layout } from "../../components";
+import img from "../../assets/MysteryPaintByNumber.webp";
 import toast from "react-hot-toast";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
@@ -9,7 +10,8 @@ import { useContext, useEffect, useState, useMemo } from "react";
 import { AuthContext } from "../../config/AuthContext";
 
 export default function Cart() {
-  const { orders, setOrders, setTrackingId } = useContext(AuthContext);
+  const { orders, setOrders, setTrackingId, mysteryPaintKit } =
+    useContext(AuthContext);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [discount, setDiscount] = useState(0);
@@ -115,14 +117,43 @@ export default function Cart() {
   const discountAmount = useMemo(() => {
     return (subtotal * discount) / 100;
   }, [subtotal, discount]);
-
+  const pricing = () => {
+    if (mysteryPaintKit === "Small") {
+      return 2500;
+    }
+    if (mysteryPaintKit === "Medium") {
+      return 3500;
+    }
+    if (mysteryPaintKit === "Large") {
+      return 4500;
+    }
+  };
   let totalPrice = useMemo(() => {
+    const pricing = () => {
+      if (mysteryPaintKit === "Small") {
+        return 2500;
+      }
+      if (mysteryPaintKit === "Medium") {
+        return 3500;
+      }
+      if (mysteryPaintKit === "Large") {
+        return 4500;
+      }
+    };
     let price = subtotal - discountAmount;
     if (warrantySelected) {
       price += 500;
     }
+    // Adjusting total price based on mysteryPaintKit
+    if (
+      mysteryPaintKit &&
+      ["Small", "Medium", "Large"].includes(mysteryPaintKit)
+    ) {
+      price += pricing(); // Add mysteryPaintKit price
+      price *= 0.9; // Apply 10% discount
+    }
     return price;
-  }, [subtotal, discountAmount, warrantySelected]);
+  }, [subtotal, discountAmount, warrantySelected, mysteryPaintKit]);
 
   const updateFrameOptions = (index, style, selected) => {
     const newFrameOptions = [...frameOptions];
@@ -137,7 +168,7 @@ export default function Cart() {
           <h2 className="title font-inter font-bold text-4xl leading-10 mb-8 text-center text-black">
             Your Cart
           </h2>
-          <div className="hidden lg:flex items-center justify-between ">
+          <div className="hidden lg:flex items-center justify-between">
             <div className="font-normal text-xl leading-8 text-gray-500">
               Product
             </div>
@@ -151,7 +182,38 @@ export default function Cart() {
               Total
             </div>
           </div>
-
+          {mysteryPaintKit &&
+            ["Small", "Medium", "Large"].includes(mysteryPaintKit) && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 min-[550px]:gap-6 border-t border-gray-200 py-6">
+                <div className="flex items-center flex-col min-[550px]:flex-row gap-3 min-[550px]:gap-6 w-full max-xl:justify-center max-xl:max-w-xl max-xl:mx-auto">
+                  <div className="img-box">
+                    <img
+                      src={img}
+                      alt="Mystery Paint Kit"
+                      className="xl:w-[140px]"
+                    />
+                  </div>
+                  <div className="pro-data w-full max-w-sm">
+                    {/* Placeholder text for mystery paint kit */}
+                    <h5 className="font-semibold text-xl leading-8 text-black max-[550px]:text-center">
+                      {mysteryPaintKit} Paint Kit
+                    </h5>
+                    {/* Placeholder text for size */}
+                    <p className="font-normal text-lg leading-8 text-gray-500 my-2 min-[550px]:my-3 max-[550px]:text-center">
+                      Size: {mysteryPaintKit}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center flex-col min-[550px]:flex-row w-full max-xl:max-w-xl max-xl:mx-auto gap-10 justify-end">
+                  <button className="bg-red-500 text-white text-base px-2 py-2 rounded-md flex items-center gap-2 disabled:bg-[#c4c4c4] disabled:text-[#787878]">
+                    <DeleteForever fontSize="medium" />
+                  </button>
+                  <h6 className="text-[#587cdd] font-inter font-bold text-2xl leading-9 w-full max-w-[176px] text-center">
+                    {(pricing() / 100).toFixed(2)} $
+                  </h6>
+                </div>
+              </div>
+            )}
           {orders.map((image, index) => (
             <div
               key={index}
