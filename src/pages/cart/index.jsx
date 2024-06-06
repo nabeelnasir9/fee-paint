@@ -140,10 +140,10 @@ export default function Cart() {
       return 2500;
     }
     if (mysteryPaintKit === "Medium") {
-      return 3500;
+      return 2900;
     }
     if (mysteryPaintKit === "Large") {
-      return 4500;
+      return 3400;
     }
   };
 
@@ -153,10 +153,10 @@ export default function Cart() {
         return 2500;
       }
       if (mysteryPaintKit === "Medium") {
-        return 3500;
+        return 2900;
       }
       if (mysteryPaintKit === "Large") {
-        return 4500;
+        return 3400;
       }
     };
 
@@ -222,7 +222,6 @@ export default function Cart() {
                     <h5 className="font-semibold text-xl leading-8 text-black max-[550px]:text-center">
                       {mysteryPaintKit} Paint Kit
                     </h5>
-                    {/* Placeholder text for size */}
                     <p className="font-normal text-lg leading-8 text-gray-500 my-2 min-[550px]:my-3 max-[550px]:text-center">
                       Size: {mysteryPaintKit}
                     </p>
@@ -236,7 +235,7 @@ export default function Cart() {
                     <DeleteForever fontSize="medium" />
                   </button>
                   <h6 className="text-[#587cdd] font-inter font-bold text-2xl leading-9 w-full max-w-[176px] text-center">
-                    {(pricing() / 100).toFixed(2)} $
+                    ${(pricing() / 100).toFixed(2)}
                   </h6>
                 </div>
               </div>
@@ -316,10 +315,6 @@ export default function Cart() {
           ))}
 
           <div className="bg-gray-50 rounded-xl p-6 w-full mb-8 max-lg:max-w-xl max-lg:mx-auto">
-            {mysteryPaintKit &&
-              ["Small", "Medium", "Large"].includes(mysteryPaintKit) && (
-                <div>10% discount applied on complete order</div>
-              )}
             <div className="flex items-center w-full justify-between mb-4">
               <p className="font-inter font-semibold text-base leading-9 text-gray-900">
                 $5 Life Time Warranty
