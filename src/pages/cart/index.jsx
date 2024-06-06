@@ -71,6 +71,7 @@ export default function Cart() {
         })),
         price: Math.round(totalPrice),
         mysteryPaintKit: mysteryPaintKit,
+        warranty: warrantySelected,
         couponCode: couponCode.length > 0 ? couponCode : null,
       });
       setTrackingId(response.trackingId);
