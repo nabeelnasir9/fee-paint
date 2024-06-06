@@ -10,14 +10,19 @@ import { useContext, useEffect, useState, useMemo } from "react";
 import { AuthContext } from "../../config/AuthContext";
 
 export default function Cart() {
-  const { orders, setOrders, setTrackingId, mysteryPaintKit } =
-    useContext(AuthContext);
+  const {
+    orders,
+    setOrders,
+    setTrackingId,
+    mysteryPaintKit,
+    setMysteryPaintKit,
+  } = useContext(AuthContext);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [discount, setDiscount] = useState(0);
   const [warrantySelected, setWarrantySelected] = useState(false);
   const [frameOptions, setFrameOptions] = useState([]);
-
+  const [mysteryPaintKitDiscount, setMysteryPaintKitDiscount] = useState(0);
   useEffect(() => {
     const defaultFrameOptions = orders.map(() => {
       return { style: "Detailed", selected: false };
@@ -25,6 +30,13 @@ export default function Cart() {
     setFrameOptions(defaultFrameOptions);
   }, [orders]);
 
+  useEffect(() => {
+    if (mysteryPaintKit) {
+      setMysteryPaintKitDiscount(10); // Apply 10% discount
+    } else {
+      setMysteryPaintKitDiscount(0); // Remove 10% discount
+    }
+  }, [mysteryPaintKit]);
   const addWarranty = () => {
     setWarrantySelected(!warrantySelected);
   };
@@ -67,6 +79,11 @@ export default function Cart() {
     } finally {
       setCheckoutLoading(false);
     }
+  };
+
+  const handleMysteryRemove = () => {
+    setMysteryPaintKit(null);
+    setMysteryPaintKitDiscount(0); // Remove the 10% discount
   };
 
   const handleRemove = (id) => {
@@ -128,7 +145,8 @@ export default function Cart() {
       return 4500;
     }
   };
-  let totalPrice = useMemo(() => {
+
+  const totalPrice = useMemo(() => {
     const pricing = () => {
       if (mysteryPaintKit === "Small") {
         return 2500;
@@ -140,20 +158,26 @@ export default function Cart() {
         return 4500;
       }
     };
+
     let price = subtotal - discountAmount;
     if (warrantySelected) {
       price += 500;
     }
-    // Adjusting total price based on mysteryPaintKit
-    if (
-      mysteryPaintKit &&
-      ["Small", "Medium", "Large"].includes(mysteryPaintKit)
-    ) {
+    if (mysteryPaintKit) {
       price += pricing(); // Add mysteryPaintKit price
-      price *= 0.9; // Apply 10% discount
     }
+
+    const totalDiscount = (price * mysteryPaintKitDiscount) / 100;
+    price -= totalDiscount;
+
     return price;
-  }, [subtotal, discountAmount, warrantySelected, mysteryPaintKit]);
+  }, [
+    subtotal,
+    discountAmount,
+    warrantySelected,
+    mysteryPaintKit,
+    mysteryPaintKitDiscount,
+  ]);
 
   const updateFrameOptions = (index, style, selected) => {
     const newFrameOptions = [...frameOptions];
@@ -194,7 +218,6 @@ export default function Cart() {
                     />
                   </div>
                   <div className="pro-data w-full max-w-sm">
-                    {/* Placeholder text for mystery paint kit */}
                     <h5 className="font-semibold text-xl leading-8 text-black max-[550px]:text-center">
                       {mysteryPaintKit} Paint Kit
                     </h5>
@@ -205,7 +228,10 @@ export default function Cart() {
                   </div>
                 </div>
                 <div className="flex items-center flex-col min-[550px]:flex-row w-full max-xl:max-w-xl max-xl:mx-auto gap-10 justify-end">
-                  <button className="bg-red-500 text-white text-base px-2 py-2 rounded-md flex items-center gap-2 disabled:bg-[#c4c4c4] disabled:text-[#787878]">
+                  <button
+                    className="bg-red-500 text-white text-base px-2 py-2 rounded-md flex items-center gap-2 disabled:bg-[#c4c4c4] disabled:text-[#787878]"
+                    onClick={() => handleMysteryRemove()}
+                  >
                     <DeleteForever fontSize="medium" />
                   </button>
                   <h6 className="text-[#587cdd] font-inter font-bold text-2xl leading-9 w-full max-w-[176px] text-center">
@@ -289,6 +315,10 @@ export default function Cart() {
           ))}
 
           <div className="bg-gray-50 rounded-xl p-6 w-full mb-8 max-lg:max-w-xl max-lg:mx-auto">
+            {mysteryPaintKit &&
+              ["Small", "Medium", "Large"].includes(mysteryPaintKit) && (
+                <div>10% discount applied on complete order</div>
+              )}
             <div className="flex items-center w-full justify-between mb-4">
               <p className="font-inter font-semibold text-base leading-9 text-gray-900">
                 $5 Life Time Warranty
@@ -326,7 +356,7 @@ export default function Cart() {
                 Discount
               </p>
               <h6 className="font-inter font-bold text-xl leading-9 text-[#587cdd]">
-                {discount} %
+                {discount + mysteryPaintKitDiscount} %
               </h6>
             </div>
             <div className="flex items-center justify-between w-full pb-6 border-b border-gray-200"></div>

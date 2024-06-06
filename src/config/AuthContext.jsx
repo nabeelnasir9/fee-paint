@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
   const [results, setResults] = useState([]);
   const [results2, setResults2] = useState([]);
   const [uploadImage, setUploadImage] = useState([]);
-  const [mysteryPaintKit, setMysteryPaintKit] = useState("Large");
+  const [mysteryPaintKit, setMysteryPaintKit] = useState(null);
 
   useEffect(() => {
     console.log("AuthProvider mysteryPaintKit: %s", mysteryPaintKit); // __AUTO_GENERATED_PRINT_VAR_END__
