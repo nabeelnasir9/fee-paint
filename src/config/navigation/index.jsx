@@ -1,4 +1,5 @@
 import { useContext, useEffect, useLayoutEffect } from "react";
+import { useState } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import {
@@ -28,19 +29,29 @@ import { PopupContext } from "../PopupContext";
 function ScrollToTop() {
   const { pathname } = useLocation();
   const { setPopupState } = useContext(PopupContext);
+  const [hasShownPopup, setHasShownPopup] = useState(false);
   useEffect(() => {
+    if (hasShownPopup) return;
+
     const timer = setTimeout(() => {
-      setPopupState((prevState) => ({ ...prevState, firstPopupVisible: true }));
+      if (!hasShownPopup) {
+        setPopupState((prevState) => ({
+          ...prevState,
+          firstPopupVisible: true,
+        }));
+        setHasShownPopup(true);
+      }
     }, 7000);
 
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight;
       const scrollHeight = document.documentElement.scrollHeight;
-      if (scrollPosition / scrollHeight > 0.7) {
+      if (scrollPosition / scrollHeight > 0.7 && !hasShownPopup) {
         setPopupState((prevState) => ({
           ...prevState,
           firstPopupVisible: true,
         }));
+        setHasShownPopup(true);
         window.removeEventListener("scroll", handleScroll);
       }
     };
@@ -51,7 +62,7 @@ function ScrollToTop() {
       clearTimeout(timer);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [setPopupState]);
+  }, [hasShownPopup, setPopupState]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

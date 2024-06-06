@@ -1,5 +1,4 @@
 import { useState, useContext } from "react";
-import UpsellPopUp from "../../components/MysteryPaintModal/MysteryPaintModal";
 import ImageToImage from "../../components/generate/ImageToImage";
 import PaintGeneration from "../../components/generate/PaintGeneration";
 import Loader from "../../components/loader";
@@ -54,7 +53,7 @@ const Generate = () => {
     setModalOpen(true);
   };
 
-  const handleModalConfirm = (size) => {
+  const handleModalConfirm = (size, updateMysteryKit) => {
     if (selectedItem) {
       setOrders((prevOrders) => {
         const alreadyInCart = prevOrders.some(
@@ -62,7 +61,7 @@ const Generate = () => {
         );
 
         if (alreadyInCart) {
-          toast.error("Already in cart");
+          // toast.error("Already in cart");
           return prevOrders;
         }
         toast.success("Added to cart!");
@@ -71,7 +70,9 @@ const Generate = () => {
           { uri: selectedItem.uri, size: selectedItem.size },
         ];
       });
-      setMysteryPaintKit(size);
+      if (updateMysteryKit) {
+        setMysteryPaintKit(size);
+      }
     }
     setModalOpen(false);
   };
@@ -90,8 +91,6 @@ const Generate = () => {
                     My Paint Genie and images from text straight from your
                     browser
                   </p>
-                  <UpsellPopUp />
-
                   <div className="generate-left-box">
                     <div className="generate-left-btn-main">
                       <Button
@@ -178,7 +177,7 @@ const Generate = () => {
                                       onClick={() => addToCart(v)}
                                     >
                                       <BsCart style={{ marginRight: "5px" }} />
-                                      Add Cart
+                                      Add to Cart
                                     </Button>
                                   </div>
                                 </div>

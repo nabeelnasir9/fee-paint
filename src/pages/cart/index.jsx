@@ -32,9 +32,9 @@ export default function Cart() {
 
   useEffect(() => {
     if (mysteryPaintKit) {
-      setMysteryPaintKitDiscount(10); // Apply 10% discount
+      setMysteryPaintKitDiscount(10);
     } else {
-      setMysteryPaintKitDiscount(0); // Remove 10% discount
+      setMysteryPaintKitDiscount(0);
     }
   }, [mysteryPaintKit]);
   const addWarranty = () => {
@@ -70,6 +70,7 @@ export default function Cart() {
           frame: frameOptions[index] || { style: "", selected: false },
         })),
         price: Math.round(totalPrice),
+        mysteryPaintKit: mysteryPaintKit,
         couponCode: couponCode.length > 0 ? couponCode : null,
       });
       setTrackingId(response.trackingId);
@@ -83,7 +84,7 @@ export default function Cart() {
 
   const handleMysteryRemove = () => {
     setMysteryPaintKit(null);
-    setMysteryPaintKitDiscount(0); // Remove the 10% discount
+    setMysteryPaintKitDiscount(0);
   };
 
   const handleRemove = (id) => {

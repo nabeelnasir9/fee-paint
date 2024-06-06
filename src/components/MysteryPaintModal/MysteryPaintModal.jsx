@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import img from "../../assets/MysteryPaintByNumber.webp";
-import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -16,6 +15,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -31,8 +31,17 @@ const style = {
 const MysteryPaintModal = ({ open, handleClose, onConfirm }) => {
   const [size, setSize] = useState("Small");
   const navigate = useNavigate();
-  const handleConfirm = () => {
-    onConfirm(size); // Pass the selected size to the parent component
+
+  const handleClaimOffer = () => {
+    onConfirm(size, true);
+  };
+
+  const handleAddToCart = () => {
+    onConfirm(size, false);
+  };
+  const handleAddToCart2 = () => {
+    onConfirm(size, false);
+    navigate("/cart");
   };
 
   return (
@@ -88,7 +97,7 @@ const MysteryPaintModal = ({ open, handleClose, onConfirm }) => {
           variant="contained"
           fullWidth
           sx={{ mt: 2 }}
-          onClick={handleConfirm}
+          onClick={handleClaimOffer}
         >
           CLAIM OFFER!
         </Button>
@@ -126,14 +135,10 @@ const MysteryPaintModal = ({ open, handleClose, onConfirm }) => {
           </AccordionDetails>
         </Accordion>
         <Box display="flex" justifyContent="space-between" mt={2}>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleAddToCart} color="primary">
             No thanks
           </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => navigate("/cart")}
-          >
+          <Button variant="contained" color="primary" onClick={handleAddToCart2}>
             Go to checkout →
           </Button>
         </Box>
