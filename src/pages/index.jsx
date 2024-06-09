@@ -8,6 +8,7 @@ import Login from "./login";
 import Signup from "./signup";
 import TermsConditions from "./terms-conditions";
 import RefundPolicy from "./refund-policy";
+import ProductPage from "./product-page/ProductPage";
 import Faqs from "./faqs";
 import ContactUs from "./contact-us";
 import TrackYourOrder from "./track-your-order";
@@ -18,6 +19,7 @@ export {
   PrivacyPolicy,
   TermsConditions,
   RefundPolicy,
+  ProductPage,
   Faqs,
   ContactUs,
   TrackYourOrder,

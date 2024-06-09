@@ -11,6 +11,7 @@ import {
 import {
   Home,
   Cart,
+  ProductPage,
   Success,
   Cancel,
   Login,
@@ -86,6 +87,7 @@ const RouterNavigation = () => {
           <Route path="/track-your-order" element={<TrackYourOrder />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/success" element={<Success />} />
+          <Route path="/product" element={<ProductPage />} />
           <Route path="/cancel" element={<Cancel />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

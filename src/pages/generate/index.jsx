@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import ImageToImage from "../../components/generate/ImageToImage";
 import PaintGeneration from "../../components/generate/PaintGeneration";
 import Loader from "../../components/loader";
@@ -13,6 +13,8 @@ import { BsCart } from "react-icons/bs";
 import { AuthContext } from "../../config/AuthContext";
 import { StyleList } from "../../utils/Utils";
 import MysteryPaintModal from "../../components/MysteryPaintModal/MysteryPaintModal";
+import { useNavigate } from "react-router-dom";
+import { fetchData } from "./apiService"; // Import the fetchData function
 
 const Generate = () => {
   const {
@@ -23,6 +25,8 @@ const Generate = () => {
     mutate,
     isPending,
     results,
+    setResults,
+    setResults2,
     textAreaValue,
     selectedDimension,
     imgtoImgMutation,
@@ -33,6 +37,18 @@ const Generate = () => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch data and set results based on selectedType
+    fetchData().then((data) => {
+      if (selectedType === "Paint Generation") {
+        setResults(data);
+      } else {
+        setResults2(data);
+      }
+    });
+  }, [selectedType, setResults, setResults2]);
 
   const handleGenerate = () => {
     const selectedStyles = StyleList.filter((style) =>
@@ -48,9 +64,12 @@ const Generate = () => {
     });
   };
 
-  const addToCart = (v) => {
+  const addToCart = (v, i) => {
     setSelectedItem(v);
     setModalOpen(true);
+    navigate("/product", {
+      state: { index: i },
+    });
   };
 
   const handleModalConfirm = (size, updateMysteryKit) => {
@@ -174,7 +193,7 @@ const Generate = () => {
                                     <Button
                                       variant="text"
                                       className="generate-add-cart-btn"
-                                      onClick={() => addToCart(v)}
+                                      onClick={() => addToCart(v, i)}
                                     >
                                       <BsCart style={{ marginRight: "5px" }} />
                                       Add to Cart
