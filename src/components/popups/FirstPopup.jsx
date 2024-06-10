@@ -4,7 +4,7 @@ import { PopupContext } from "../../config/PopupContext";
 import img from "../../assets/popups/FirstImage.png";
 import logo from "../../assets/logo.png";
 
-const SecondPopup = () => {
+const FirstPopup = () => {
   const { popupState, setPopupState, resetPopupState, setEmail, setName } =
     useContext(PopupContext);
   const {
@@ -18,8 +18,8 @@ const SecondPopup = () => {
     setEmail(data.email);
     setPopupState({
       ...popupState,
-      secondPopupVisible: false,
-      thirdPopupVisible: true,
+      firstPopupVisible: false,
+      secondPopupVisible: true,
     });
   };
 
@@ -27,7 +27,7 @@ const SecondPopup = () => {
     resetPopupState();
   };
 
-  if (!popupState.secondPopupVisible) return null;
+  if (!popupState.firstPopupVisible) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 animate-fade animate-duration-150">
@@ -41,14 +41,20 @@ const SecondPopup = () => {
         >
           &times;
         </button>
-        <div className="flex items-center justify-center mb-4 gap-10">
+        <div className="flex flex-col lg:flex-row items-center justify-center mb-4 gap-10">
           <div className="flex-1">
-            <img src={img} alt="Wolf" className="w-full h-auto" />
+            <img
+              src={img}
+              alt="Wolf"
+              className="lg:w-full lg:h-auto w-40 h-auto"
+            />
           </div>
           <div className="flex flex-col flex-1 gap-4 items-center">
             <img src={logo} alt="" className="w-40 h-auto" />
             <div className="flex flex-col flex-1 text-center gap-4">
-              <p className="text-3xl font-bold">Unlock 15$ Discount!</p>
+              <p className="lg:text-3xl text-2xl font-bold">
+                Unlock 15$ Discount!
+              </p>
               <p className="text-gray-500 text-sm">
                 Plus be the first to know about new arrivals,exclusive offers
                 and more!
@@ -89,4 +95,4 @@ const SecondPopup = () => {
   );
 };
 
-export default SecondPopup;
+export default FirstPopup;

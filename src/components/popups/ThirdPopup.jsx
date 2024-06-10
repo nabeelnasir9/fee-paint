@@ -7,7 +7,7 @@ import { PopupContext } from "../../config/PopupContext";
 import logo from "../../assets/logo.png";
 import img from "../../assets/popups/ThirdandFourthImage.png";
 
-const FourthPopup = () => {
+const ThirdPopup = () => {
   const { popupState, resetPopupState, popupMutation } =
     useContext(PopupContext);
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const FourthPopup = () => {
     navigate("/cart");
   };
 
-  if (!popupState.fourthPopupVisible) return null;
+  if (!popupState.thirdPopupVisible) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 animate-fade animate-duration-150">
@@ -41,9 +41,13 @@ const FourthPopup = () => {
         >
           &times;
         </button>
-        <div className="flex items-center justify-center mb-4 gap-6">
+        <div className="flex flex-col lg:flex-row items-center justify-center mb-4 gap-6">
           <div className="flex-1">
-            <img src={img} alt="Wolf" className="w-full h-auto" />
+            <img
+              src={img}
+              alt="Wolf"
+              className="lg:w-full lg:h-auto w-40 h-auto"
+            />
           </div>
           <div className="flex flex-col flex-1 gap-4 items-center">
             <img src={logo} alt="" className="w-40 h-auto" />
@@ -81,4 +85,4 @@ const FourthPopup = () => {
   );
 };
 
-export default FourthPopup;
+export default ThirdPopup;

@@ -4,7 +4,7 @@ import { PopupContext } from "../../config/PopupContext";
 import img from "../../assets/popups/Secondimage.png";
 import logo from "../../assets/logo.png";
 
-const ThirdPopup = () => {
+const SecondPopup = () => {
   const {
     popupState,
     setPopupState,
@@ -25,8 +25,8 @@ const ThirdPopup = () => {
     popupMutation.mutate({ name, email, phone: data.phoneNumber });
     setPopupState({
       ...popupState,
-      thirdPopupVisible: false,
-      fourthPopupVisible: true,
+      secondPopupVisible: false,
+      thirdPopupVisible: true,
     });
   };
 
@@ -34,8 +34,8 @@ const ThirdPopup = () => {
     popupMutation.mutate({ name, email });
     setPopupState({
       ...popupState,
-      thirdPopupVisible: false,
-      fourthPopupVisible: true,
+      secondPopupVisible: false,
+      thirdPopupVisible: true,
     });
   };
 
@@ -43,7 +43,7 @@ const ThirdPopup = () => {
     resetPopupState();
   };
 
-  if (!popupState.thirdPopupVisible) return null;
+  if (!popupState.secondPopupVisible) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 animate-fade animate-duration-150">
@@ -57,11 +57,15 @@ const ThirdPopup = () => {
         >
           &times;
         </button>
-        <div className="flex items-center justify-center mb-4 gap-2">
+        <div className=" flex flex-col lg:flex-row items-center justify-center mb-4 gap-2">
           <div className="flex-1">
-            <img src={img} alt="Wolf" className="w-full h-auto" />
+            <img
+              src={img}
+              alt="Wolf"
+              className="lg:w-full lg:h-auto w-40 h-auto"
+            />
           </div>
-          <div className="flex flex-col flex-1 gap-4 items-center">
+          <div className="flex flex-col flex-1 gap-4 items-center mt-10">
             <img src={logo} alt="" className="w-40 h-auto" />
             <div className="flex flex-col flex-1 text-center gap-4">
               <p className="text-2xl font-bold">
@@ -113,4 +117,4 @@ const ThirdPopup = () => {
   );
 };
 
-export default ThirdPopup;
+export default SecondPopup;

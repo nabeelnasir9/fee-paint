@@ -15,17 +15,20 @@ export const PopupProvider = ({ children }) => {
     firstPopupVisible: false,
     secondPopupVisible: false,
     thirdPopupVisible: false,
-    fourthPopupVisible: false,
+    // fourthPopupVisible: false,
   });
 
   const popupMutation = useMutation({
     mutationKey: ["popup"],
     mutationFn: async ({ name, email, phone }) => {
-      const req = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/popup-generate`, {
-        name,
-        email,
-        phone,
-      });
+      const req = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/api/auth/popup-generate`,
+        {
+          name,
+          email,
+          phone,
+        },
+      );
       return req.data;
     },
     onSuccess: () => {
@@ -33,7 +36,7 @@ export const PopupProvider = ({ children }) => {
     },
     onError: () => {
       toast.error("Something went wrong");
-    }
+    },
   });
 
   const resetPopupState = () => {
@@ -47,14 +50,17 @@ export const PopupProvider = ({ children }) => {
 
   const value = {
     popupState,
-    name, setName,
+    name,
+    setName,
     resetPopupState,
-    email, setEmail,
+    email,
+    setEmail,
     setPopupState,
     popupMutation,
-    phoneNumber, setPhoneNumber
+    phoneNumber,
+    setPhoneNumber,
   };
-  return <PopupContext.Provider value={value}>{children}</PopupContext.Provider>;
-
-}
-
+  return (
+    <PopupContext.Provider value={value}>{children}</PopupContext.Provider>
+  );
+};

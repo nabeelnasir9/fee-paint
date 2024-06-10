@@ -2,12 +2,7 @@ import { useContext, useEffect, useLayoutEffect } from "react";
 import { useState } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import {
-  FirstPopup,
-  SecondPopup,
-  ThirdPopup,
-  FourthPopup,
-} from "../../components";
+import { FirstPopup, SecondPopup, ThirdPopup } from "../../components";
 import {
   Home,
   Cart,
@@ -101,7 +96,6 @@ const RouterNavigation = () => {
         <FirstPopup />
         <SecondPopup />
         <ThirdPopup />
-        <FourthPopup />
       </BrowserRouter>
       <Toaster
         toastOptions={{
