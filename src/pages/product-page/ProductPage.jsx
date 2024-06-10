@@ -1,5 +1,7 @@
 import { Layout } from "../../components";
 import Slider from "react-slick";
+import MysteryPaintModal from "../../components/MysteryPaintModal/MysteryPaintModal";
+import toast from "react-hot-toast";
 import { useLocation } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -20,8 +22,34 @@ const ProductPage = () => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const location = useLocation();
-  const { results } = useContext(AuthContext);
+  const { selectedItem, results, setOrders, setMysteryPaintKit } =
+    useContext(AuthContext);
 
+  const handleModalConfirm = (size, updateMysteryKit) => {
+    if (selectedItem) {
+      setOrders((prevOrders) => {
+        const alreadyInCart = prevOrders.some(
+          (item) => item.uri === selectedItem.uri,
+        );
+
+        if (alreadyInCart) {
+          // toast.error("Already in cart");
+          return prevOrders;
+        }
+        toast.success("Added to cart!");
+        return [
+          ...prevOrders,
+          { uri: selectedItem.uri, size: selectedItem.size },
+        ];
+      });
+      if (updateMysteryKit) {
+        setMysteryPaintKit(size);
+      }
+    }
+    setModalOpen(false);
+  };
+
+  const [modalOpen, setModalOpen] = useState(false);
   const selectedImage =
     results && results.length > 0 && selectedIndex < results.length
       ? results[selectedIndex].uri
@@ -117,6 +145,7 @@ const ProductPage = () => {
                   variant="contained"
                   color="primary"
                   sx={{ width: "100%" }}
+                  onClick={() => setModalOpen(true)}
                 >
                   Add to Cart
                 </Button>
@@ -125,6 +154,11 @@ const ProductPage = () => {
           </Box>
         </Box>
       </Box>
+      <MysteryPaintModal
+        open={modalOpen}
+        handleClose={() => setModalOpen(false)}
+        onConfirm={handleModalConfirm}
+      />
     </Layout>
   );
 };

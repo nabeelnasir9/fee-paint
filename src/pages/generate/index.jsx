@@ -32,15 +32,15 @@ const Generate = () => {
     imgtoImgMutation,
     imagesToMake,
     results2,
+    selectedItem,
+    setSelectedItem,
     setMysteryPaintKit,
   } = useContext(AuthContext);
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch data and set results based on selectedType
     fetchData().then((data) => {
       if (selectedType === "Paint Generation") {
         setResults(data);

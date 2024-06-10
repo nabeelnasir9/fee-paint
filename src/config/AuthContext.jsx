@@ -2,12 +2,12 @@ import { createContext, useState } from "react";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
 export const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const [selectedType, setSelectedType] = useState("Paint Generation");
+  const [selectedItem, setSelectedItem] = useState(null);
   const [textAreaValue, setTextAreaValue] = useState("");
   const [selectedStyle, setSelectedStyle] = useState("");
   const [imagesToMake, setImagesToMake] = useState(1);
@@ -21,11 +21,6 @@ export const AuthProvider = ({ children }) => {
   const [results2, setResults2] = useState([]);
   const [uploadImage, setUploadImage] = useState([]);
   const [mysteryPaintKit, setMysteryPaintKit] = useState(null);
-
-  useEffect(() => {
-    console.log("AuthProvider mysteryPaintKit: %s", mysteryPaintKit); // __AUTO_GENERATED_PRINT_VAR_END__
-  }, [mysteryPaintKit]);
-
   const imgtoImgMutation = useMutation({
     mutationKey: ["imgtoimg"],
     mutationFn: (data) => {
@@ -104,6 +99,8 @@ export const AuthProvider = ({ children }) => {
     setTrackingId,
     mysteryPaintKit,
     setMysteryPaintKit,
+    selectedItem,
+    setSelectedItem,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

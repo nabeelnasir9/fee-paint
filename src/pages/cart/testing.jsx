@@ -187,7 +187,7 @@ export default function Cart() {
   return (
     <Layout>
       <section className="py-32 relative mt-10 font-inter">
-        <div className="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto">
+        <div className="w-full max-w-6xl px-4 md:px-5 lg-6 mx-auto">
           <h2 className="title font-inter font-bold text-4xl leading-10 mb-8 text-center text-black">
             Your Cart
           </h2>
@@ -195,10 +195,7 @@ export default function Cart() {
             <div className="font-normal text-xl leading-8 text-gray-500">
               Product
             </div>
-            <div className="font-normal text-xl leading-8  text-gray-500 ml-[550px]">
-              Size
-            </div>
-            <div className="font-normal text-xl leading-8  text-gray-500 ">
+            <div className="font-normal text-xl leading-8  text-gray-500 ml-96">
               Style
             </div>
             <div className="font-normal text-xl  leading-8 text-gray-500">
@@ -235,181 +232,188 @@ export default function Cart() {
                   >
                     <DeleteForever fontSize="medium" />
                   </button>
-                  <h6 className="text-[#587cdd] font-inter font-bold text-2xl leading-9 w-full max-w-[136px] text-center">
+                  <h6 className="text-[#587cdd] font-inter font-bold text-2xl leading-9 w-full max-w-[176px] text-center">
                     ${(pricing() / 100).toFixed(2)}
                   </h6>
                 </div>
               </div>
             )}
-          {orders.map((image, index) => (
+          {orders?.map((order, index) => (
             <div
               key={index}
               className="grid grid-cols-1 lg:grid-cols-2 min-[550px]:gap-6 border-t border-gray-200 py-6"
             >
               <div className="flex items-center flex-col min-[550px]:flex-row gap-3 min-[550px]:gap-6 w-full max-xl:justify-center max-xl:max-w-xl max-xl:mx-auto">
                 <div className="img-box">
-                  <img
-                    src={image.uri}
-                    alt={`Image ${index + 1}`}
-                    className="xl:w-[140px]"
-                  />
+                  <img src={order?.image} alt="" className="xl:w-[140px]" />
                 </div>
-                <div className="pro-data w-full max-w-sm ">
+                <div className="pro-data w-full max-w-sm">
                   <h5 className="font-semibold text-xl leading-8 text-black max-[550px]:text-center">
-                    Paint-By-Numbers Kit
+                    {order?.name}
                   </h5>
                   <p className="font-normal text-lg leading-8 text-gray-500 my-2 min-[550px]:my-3 max-[550px]:text-center">
-                    Size: {selectedSizes[index] || image?.size}
+                    {order?.description}
                   </p>
+                  <p className="font-normal text-lg leading-8 text-gray-500 my-2 min-[550px]:my-3 max-[550px]:text-center">
+                    Size:{" "}
+                    <select
+                      value={selectedSizes[index] || order.size}
+                      onChange={(e) => handleSizeChange(index, e.target.value)}
+                    >
+                      <option value="Small">Small</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Large">Large</option>
+                    </select>
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <p className="font-normal text-lg leading-8 text-gray-500 my-2 min-[550px]:my-3 max-[550px]:text-center">
+                      Quantity: {order?.quantity}
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <RemoveIcon
+                        onClick={() =>
+                          setOrders((prev) =>
+                            prev.map((o, i) =>
+                              i === index
+                                ? {
+                                    ...o,
+                                    quantity:
+                                      o.quantity > 1 ? o.quantity - 1 : 1,
+                                  }
+                                : o,
+                            ),
+                          )
+                        }
+                      />
+                      <AddIcon
+                        onClick={() =>
+                          setOrders((prev) =>
+                            prev.map((o, i) =>
+                              i === index
+                                ? { ...o, quantity: o.quantity + 1 }
+                                : o,
+                            ),
+                          )
+                        }
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="flex items-center flex-col min-[550px]:flex-row w-full max-xl:max-w-xl max-xl:mx-auto gap-10 justify-end">
-                <button
-                  className="bg-red-500 text-white text-base px-2 py-2 rounded-md flex items-center gap-2 disabled:bg-[#c4c4c4] disabled:text-[#787878]"
-                  onClick={() => handleRemove(image)}
-                >
-                  <DeleteForever fontSize="medium" />
-                </button>
-                <select
-                  className=" bg-gray-200 rounded-md border-0 pl-2 pr-3 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
-                  value={selectedSizes[index] || image.size}
-                  onChange={(e) => handleSizeChange(index, e.target.value)}
-                >
-                  <option value="Small">Small</option>
-                  <option value="Medium">Medium</option>
-                  <option value="Large">Large</option>
-                </select>
-                <select
-                  className=" bg-gray-200 rounded-md border-0 pl-2 pr-3 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={frameOptions[index]?.style || ""}
-                  onChange={(e) =>
-                    updateFrameOptions(
-                      index,
-                      e.target.value,
-                      frameOptions[index]?.selected || false,
-                    )
-                  }
-                >
-                  <option selected value="Detailed">
-                    Detailed
-                  </option>
-                  <option value="Exquisite">Exquisite</option>
-                </select>
-
-                <div className="flex p-7 flex-col">
+                <div className="frame flex items-center gap-2">
+                  <button
+                    onClick={() =>
+                      updateFrameOptions(
+                        index,
+                        frameOptions[index]?.style === "Detailed"
+                          ? "Exquisite"
+                          : "Detailed",
+                        frameOptions[index]?.selected || false,
+                      )
+                    }
+                    className={`${
+                      frameOptions[index]?.style === "Detailed"
+                        ? "bg-[#587cdd] text-white"
+                        : "bg-[#d1d5db] text-black"
+                    } px-2 py-1 rounded-md`}
+                  >
+                    {frameOptions[index]?.style || "Detailed"}
+                  </button>
                   <input
                     type="checkbox"
                     checked={frameOptions[index]?.selected || false}
-                    className="w-6 h-6 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
-                    onChange={(e) =>
+                    onChange={() =>
                       updateFrameOptions(
                         index,
                         frameOptions[index]?.style || "",
-                        e.target.checked,
+                        !frameOptions[index]?.selected,
                       )
                     }
+                    className="w-4 h-4"
                   />
-                  <label className=" text-gray-700 text-sm pt-2">
-                    DIY Frame
-                  </label>
                 </div>
                 <h6 className="text-[#587cdd] font-inter font-bold text-2xl leading-9 w-full max-w-[176px] text-center">
                   $
                   {(
                     getPriceForVariant(
                       frameOptions[index]?.style || "Detailed",
-                      selectedSizes[index] || image.size,
+                      selectedSizes[index] || order.size,
                       frameOptions[index]?.selected || false,
                     ) / 100
                   ).toFixed(2)}
                 </h6>
-              </div>
-            </div>
-          ))}
-
-          <div className="bg-gray-50 rounded-xl p-6 w-full mb-8 max-lg:max-w-xl max-lg:mx-auto">
-            <div className="flex items-center w-full justify-between mb-4">
-              <p className="font-inter font-semibold text-base leading-9 text-gray-900">
-                $5 Life Time Warranty
-              </p>
-              <div className="flex items-center gap-10">
                 <button
-                  className=" bg-gray-200 rounded-xl "
-                  onClick={addWarranty}
+                  className="bg-red-500 text-white text-base px-2 py-2 rounded-md flex items-center gap-2 disabled:bg-[#c4c4c4] disabled:text-[#787878]"
+                  onClick={() => handleRemove(order)}
                 >
-                  {warrantySelected ? (
-                    <RemoveIcon fontSize="large" />
-                  ) : (
-                    <AddIcon fontSize="large" />
-                  )}
+                  <DeleteForever fontSize="medium" />
                 </button>
               </div>
             </div>
-            <div className="flex items-center justify-between w-full mb-4">
+          ))}
+          <div className="mt-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between">
+              <div className="mb-4 md:mb-0">
+                <label className="block text-lg font-medium text-gray-700">
+                  Coupon Code
+                </label>
+                <div className="mt-1 flex rounded-md shadow-sm">
+                  <input
+                    type="text"
+                    name="coupon-code"
+                    id="coupon-code"
+                    className="flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
+                    value={couponCode}
+                    onChange={(e) => setCouponCode(e.target.value)}
+                  />
+                  <button
+                    className="px-4 py-2 border border-transparent text-sm font-medium rounded-r-md bg-indigo-600 text-white hover:bg-indigo-700"
+                    onClick={handleCouponApply}
+                    disabled={couponMutation.isLoading}
+                  >
+                    Apply
+                  </button>
+                </div>
+              </div>
+              <div className="text-lg font-medium text-gray-700">
+                Subtotal: ${(subtotal / 100).toFixed(2)}
+              </div>
+            </div>
+            {discount > 0 && (
+              <div className="mt-2 text-lg font-medium text-gray-700">
+                Discount: -${(discountAmount / 100).toFixed(2)}
+              </div>
+            )}
+            <div className="mt-2 text-lg font-medium text-gray-700">
+              Warranty: +$5.00
               <input
-                type="text"
-                className="block w-full rounded-md border-0 pl-2 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Enter coupon code"
-                value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value)}
+                type="checkbox"
+                checked={warrantySelected}
+                onChange={addWarranty}
+                className="ml-2"
               />
+            </div>
+            {mysteryPaintKit && (
+              <div className="mt-2 text-lg font-medium text-gray-700">
+                Mystery Paint Kit Discount: -$
+                {((totalPrice * mysteryPaintKitDiscount) / 100 / 100).toFixed(
+                  2,
+                )}
+              </div>
+            )}
+            <div className="mt-4 text-2xl font-bold text-gray-900">
+              Total: ${(totalPrice / 100).toFixed(2)}
+            </div>
+            <div className="mt-8 flex justify-center">
               <button
-                onClick={handleCouponApply}
-                className="bg-[#587cdd] text-white p-2 rounded-md"
+                className="px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                onClick={handleCheckout}
+                disabled={checkoutLoading}
               >
-                Apply Coupon
+                {checkoutLoading ? "Processing..." : "Checkout"}
               </button>
             </div>
-            <div className="flex items-center justify-between w-full mb-4">
-              <p className="font-inter font-medium text-xl leading-9 text-gray-900">
-                Discount
-              </p>
-              <h6 className="font-inter font-bold text-xl leading-9 text-[#587cdd]">
-                {discount + mysteryPaintKitDiscount} %
-              </h6>
-            </div>
-            <div className="flex items-center justify-between w-full pb-6 border-b border-gray-200"></div>
-            <div className="flex items-center justify-between w-full mb-6 mt-2">
-              <p className="font-normal text-xl leading-8 text-gray-400">
-                Sub Total
-              </p>
-              <h6 className="font-semibold text-xl leading-8 text-gray-900">
-                ${(subtotal / 100).toFixed(2)}
-              </h6>
-            </div>
-            <div className="flex items-center justify-between w-full py-6">
-              <p className="font-inter font-medium text-2xl leading-9 text-gray-900">
-                Total
-              </p>
-              <h6 className="font-inter font-bold text-2xl leading-9 text-[#587cdd]">
-                ${(totalPrice / 100).toFixed(2)}
-              </h6>
-            </div>
-          </div>
-
-          <div className="flex items-center flex-col sm:flex-row justify-center gap-3 mt-8">
-            <button
-              className="rounded-md w-full max-w-[280px] py-4 text-center justify-center items-center bg-[#587cdd] font-semibold text-lg text-white flex transition-all duration-500 hover:bg-indigo-600  disabled:bg-[#c4c4c4] disabled:text-[#787878]"
-              disabled={checkoutLoading || orders.length === 0}
-              onClick={handleCheckout}
-            >
-              Continue to Payment
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="23"
-                height="22"
-                viewBox="0 0 23 22"
-                fill="none"
-              >
-                <path
-                  d="M8.75324 5.49609L14.2535 10.9963L8.75 16.4998"
-                  stroke="white"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
           </div>
         </div>
       </section>
