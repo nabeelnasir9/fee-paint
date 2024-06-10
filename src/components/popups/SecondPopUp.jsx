@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { PopupContext } from "../../config/PopupContext";
+import img from "../../assets/popups/FirstImage.png";
+import logo from "../../assets/logo.png";
 
 const SecondPopup = () => {
   const { popupState, setPopupState, resetPopupState, setEmail, setName } =
@@ -28,9 +30,9 @@ const SecondPopup = () => {
   if (!popupState.secondPopupVisible) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 animate-fade animate-duration-150 ">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 animate-fade animate-duration-150">
       <div
-        className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative"
+        className="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -39,38 +41,48 @@ const SecondPopup = () => {
         >
           &times;
         </button>
-        <div className="text-center">
-          <h2 className="text-xl font-semibold mb-4">
-            Sign up for 15% discount
-          </h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <input
-              type="text"
-              placeholder="Name"
-              {...register("name", { required: "Name is required" })}
-              className="w-full mb-4 p-2 border rounded"
-            />
-            {errors.name && (
-              <p className="text-red-500">{errors.name.message}</p>
-            )}
+        <div className="flex items-center justify-center mb-4 gap-10">
+          <div className="flex-1">
+            <img src={img} alt="Wolf" className="w-full h-auto" />
+          </div>
+          <div className="flex flex-col flex-1 gap-4 items-center">
+            <img src={logo} alt="" className="w-40 h-auto" />
+            <div className="flex flex-col flex-1 text-center gap-4">
+              <p className="text-3xl font-bold">Unlock 15$ Discount!</p>
+              <p className="text-gray-500 text-sm">
+                Plus be the first to know about new arrivals,exclusive offers
+                and more!
+              </p>
+            </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <input
+                type="text"
+                placeholder="Enter First Name"
+                {...register("name", { required: "Name is required" })}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+              />
+              {errors.name && (
+                <p className="text-red-500">{errors.name.message}</p>
+              )}
 
-            <input
-              type="email"
-              placeholder="Email"
-              {...register("email", { required: "Email is required" })}
-              className="w-full mb-4 p-2 border rounded"
-            />
-            {errors.email && (
-              <p className="text-red-500">{errors.email.message}</p>
-            )}
+              <input
+                type="email"
+                placeholder="Enter Email"
+                {...register("email", { required: "Email is required" })}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+              />
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
 
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-            >
-              Submit
-            </button>
-          </form>
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full"
+              >
+                Continue
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

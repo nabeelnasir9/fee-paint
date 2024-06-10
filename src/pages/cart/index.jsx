@@ -1,4 +1,5 @@
 import { Layout } from "../../components";
+import DiscountIcon from "@mui/icons-material/Discount";
 import img from "../../assets/MysteryPaintByNumber.webp";
 import toast from "react-hot-toast";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -338,9 +339,12 @@ export default function Cart() {
                   onClick={addWarranty}
                 >
                   {warrantySelected ? (
-                    <RemoveIcon fontSize="large" />
+                    <RemoveIcon
+                      fontSize="large"
+                      className="animate-fade text-red-500"
+                    />
                   ) : (
-                    <AddIcon fontSize="large" />
+                    <AddIcon fontSize="large" clnassName="animate-fade" />
                   )}
                 </button>
               </div>
@@ -348,15 +352,16 @@ export default function Cart() {
             <div className="flex items-center justify-between w-full mb-4">
               <input
                 type="text"
-                className="block w-full rounded-md border-0 pl-2 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full max-w-5xl rounded-md border-0 pl-2 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 placeholder="Enter coupon code"
                 value={couponCode}
                 onChange={(e) => setCouponCode(e.target.value)}
               />
               <button
                 onClick={handleCouponApply}
-                className="bg-[#587cdd] text-white p-2 rounded-md"
+                className="bg-[#587cdd] text-white p-2 rounded-md flex justify-center items-center gap-2"
               >
+                <DiscountIcon />
                 Apply Coupon
               </button>
             </div>

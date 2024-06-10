@@ -1,9 +1,11 @@
 import { useContext } from "react";
+import DiscountIcon from "@mui/icons-material/Discount";
+import toast from "react-hot-toast";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { useNavigate } from "react-router-dom";
 import { PopupContext } from "../../config/PopupContext";
-import img from "../../assets/gallery-6.png";
-import img2 from "../../assets/gallery-5.png";
-import img3 from "../../assets/gallery-4.png";
+import logo from "../../assets/logo.png";
+import img from "../../assets/popups/ThirdandFourthImage.png";
 
 const FourthPopup = () => {
   const { popupState, resetPopupState, popupMutation } =
@@ -15,68 +17,64 @@ const FourthPopup = () => {
   };
 
   const handleCopyCode = () => {
-    // Logic to copy the discount code to clipboard
     const discountCode = popupMutation.data ? popupMutation.data.code : "";
     navigator.clipboard.writeText(discountCode);
-    // Optional: Show a confirmation message or feedback to the user
+    toast.success("Copied to clipboard!");
+  };
+
+  const handleNavigateToCart = () => {
+    handleClose(); // Close the popup before navigating
+    navigate("/cart");
   };
 
   if (!popupState.fourthPopupVisible) return null;
 
   return (
-    <div
-      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 animate-fade animate-duration-150"
-      onClick={handleClose}
-    >
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 animate-fade animate-duration-150">
       <div
-        className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative"
+        className="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl relative"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex justify-center mb-4">
-          <img
-            src={img}
-            className="bg-contain w-auto h-32 object-cover mr-2"
-            alt="first popup"
-          />
-          <img
-            src={img2}
-            className="bg-contain w-auto h-32 object-cover mr-2"
-            alt="first popup"
-          />
-          <img
-            src={img3}
-            className="bg-contain w-auto h-32 object-cover"
-            alt="first popup"
-          />
-        </div>
-        <div className="text-center">
-          <h2 className="text-xl font-semibold mb-4">Thank You!</h2>
-          <div className="flex justify-center flex-col">
-            <p className="">
-              Here is your discount code: <br />
-            </p>
-            <strong className="font-semibold text-xl mb-5 bg-blue-300 p-4">
-              {popupMutation.isLoading
-                ? "Processing..."
-                : popupMutation.isError
-                  ? popupMutation.error.response.data.error
-                  : popupMutation.data
-                    ? popupMutation.data.code
-                    : ""}
-            </strong>
+        <button
+          onClick={handleClose}
+          className="absolute top-2 right-2 text-gray-700 hover:text-gray-900"
+        >
+          &times;
+        </button>
+        <div className="flex items-center justify-center mb-4 gap-6">
+          <div className="flex-1">
+            <img src={img} alt="Wolf" className="w-full h-auto" />
           </div>
-          <button
-            onClick={handleCopyCode}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2"
-          >
-            Copy Code
-          </button>
-          <button
-            onClick={() => navigate("/cart")}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Apply Discount
-          </button>
+          <div className="flex flex-col flex-1 gap-4 items-center">
+            <img src={logo} alt="" className="w-40 h-auto" />
+            <div className="flex flex-col flex-1 text-center gap-4">
+              <p className="text-2xl font-bold">Thank You for Subscribing!</p>
+              <p className="">Here is your discount code:</p>
+              <strong className="font-semibold text-xl bg-blue-300 p-4">
+                {popupMutation.isLoading
+                  ? "Processing..."
+                  : popupMutation.isError
+                    ? popupMutation.error.response.data.error
+                    : popupMutation.data
+                      ? popupMutation.data.code
+                      : ""}
+              </strong>
+              <button
+                className="bg-blue-500 w-full rounded text-white px-4 py-2 hover:bg-blue-600 items-center flex justify-center gap-2"
+                onClick={handleNavigateToCart}
+              >
+                <DiscountIcon />
+                Apply Discount
+              </button>
+              <button
+                onClick={handleCopyCode}
+                className="bg-blue-500 w-full rounded text-white px-4 py-2 hover:bg-blue-600 items-center flex justify-center gap-2"
+              >
+                <ContentCopyIcon />
+                Copy Code
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

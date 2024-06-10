@@ -16,6 +16,8 @@ const ProductPage = () => {
     dots: true,
     infinite: true,
     speed: 200,
+    autoplay: true,
+    autoPlaySpeed: 2000,
     slidesToShow: 1,
     slidesToScroll: 1,
   };

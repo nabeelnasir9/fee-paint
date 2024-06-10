@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { PopupContext } from "../../config/PopupContext";
-import img from "../../assets/popups/Secondimage.png";
+import img from "../../assets/FirstImage.png";
 import logo from "../../assets/logo.png";
 
 const ThirdPopup = () => {
@@ -57,20 +57,15 @@ const ThirdPopup = () => {
         >
           &times;
         </button>
-        <div className="flex items-center justify-center mb-4 gap-2">
+        <div className="flex items-center justify-center mb-4 gap-10">
           <div className="flex-1">
             <img src={img} alt="Wolf" className="w-full h-auto" />
           </div>
           <div className="flex flex-col flex-1 gap-4 items-center">
             <img src={logo} alt="" className="w-40 h-auto" />
             <div className="flex flex-col flex-1 text-center gap-4">
-              <p className="text-2xl font-bold">
-                You have your promised Discount Already!
-              </p>
-              <p className="mb-6">
-                Share your phone number to upgrade to a 20% discount and get
-                SMS-exclusive deals.
-              </p>
+              <p className="text-3xl font-bold">Unlock 20% Discount!</p>
+              <p className="mb-6">Sign up for SMS-exclusive deals.</p>
             </div>
             <form onSubmit={handleSubmit(onAccept)}>
               <input
@@ -78,8 +73,8 @@ const ThirdPopup = () => {
                 placeholder="Phone Number"
                 {...register("phoneNumber", {
                   required: "Phone number is required",
+                  value: /^\+?[0-9]+$/,
                   pattern: {
-                    value: /^\+?[0-9]+$/,
                     message:
                       "Phone number must contain only numbers and may start with +",
                   },
@@ -93,19 +88,19 @@ const ThirdPopup = () => {
               <div className="flex justify-around">
                 <button
                   type="submit"
-                  className="bg-blue-500 w-full rounded text-white px-4 py-2 mb-4  hover:bg-blue-600"
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                 >
-                  Upgrade
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  onClick={onDecline}
+                  className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                >
+                  No
                 </button>
               </div>
             </form>
-            <button
-              type="button"
-              onClick={onDecline}
-              className="underline text-gray-500 text-sm"
-            >
-              No thanks i would like to keep my 15% discount
-            </button>
           </div>
         </div>
       </div>

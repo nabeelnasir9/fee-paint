@@ -1,8 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useContext } from "react";
-import img from "../../assets/gallery-6.png";
-import img2 from "../../assets/gallery-5.png";
-import img3 from "../../assets/gallery-4.png";
+import img from "../../assets/logo.png";
 import { PopupContext } from "../../config/PopupContext";
 
 const FirstPopup = () => {
@@ -44,22 +42,12 @@ const FirstPopup = () => {
               className="bg-contain w-auto h-32 object-cover mr-2"
               alt="first popup"
             />
-            <img
-              src={img2}
-              className="bg-contain w-auto h-32 object-cover mr-2"
-              alt="first popup"
-            />
-            <img
-              src={img3}
-              className="bg-contain w-auto h-32 object-cover"
-              alt="first popup"
-            />
           </div>
           <div className="text-center">
-            <h2 className="text-xl font-semibold mb-4">Unlock 15% off!</h2>
+            <h2 className="text-3xl font-bold mb-4">Exclusive Offer!</h2>
             <p className="mb-6">
               This exclusive offer is ticking away-enter your email and name
-              before it's gone
+              before it's gone!
             </p>
             <div className="flex flex-col gap-4 bg-white">
               <button
@@ -70,7 +58,7 @@ const FirstPopup = () => {
               </button>
               <button
                 onClick={handleDecline}
-                className="underline underline-blue-500 text-blue-500 "
+                className="underline text-gray-500 text-sm"
               >
                 No thanks i don't like discounts
               </button>
