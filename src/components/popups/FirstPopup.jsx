@@ -55,7 +55,7 @@ const FirstPopup = () => {
               <p className="lg:text-3xl text-2xl font-bold">
                 Unlock 15$ Discount!
               </p>
-              <p className="text-gray-500 text-sm">
+              <p className="text-sm">
                 Plus be the first to know about new arrivals,exclusive offers
                 and more!
               </p>
