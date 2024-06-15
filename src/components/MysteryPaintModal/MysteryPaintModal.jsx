@@ -12,25 +12,18 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  useMediaQuery,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useNavigate } from "react-router-dom";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 600,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-};
+import { useTheme } from "@mui/material/styles";
 
 const MysteryPaintModal = ({ open, handleClose, onConfirm }) => {
   const [size, setSize] = useState("Small");
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleClaimOffer = () => {
     onConfirm(size, true);
@@ -39,9 +32,22 @@ const MysteryPaintModal = ({ open, handleClose, onConfirm }) => {
   const handleAddToCart = () => {
     onConfirm(size, false);
   };
+
   const handleAddToCart2 = () => {
     onConfirm(size, false);
     navigate("/cart");
+  };
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: isMobile ? "90%" : 600,
+    bgcolor: "background.paper",
+    borderRadius: 2,
+    boxShadow: 24,
+    p: 4,
   };
 
   return (
@@ -67,12 +73,22 @@ const MysteryPaintModal = ({ open, handleClose, onConfirm }) => {
         <Typography id="modal-title" variant="h6" component="h2">
           Mystery Paint By Numbers Kit
         </Typography>
-        <Box display="flex" flexDirection="row" alignItems="center" mt={2}>
+        <Box
+          display="flex"
+          flexDirection={isMobile ? "column" : "row"}
+          alignItems="center"
+          mt={2}
+        >
           <Box
             component="img"
             src={img}
             alt="Mystery Paint By Number"
-            sx={{ width: "150px", height: "auto", marginRight: 2 }}
+            sx={{
+              width: isMobile ? "100%" : "150px",
+              height: "auto",
+              marginRight: isMobile ? 0 : 2,
+              mb: isMobile ? 2 : 0,
+            }}
           />
           <Box>
             <Typography variant="h6" component="h2">
@@ -134,11 +150,24 @@ const MysteryPaintModal = ({ open, handleClose, onConfirm }) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Box display="flex" justifyContent="space-between" mt={2}>
-          <Button onClick={handleAddToCart} color="primary">
+        <Box
+          display="flex"
+          flexDirection={isMobile ? "column" : "row"}
+          justifyContent="space-between"
+          mt={2}
+        >
+          <Button
+            onClick={handleAddToCart}
+            color="primary"
+            sx={{ mb: isMobile ? 2 : 0 }}
+          >
             No thanks
           </Button>
-          <Button variant="contained" color="primary" onClick={handleAddToCart2}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleAddToCart2}
+          >
             Go to checkout →
           </Button>
         </Box>
