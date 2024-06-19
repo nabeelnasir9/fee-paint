@@ -86,7 +86,7 @@ const ProductPage = () => {
           <Box display="flex" flexDirection={{ xs: "column", md: "row" }}>
             <Box flexShrink={0} width={{ xs: "100%", md: "50%" }}>
               <Slider {...settings}>
-                <Box className="relative w-full pt-[75%] overflow-hidden">
+                <Box className="relative w-full pt-[100%] overflow-hidden">
                   <Box
                     component="img"
                     src={selectedImage}
@@ -94,7 +94,7 @@ const ProductPage = () => {
                     className="absolute top-0 left-0 w-full h-full object-cover rounded-md"
                   />
                 </Box>
-                <Box className="relative w-full pt-[75%] overflow-hidden">
+                <Box className="relative w-full pt-[100%] overflow-hidden">
                   <Box
                     component="img"
                     src={img2}
@@ -102,7 +102,7 @@ const ProductPage = () => {
                     className="absolute top-0 left-0 w-full h-full object-cover rounded-md"
                   />
                 </Box>
-                <Box className="relative w-full pt-[75%] overflow-hidden">
+                <Box className="relative w-full pt-[100%] overflow-hidden">
                   <Box
                     component="img"
                     src={img3}
