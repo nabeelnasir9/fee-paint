@@ -1,4 +1,3 @@
-import React from "react";
 import { Layout } from "../../components";
 import Grid from "@mui/material/Grid";
 import "./index.css";
@@ -12,9 +11,9 @@ const PrivacyPolicy = () => {
           <Grid xs={10} sm={10} md={10} lg={10} xl={8}>
             <h1 className="privacy-policy-heading">Privacy Policy</h1>
             <p className="privacy-policy-text">
-              This Privacy Policy describes how troetel.co (the “Site” or “we”)
-              collects, uses, and discloses your Personal Information when you
-              visit or make a purchase from the Site.
+              This Privacy Policy describes how info@mypaintgenie.com (the
+              “Site” or “we”) collects, uses, and discloses your Personal
+              Information when you visit or make a purchase from the Site.
             </p>
             <p className="privacy-policy-title">Contact</p>
             <p className="privacy-policy-text">
@@ -107,18 +106,18 @@ const PrivacyPolicy = () => {
               described above. For example:
             </p>
             <ul className="privacy-policy-list">
-              <li>
-                We use Shopify to power our online store. You can read more
-                about how Shopify uses your Personal Information here:
-                <Link
-                  to="https://www.shopify.com/legal/privacy"
-                  target="_blank"
-                  className="linking"
-                >
-                  https://www.shopify.com/legal/privacy
-                </Link>
-                .
-              </li>
+              {/* <li> */}
+              {/*   We use Shopify to power our online store. You can read more */}
+              {/*   about how Shopify uses your Personal Information here: */}
+              {/*   <Link */}
+              {/*     to="https://www.shopify.com/legal/privacy" */}
+              {/*     target="_blank" */}
+              {/*     className="linking" */}
+              {/*   > */}
+              {/*     https://www.shopify.com/legal/privacy */}
+              {/*   </Link> */}
+              {/*   . */}
+              {/* </li> */}
               <li>
                 We may share your Personal Information to comply with applicable
                 laws and regulations, to respond to a subpoena, search warrant
@@ -161,13 +160,6 @@ const PrivacyPolicy = () => {
                 (which you may consent to, depending on your location).
               </li>
               <li>
-                We use Shopify Audiences to help us show ads on other websites
-                with our advertising partners to buyers who made purchases with
-                other Shopify merchants and who may also be interested in what
-                we have to offer. We also share information about your use of
-                the Site, your purchases, and the email address associated with
-                your purchases with Shopify Audiences, through which other
-                Shopify merchants may make offers you may be interested in.
                 <br />
                 For more information about how targeted advertising works, you
                 can visit the Network Advertising Initiative’s (“NAI”)
