@@ -237,7 +237,7 @@ const Generate = () => {
                                     <Button
                                       variant="text"
                                       className="generate-add-cart-btn"
-                                      onClick={() => addToCart(v)}
+                                      onClick={() => addToCart(v, i)}
                                     >
                                       <BsCart style={{ marginRight: "5px" }} />
                                       Add to Cart
