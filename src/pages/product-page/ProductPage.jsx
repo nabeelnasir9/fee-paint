@@ -55,7 +55,7 @@ const ProductPage = () => {
   const selectedImage =
     results && results.length > 0 && selectedIndex < results.length
       ? results[selectedIndex].uri
-      : "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQSqC1w7juXyqLMMZ5zuUO5UqduW9xxfOfpANgUqLhfWFKj4D0W";
+      : "https://placehold.co/400x500?text=Product+not+selected!&font=inter";
 
   useEffect(() => {
     if (location.state && location.state.index !== undefined) {
