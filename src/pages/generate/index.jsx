@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import ImageToImage from "../../components/generate/ImageToImage";
 import PaintGeneration from "../../components/generate/PaintGeneration";
 import Loader from "../../components/loader";
@@ -14,7 +14,7 @@ import { AuthContext } from "../../config/AuthContext";
 import { StyleList } from "../../utils/Utils";
 import MysteryPaintModal from "../../components/MysteryPaintModal/MysteryPaintModal";
 import { useNavigate } from "react-router-dom";
-// import { fetchData } from "./apiService"; // Import the fetchData function
+import { fetchData } from "./apiService"; // Import the fetchData function
 
 const Generate = () => {
   const {
@@ -25,8 +25,8 @@ const Generate = () => {
     mutate,
     isPending,
     results,
-    // setResults,
-    // setResults2,
+    setResults,
+    setResults2,
     textAreaValue,
     selectedDimension,
     imgtoImgMutation,
@@ -40,15 +40,15 @@ const Generate = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   fetchData().then((data) => {
-  //     if (selectedType === "Paint Generation") {
-  //       setResults(data);
-  //     } else {
-  //       setResults2(data);
-  //     }
-  //   });
-  // }, [selectedType, setResults, setResults2]);
+  useEffect(() => {
+    fetchData().then((data) => {
+      if (selectedType === "Paint Generation") {
+        setResults(data);
+      } else {
+        setResults2(data);
+      }
+    });
+  }, [selectedType, setResults, setResults2]);
 
   const handleGenerate = () => {
     const selectedStyles = StyleList.filter((style) =>

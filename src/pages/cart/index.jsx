@@ -209,6 +209,29 @@ export default function Cart() {
               Total
             </div>
           </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 min-[550px]:gap-6 border-t border-gray-200 py-6">
+            <div className="flex items-center flex-col min-[550px]:flex-row gap-3 min-[550px]:gap-6 w-full max-xl:justify-center max-xl:max-w-xl max-xl:mx-auto">
+              <div className="img-box">
+                <img
+                  src={img}
+                  alt="Mystery Paint Kit"
+                  className="xl:w-[140px]"
+                />
+              </div>
+              <div className="pro-data w-full max-w-sm">
+                <h5 className="font-semibold text-xl leading-8 text-black max-[550px]:text-center">
+                  Paint Brush Kit
+                </h5>
+                <p className="font-normal text-lg leading-8 text-gray-500 my-2 min-[550px]:my-3 max-[550px]:text-center"></p>
+              </div>
+            </div>
+            <div className="flex items-center flex-col min-[550px]:flex-row w-full max-xl:max-w-xl max-xl:mx-auto gap-10 justify-end">
+              <h6 className="text-[#587cdd] font-inter font-bold text-2xl leading-9 w-full max-w-[136px] text-center flex flex-col">
+                <span className="line-through">$25</span>
+                <span className="">$0</span>
+              </h6>
+            </div>
+          </div>
           {mysteryPaintKit &&
             ["Small", "Medium", "Large"].includes(mysteryPaintKit) && (
               <div className="grid grid-cols-1 lg:grid-cols-2 min-[550px]:gap-6 border-t border-gray-200 py-6">
