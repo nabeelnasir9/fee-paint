@@ -14,6 +14,10 @@ import { AuthContext } from "../../config/AuthContext";
 import { StyleList } from "../../utils/Utils";
 import MysteryPaintModal from "../../components/MysteryPaintModal/MysteryPaintModal";
 import { useNavigate } from "react-router-dom";
+import ReactGA from "react-ga4"
+import mixpanel from 'mixpanel-browser';
+import { trackAddToCart, trackGenerateButtonClicked  } from '../../tracking/MetaEvents.js'
+
 import { fetchData } from "./apiService"; // Import the fetchData function
 
 const Generate = () => {
@@ -51,6 +55,18 @@ const Generate = () => {
   }, [selectedType, setResults, setResults2]);
 
   const handleGenerate = () => {
+    ReactGA.event({
+      category: 'Generate Button Click',
+      action: 'Generate Button Click',
+      label: 'Generate Button',
+    });
+    // Track meta generate button
+    trackGenerateButtonClicked()
+
+    
+    // Track in mixpanel
+    mixpanel.track("Generate Button Clicked")
+
     const selectedStyles = StyleList.filter((style) =>
       selectedStyle.includes(style.id),
     );
@@ -65,6 +81,11 @@ const Generate = () => {
   };
 
   const addToCart = (v, i) => {
+    // Track add to cart for meta pixel
+    trackAddToCart()
+    // track add to cart in mixpanel
+    mixpanel.track("Add to cart")
+    
     setSelectedItem(v);
     setModalOpen(true);
     navigate("/product", {

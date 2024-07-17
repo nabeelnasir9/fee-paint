@@ -3,6 +3,10 @@ import { useState } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { FirstPopup, SecondPopup, ThirdPopup } from "../../components";
+import Facebook from '../../tracking/FacebookPixel.jsx'
+import ReactGA from 'react-ga4'
+import TiktokPixel from 'tiktok-pixel';
+import mixpanel from 'mixpanel-browser';
 import {
   Home,
   Cart,
@@ -21,6 +25,11 @@ import {
   Payment,
 } from "../../pages";
 import { PopupContext } from "../PopupContext";
+
+
+
+
+
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -72,8 +81,27 @@ function ScrollToTop() {
 }
 
 const RouterNavigation = () => {
+  ReactGA.initialize('G-1F0602N922');
+  TiktokPixel.init('CQ0SU23C77U1C0R51SQG');
+  // ReactGA.initialize([
+  //   {
+  //     trackingId: "G-1F0602N922",
+  //     gaOptions: {
+  //       testMode: true
+  //     }, // optional
+      
+  //   },
+    
+  // ]);
+  ReactGA.send({
+    hitType: 'pageview',
+
+  })
+  TiktokPixel.pageView();
+  mixpanel.init('3c06c85ca82cefa8cf12662e1aafe49a', {debug: true, track_pageview: true, persistence: 'localStorage'});
   return (
     <div className="font-inter">
+      <Facebook/>
       <BrowserRouter>
         <ScrollToTop />
         <Routes>

@@ -9,6 +9,8 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useContext, useEffect, useState, useMemo, useCallback } from "react";
 import { AuthContext } from "../../config/AuthContext";
+import { trackCheckoutButtonClicked } from "../../tracking/MetaEvents.js";
+import mixpanel from 'mixpanel-browser';
 
 export default function Cart() {
   const {
@@ -80,6 +82,8 @@ export default function Cart() {
         couponCode: couponCode.length > 0 ? couponCode : null,
       });
       setTrackingId(response.trackingId);
+      trackCheckoutButtonClicked()
+      mixpanel.track("Checkout Initiated")
       window.location.href = response.url;
     } catch (error) {
       console.error("Error during checkout:", error);
