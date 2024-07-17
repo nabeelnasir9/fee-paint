@@ -1,18 +1,17 @@
 export const trackAddToCart = () => {
-    fbq('track', 'AddToCart')
-}
+  fbq("track", "AddToCart");
+};
 
 export const trackGenerateButtonClicked = () => {
-    fbq('track', 'GenerateButtonClicked')
-}
+  fbq("track", "GenerateButtonClicked");
+};
 
 export const trackCheckoutButtonClicked = () => {
-    fbq('track', 'CheckoutButtonClicked')
-    fbq('track', 'InitiateCheckout');
-}
-
+  fbq("track", "CheckoutButtonClicked");
+  fbq("track", "InitiateCheckout");
+};
 
 export const trackFormSubmission = () => {
-    fbq('track', 'PopupFormSubmitted')
-    
-}
+  fbq("track", "PopupFormSubmitted");
+};
+
