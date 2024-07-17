@@ -1,6 +1,7 @@
 import { Layout } from "../../components";
 import DiscountIcon from "@mui/icons-material/Discount";
 import img from "../../assets/MysteryPaintByNumber.webp";
+import brushes from "../../assets/brushes.jpeg";
 import toast from "react-hot-toast";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
@@ -10,7 +11,7 @@ import axios from "axios";
 import { useContext, useEffect, useState, useMemo, useCallback } from "react";
 import { AuthContext } from "../../config/AuthContext";
 import { trackCheckoutButtonClicked } from "../../tracking/MetaEvents.js";
-import mixpanel from 'mixpanel-browser';
+import mixpanel from "mixpanel-browser";
 
 export default function Cart() {
   const {
@@ -82,8 +83,8 @@ export default function Cart() {
         couponCode: couponCode.length > 0 ? couponCode : null,
       });
       setTrackingId(response.trackingId);
-      trackCheckoutButtonClicked()
-      mixpanel.track("Checkout Initiated")
+      trackCheckoutButtonClicked();
+      mixpanel.track("Checkout Initiated");
       window.location.href = response.url;
     } catch (error) {
       console.error("Error during checkout:", error);
@@ -217,20 +218,20 @@ export default function Cart() {
             <div className="flex items-center flex-col min-[550px]:flex-row gap-3 min-[550px]:gap-6 w-full max-xl:justify-center max-xl:max-w-xl max-xl:mx-auto">
               <div className="img-box">
                 <img
-                  src={img}
+                  src={brushes}
                   alt="Mystery Paint Kit"
                   className="xl:w-[140px]"
                 />
               </div>
               <div className="pro-data w-full max-w-sm">
                 <h5 className="font-semibold text-xl leading-8 text-black max-[550px]:text-center">
-                  Paint Brush Kit
+                  Professional PBN Paint Brush Set
                 </h5>
                 <p className="font-normal text-lg leading-8 text-gray-500 my-2 min-[550px]:my-3 max-[550px]:text-center"></p>
               </div>
             </div>
             <div className="flex items-center flex-col min-[550px]:flex-row w-full max-xl:max-w-xl max-xl:mx-auto gap-10 justify-end">
-              <h6 className="text-[#587cdd] font-inter font-bold text-2xl leading-9 w-full max-w-[136px] text-center flex flex-col">
+              <h6 className="text-[#587cdd] font-inter font-bold text-2xl leading-9 w-full max-w-[136px] text-center flex items-center gap-3">
                 <span className="line-through">$25</span>
                 <span className="">$0</span>
               </h6>
