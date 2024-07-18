@@ -50,18 +50,25 @@ const Home = () => {
                 MY PAINT GENIE
               </div>
             </div>
-            <h1 className="home-heading">AI Generated Paint By Numbers</h1>
+            <h1 className="home-heading leading-tight">
+              Instantly Transform Words Into Stunning Art
+            </h1>
+            <h2 className="text-2xl text-center font-semibold font-sans mt-2">
+              Become a Digital Picasso in Seconds!
+            </h2>
             <p className="home-txt">
-              Get AI-generated paint and images from text straight from your
-              browser
+              Are you looking to have fun by creating cool images to paint
+              without the hassle of messy cleanups and uneven finishes? With
+              Paint Genie, you can achieve flawless, professional-quality
+              results effortlessly in seconds. Forget about dull, fixed
+              paint-by-number designs. With Paint Genie, you can create stunning
+              and captivating images that transform into beautiful works of art,
+              achieving flawless, professional-quality finishes every time you
+              paint
             </p>
             <div className="home-generate-btn-main">
-              <Button
-                variant="text"
-                className="home-generate-btn"
-                onClick={() => navigate("/generate")}
-              >
-                Generate
+              <Button variant="contained" onClick={() => navigate("/generate")}>
+                Generate Your First Masterpiece
               </Button>
             </div>
             <Grid container spacing={3}>

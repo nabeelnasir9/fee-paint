@@ -1,5 +1,6 @@
 import { Layout } from "../../components";
 import Slider from "react-slick";
+import { useNavigate } from "react-router-dom";
 import MysteryPaintModal from "../../components/MysteryPaintModal/MysteryPaintModal";
 import toast from "react-hot-toast";
 import { useLocation } from "react-router-dom";
@@ -12,6 +13,7 @@ import img3 from "../../assets/prod-shit2.webp";
 import { Box, Button, Typography } from "@mui/material";
 
 const ProductPage = () => {
+  const navigate = useNavigate();
   const settings = {
     dots: true,
     infinite: true,
@@ -38,6 +40,7 @@ const ProductPage = () => {
           // toast.error("Already in cart");
           return prevOrders;
         }
+        navigate("/cart");
         toast.success("Added to cart!");
         return [
           ...prevOrders,
