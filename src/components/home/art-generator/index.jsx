@@ -89,7 +89,7 @@ const ArtGenerator = () => {
               color="primary"
               onClick={handleButtonClick}
             >
-              Generate your first piece of art!
+              Generate your first piece of art !
             </Button>
           </div>
         </div>
