@@ -1,11 +1,11 @@
 .gen-img-from-txt-heading {
   color: #18191b;
   font-family: "Roboto";
-  font-size: 36px;
-  font-weight: 400;
+  font-size: 48px;
+  font-weight: 600;
   text-align: center;
   margin-top: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
 }
 .gen-img-from-txt-img{
     width: 100%;
