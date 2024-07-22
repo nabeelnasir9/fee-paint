@@ -26,6 +26,8 @@ import Pinterest from "./../../assets/svg/pinterest.svg";
 import Booking from "./../../assets/svg/booking.svg";
 import Hublot from "./../../assets/svg/hublot.svg";
 import { useNavigate } from "react-router-dom";
+import Testimonial from "../../components/home/testimonial";
+import FAQS from "../../components/home/faqs";
 const Home = () => {
   const navigate = useNavigate();
   const List = [
@@ -66,7 +68,7 @@ const Home = () => {
               achieving flawless, professional-quality finishes every time you
               paint
             </p>
-            <div className="home-generate-btn-main">
+            <div className="home-generate-btn-main mb-20 mt-10">
               <Button variant="contained" onClick={() => navigate("/generate")}>
                 Generate Your First Masterpiece
               </Button>
@@ -97,6 +99,12 @@ const Home = () => {
       <GenieGenerator />
       <ImageToImageGeneration />
       <About />
+      <div className="mt-28">
+      <Testimonial/>
+      </div>
+      <div className="mt-28 mb-20">
+      <FAQS/>
+      </div>
       <ImageArtGenerator />
     </Layout>
   );

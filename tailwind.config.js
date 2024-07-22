@@ -4,8 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        inter: ["Inter", "sans-serif"],
-        roboto: ["Roboto", "sans-serif"],
+        jakarta: ["Plus Jakarta Sans", "sans-serif"],
+        // inter: ["Inter", "sans-serif"],
+        // roboto: ["Roboto", "sans-serif"],
       },
     },
   },
