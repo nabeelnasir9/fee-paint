@@ -11,6 +11,7 @@ import "./index.css";
 import Grid from "@mui/material/Grid";
 import { BsStars } from "react-icons/bs";
 import { Button } from "@mui/material";
+import Logo from "../../assets/logo.png";
 import GalleryImage1 from "./../../assets/gallery-1.png";
 import GalleryImage2 from "./../../assets/gallery-2.png";
 import GalleryImage3 from "./../../assets/gallery-3.png";
@@ -28,6 +29,7 @@ import Hublot from "./../../assets/svg/hublot.svg";
 import { useNavigate } from "react-router-dom";
 import Testimonial from "../../components/home/testimonial";
 import FAQS from "../../components/home/faqs";
+import Content from "../content/content";
 const Home = () => {
   const navigate = useNavigate();
   const List = [
@@ -46,11 +48,10 @@ const Home = () => {
         <Grid container spacing={0}>
           <Grid item xs={1} sm={1} md={1} lg={2} xl={3}></Grid>
           <Grid xs={10} sm={10} md={10} lg={8} xl={6}>
-            <div className="home-paint-box">
-              <div>
-                <BsStars style={{ marginRight: "5px" }} />
-                MY PAINT GENIE
-              </div>
+            <div className="flex items-center justify-center">
+              {/* <BsStars style={{ marginRight: "5px" }} />
+                MY PAINT GENIE */}
+              <img src={Logo} className="w-44 h-auto mt-32 " />
             </div>
             <h1 className="home-heading leading-tight">
               Instantly Transform Words Into Stunning Art
@@ -62,11 +63,13 @@ const Home = () => {
               Are you looking to have fun by creating cool images to paint
               without the hassle of messy cleanups and uneven finishes? With
               Paint Genie, you can achieve flawless, professional-quality
-              results effortlessly in seconds. Forget about dull, fixed
-              paint-by-number designs. With Paint Genie, you can create stunning
-              and captivating images that transform into beautiful works of art,
-              achieving flawless, professional-quality finishes every time you
-              paint
+              results effortlessly in seconds.
+              <br />
+              <br />
+              Forget about dull, fixed paint-by-number designs. With Paint
+              Genie, you can create stunning and captivating images that
+              transform into beautiful works of art, achieving flawless,
+              professional-quality finishes every time you paint
             </p>
             <div className="home-generate-btn-main mb-20 mt-10">
               <Button variant="contained" onClick={() => navigate("/generate")}>
@@ -98,12 +101,15 @@ const Home = () => {
       <GenerateImagesFromText />
       <GenieGenerator />
       <ImageToImageGeneration />
+      <div className="mt-28">
+      <Content/>
+      </div>
       <About />
       <div className="mt-28">
-      <Testimonial/>
+        <Testimonial />
       </div>
       <div className="mt-28 mb-20">
-      <FAQS/>
+        <FAQS />
       </div>
       <ImageArtGenerator />
     </Layout>

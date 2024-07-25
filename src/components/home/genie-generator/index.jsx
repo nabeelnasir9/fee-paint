@@ -18,7 +18,7 @@ const GenieGenerator = () => {
                 no need to download or install an app! Type a word or a set of
                 words and watch an AI-generated image appear on your screen.
                 It’s free to use; no credit card or subscription is required.
-                Let VEED automatically create images for you. Get as creative as
+                Let Paint Genie automatically create images for you. Get as creative as
                 you want and post them on social media! Share with your friends
                 or use them for your own art.
               </p>

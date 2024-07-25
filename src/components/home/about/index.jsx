@@ -16,7 +16,7 @@ const About = () => {
             <Grid item xs={12} sm={12} md={1} lg={1} xl={1}></Grid>
             <Grid item xs={12} sm={12} md={6} lg={7} xl={7}>
               <p className="genie-generator-text">
-                Veed is a great piece of browser software with the best team
+                Paint Genie is a great piece of browser software with the best team
                 I've ever seen. My Paint Genie allows for subtitling, editing,
                 effect/text encoding, and many more advanced features that other
                 editors just can't compete with. The free version is wonderful,
