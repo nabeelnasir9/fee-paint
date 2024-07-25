@@ -1,11 +1,28 @@
-import React from "react";
-import Grid from "@mui/material/Grid";
+/* eslint-disable react/no-unescaped-entities */
 import "./index.css";
+import { motion } from "framer-motion";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { FaHandshake } from "react-icons/fa";
 import { GrSettingsOption } from "react-icons/gr";
 import { TbBulb } from "react-icons/tb";
+
+const container = {
+  initial: { opacity: 0, y: 30 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      staggerChildren: 0.3,
+    },
+  },
+};
+
+const child = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: { delay: 0.3, duration: 0.5 },
+};
 
 const ArtGenerator = () => {
   const navigate = useNavigate();
@@ -16,7 +33,13 @@ const ArtGenerator = () => {
   return (
     <div>
       <section className="bg-white text-black">
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          variants={container}
+          viewport={{ once: true, amount: 0.7 }}
+          className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16"
+        >
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold sm:text-4xl text-black">
               Here Are The 3 Main Reasons Why Everyone Loves Paint Genie
@@ -29,7 +52,8 @@ const ArtGenerator = () => {
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <a
+            <motion.a
+              variants={child}
               className="block rounded-xl border border-gray-800 p-8 shadow-xl transition hover:border-gray-500/10 hover:shadow-gray-500/10"
               href="#"
             >
@@ -42,9 +66,10 @@ const ArtGenerator = () => {
                 artwork with just a few clicks. Simply write a prompt and push a
                 button to see your ideas come to life.
               </p>
-            </a>
+            </motion.a>
 
-            <a
+            <motion.a
+              variants={child}
               className="block rounded-xl border border-[#2276D2] bg-[#2276D2] p-8 shadow-xl transition hover:border-gray-500/10 hover:shadow-gray-500/10"
               href="#"
             >
@@ -62,9 +87,10 @@ const ArtGenerator = () => {
                 Paint Genie, you get professional-quality images instantly. This
                 means more time for creating and less time for waiting.
               </p>
-            </a>
+            </motion.a>
 
-            <a
+            <motion.a
+              variants={child}
               className="block rounded-xl border border-gray-800 p-8 shadow-xl transition hover:border-gray-500/10 hover:shadow-gray-500/10"
               href="#"
             >
@@ -80,7 +106,7 @@ const ArtGenerator = () => {
                 convenient. You can create art anytime, anywhere, without
                 worrying about compatibility issues.
               </p>
-            </a>
+            </motion.a>
           </div>
 
           <div className="text-center mt-[2rem]">
@@ -92,7 +118,7 @@ const ArtGenerator = () => {
               Generate your first piece of art !
             </Button>
           </div>
-        </div>
+        </motion.div>
       </section>
     </div>
   );

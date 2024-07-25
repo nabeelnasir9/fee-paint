@@ -1,49 +1,61 @@
-import React from "react";
+/* eslint-disable react/no-unescaped-entities */
 import { motion } from "framer-motion";
+
+const container = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const child = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: { delay: 0.3, duration: 0.5 },
+};
 
 const Content = () => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      initial="initial"
+      whileInView="animate"
+      variants={container}
+      viewport={{ once: true, amount: 0.2 }}
       className="p-6 max-w-6xl mx-auto bg-white"
     >
       <motion.h2
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
+        variants={child}
         className="text-4xl font-bold mb-6 text-center text-gray-800"
       >
         Who is Paint Genie For?
       </motion.h2>
 
       <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6, duration: 0.5 }}
+        variants={child}
         className="mb-10 text-lg text-gray-700 text-justify"
       >
         Our platform is for… EVERYONE interested in creating cool designs using
-        AI and having a blast painting the images. 
-        <br/>
-        <br/>
-        Whether you're an experienced
-        painter looking for fresh inspiration or a newbie dipping your toes into
-        the paint by numbers, our tool helps you whip up stunning images and
-        paintings from simple text prompts. 
-        <br/>
-        <br/>
-Our user-friendly platform ensures
-        that everyone can produce high-quality visuals without breaking a sweat.
-        It's perfect for anyone who:
+        AI and having a blast painting the images.
+        <br />
+        <br />
+        Whether you're an experienced painter looking for fresh inspiration or a
+        newbie dipping your toes into the paint by numbers, our tool helps you
+        whip up stunning images and paintings from simple text prompts.
+        <br />
+        <br />
+        Our user-friendly platform ensures that everyone can produce
+        high-quality visuals without breaking a sweat. It's perfect for anyone
+        who:
       </motion.p>
 
       <div className="space-y-10">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.9, duration: 0.5 }}
+          variants={child}
           className="flex flex-col md:flex-row items-start"
         >
           <div className="text-7xl font-bold text-blue-600 mb-4 md:mb-0 md:mr-6">
@@ -62,9 +74,7 @@ Our user-friendly platform ensures
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.5 }}
+          variants={child}
           className="flex flex-col md:flex-row items-start"
         >
           <div className="text-7xl font-bold text-blue-600 mb-4 md:mb-0 md:mr-6">
@@ -82,9 +92,7 @@ Our user-friendly platform ensures
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.5 }}
+          variants={child}
           className="flex flex-col md:flex-row items-start"
         >
           <div className="text-7xl font-bold text-blue-600 mb-4 md:mb-0 md:mr-6">
@@ -102,9 +110,7 @@ Our user-friendly platform ensures
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.8, duration: 0.5 }}
+          variants={child}
           className="flex flex-col md:flex-row items-start"
         >
           <div className="text-7xl font-bold text-blue-600 mb-4 md:mb-0 md:mr-6">
@@ -123,9 +129,7 @@ Our user-friendly platform ensures
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.1, duration: 0.5 }}
+          variants={child}
           className="flex flex-col md:flex-row items-start"
         >
           <div className="text-7xl font-bold text-blue-600 mb-4 md:mb-0 md:mr-6">
@@ -144,12 +148,7 @@ Our user-friendly platform ensures
         </motion.div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 2.4, duration: 0.5 }}
-        className="text-center mt-10"
-      >
+      <motion.div variants={child} className="text-center mt-10">
         <button className="bg-[#1A75D2] text-white py-2 px-4 rounded-sm shadow-lg hover:bg-blue-600 transition-colors duration-300">
           Start Creating Now!
         </button>

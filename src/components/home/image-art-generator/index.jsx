@@ -1,4 +1,3 @@
-import React from "react";
 import "./index.css";
 import Grid from "@mui/material/Grid";
 import { Button } from "@mui/material";
@@ -23,11 +22,15 @@ const ImageArtGenerator = () => {
             professional video-editing software that lets you create stunning
             videos in just minutes. You don’t need any video editing experience.
             Plus, you can make use of our video templates; create videos for
-            your business or personal use. Try Paint Genie today and experience the
-            power of AI—for images, videos, and audio!
+            your business or personal use. Try Paint Genie today and experience
+            the power of AI—for images, videos, and audio!
           </p>
           <div className="img-art-gen-btn-main">
-            <Button variant="text" className="img-art-gen-btn" onClick={()=> navigate("/generate")}>
+            <Button
+              variant="text"
+              className="img-art-gen-btn"
+              onClick={() => navigate("/generate")}
+            >
               Generate
               <IoArrowForwardCircleSharp className="img-art-gen-btn-icon" />
             </Button>

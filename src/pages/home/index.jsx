@@ -9,7 +9,6 @@ import {
 } from "../../components";
 import "./index.css";
 import Grid from "@mui/material/Grid";
-import { BsStars } from "react-icons/bs";
 import { Button } from "@mui/material";
 import Logo from "../../assets/logo.png";
 import GalleryImage1 from "./../../assets/gallery-1.png";
@@ -51,15 +50,18 @@ const Home = () => {
             <div className="flex items-center justify-center">
               {/* <BsStars style={{ marginRight: "5px" }} />
                 MY PAINT GENIE */}
-              <img src={Logo} className="w-44 h-auto mt-32 " />
+              <img
+                src={Logo}
+                className="w-44 h-auto mt-32 animate-wiggle animate-delay-500"
+              />
             </div>
-            <h1 className="home-heading leading-tight">
+            <h1 className="home-heading leading-tight animate-fade-down">
               Instantly Transform Words Into Stunning Art
             </h1>
-            <h2 className="text-2xl text-center font-semibold font-sans mt-2">
+            <h2 className="text-2xl text-center font-semibold font-sans mt-2 animate-fade-down">
               Become a Digital Picasso in Seconds!
             </h2>
-            <p className="home-txt">
+            <p className="home-txt animate-fade">
               Are you looking to have fun by creating cool images to paint
               without the hassle of messy cleanups and uneven finishes? With
               Paint Genie, you can achieve flawless, professional-quality
@@ -71,7 +73,7 @@ const Home = () => {
               transform into beautiful works of art, achieving flawless,
               professional-quality finishes every time you paint
             </p>
-            <div className="home-generate-btn-main mb-20 mt-10">
+            <div className="home-generate-btn-main mb-20 mt-10 animate-fade-up">
               <Button variant="contained" onClick={() => navigate("/generate")}>
                 Generate Your First Masterpiece
               </Button>
@@ -102,7 +104,7 @@ const Home = () => {
       <GenieGenerator />
       <ImageToImageGeneration />
       <div className="mt-28">
-      <Content/>
+        <Content />
       </div>
       <About />
       <div className="mt-28">
