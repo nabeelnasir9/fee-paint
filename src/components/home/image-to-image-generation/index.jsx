@@ -1,4 +1,3 @@
-import React from "react";
 import Grid from "@mui/material/Grid";
 import ImageToImageGenerationImage from "./../../../assets/image-to-image-generation-img.png";
 const ImageToImageGeneration = () => {
@@ -23,9 +22,9 @@ const ImageToImageGeneration = () => {
                 You don’t need to figure out complicated settings to use My
                 Paint Genie generator. Just start typing and download your AI
                 image once it’s generated. It’s that simple! The words can be as
-                varied as you want. Paint Genie uses machine learning to refine results
-                so you can keep typing different prompts until you’re happy with
-                the image.
+                varied as you want. Paint Genie uses machine learning to refine
+                results so you can keep typing different prompts until you’re
+                happy with the image.
               </p>
             </Grid>
           </Grid>

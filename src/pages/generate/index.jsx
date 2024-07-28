@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import ImageToImage from "../../components/generate/ImageToImage";
 import PaintGeneration from "../../components/generate/PaintGeneration";
 import Loader from "../../components/loader";
@@ -14,11 +14,12 @@ import { AuthContext } from "../../config/AuthContext";
 import { StyleList } from "../../utils/Utils";
 import MysteryPaintModal from "../../components/MysteryPaintModal/MysteryPaintModal";
 import { useNavigate } from "react-router-dom";
-import ReactGA from "react-ga4"
-import mixpanel from 'mixpanel-browser';
-import { trackAddToCart, trackGenerateButtonClicked  } from '../../tracking/MetaEvents.js'
-
-import { fetchData } from "./apiService"; // Import the fetchData function
+import ReactGA from "react-ga4";
+import mixpanel from "mixpanel-browser";
+import {
+  trackAddToCart,
+  trackGenerateButtonClicked,
+} from "../../tracking/MetaEvents.js";
 
 const Generate = () => {
   const {
@@ -29,8 +30,6 @@ const Generate = () => {
     mutate,
     isPending,
     results,
-    setResults,
-    setResults2,
     textAreaValue,
     selectedDimension,
     imgtoImgMutation,
@@ -44,28 +43,27 @@ const Generate = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchData().then((data) => {
-      if (selectedType === "Paint Generation") {
-        setResults(data);
-      } else {
-        setResults2(data);
-      }
-    });
-  }, [selectedType, setResults, setResults2]);
+  // useEffect(() => {
+  //   fetchData().then((data) => {
+  //     if (selectedType === "Paint Generation") {
+  //       setResults(data);
+  //     } else {
+  //       setResults2(data);
+  //     }
+  //   });
+  // }, [selectedType, setResults, setResults2]);
 
   const handleGenerate = () => {
     ReactGA.event({
-      category: 'Generate Button Click',
-      action: 'Generate Button Click',
-      label: 'Generate Button',
+      category: "Generate Button Click",
+      action: "Generate Button Click",
+      label: "Generate Button",
     });
     // Track meta generate button
-    trackGenerateButtonClicked()
+    trackGenerateButtonClicked();
 
-    
     // Track in mixpanel
-    mixpanel.track("Generate Button Clicked")
+    mixpanel.track("Generate Button Clicked");
 
     const selectedStyles = StyleList.filter((style) =>
       selectedStyle.includes(style.id),
@@ -82,10 +80,10 @@ const Generate = () => {
 
   const addToCart = (v, i) => {
     // Track add to cart for meta pixel
-    trackAddToCart()
+    trackAddToCart();
     // track add to cart in mixpanel
-    mixpanel.track("Add to cart")
-    
+    mixpanel.track("Add to cart");
+
     setSelectedItem(v);
     setModalOpen(true);
     navigate("/product", {
