@@ -20,6 +20,7 @@ import {
   trackAddToCart,
   trackGenerateButtonClicked,
 } from "../../tracking/MetaEvents.js";
+// import { fetchData } from "./apiService.js";
 
 const Generate = () => {
   const {
@@ -28,6 +29,8 @@ const Generate = () => {
     selectedStyle,
     setOrders,
     mutate,
+    // setResults,
+    // setResults2,
     isPending,
     results,
     textAreaValue,

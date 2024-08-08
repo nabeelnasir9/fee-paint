@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const container = {
   initial: { opacity: 0, y: 20 },
@@ -20,6 +21,11 @@ const child = {
 };
 
 const Content = () => {
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate("/generate");
+  };
   return (
     <motion.div
       initial="initial"
@@ -137,19 +143,22 @@ const Content = () => {
           </div>
           <div>
             <h3 className="text-2xl font-semibold mb-4 text-gray-800">
-              Spends Time on Social Media
+              Active on Social Media
             </h3>
             <p className="text-lg text-gray-700">
-              Love being inspired by content creators and sharing your own
-              masterpieces online? This tool helps you create impressive visuals
-              to dazzle your followers.
+              Do you love getting inspired by content creators and sharing your
+              own creations online? This tool helps you create beautiful artwork
+              to share with your friends and family.
             </p>
           </div>
         </motion.div>
       </div>
 
       <motion.div variants={child} className="text-center mt-10">
-        <button className="bg-[#1A75D2] text-white py-2 px-4 rounded-sm shadow-lg hover:bg-blue-600 transition-colors duration-300">
+        <button
+          onClick={handleButtonClick}
+          className="bg-[#1A75D2] text-white py-2 px-4 rounded-sm shadow-lg hover:bg-blue-600 transition-colors duration-300"
+        >
           Start Creating Now!
         </button>
       </motion.div>

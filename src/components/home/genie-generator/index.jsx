@@ -1,4 +1,3 @@
-import React from "react";
 import Grid from "@mui/material/Grid";
 import GenieGeneratorImage from "./../../../assets/genie-generator-img.png";
 import "./index.css";
@@ -18,9 +17,9 @@ const GenieGenerator = () => {
                 no need to download or install an app! Type a word or a set of
                 words and watch an AI-generated image appear on your screen.
                 It’s free to use; no credit card or subscription is required.
-                Let Paint Genie automatically create images for you. Get as creative as
-                you want and post them on social media! Share with your friends
-                or use them for your own art.
+                Let Paint Genie automatically create images for you. Get as
+                creative as you want and post them on social media! Share with
+                your friends or use them for your own art.
               </p>
             </Grid>
             <Grid item xs={12} sm={12} md={1} lg={1} xl={1}></Grid>

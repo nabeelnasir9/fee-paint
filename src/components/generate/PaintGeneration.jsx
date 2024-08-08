@@ -47,7 +47,8 @@ const PaintGeneration = ({ handleGenerate }) => {
           Choose Style
         </Button>
       </div>
-      <Grid container spacing={1.5}>
+      <Grid container spacing={1.5} className="flex gap-5 ml-1">
+        {/* <div className="flex gap-10 ml-1"> */}
         {StyleList.map((v) => {
           return (
             <Grid item key={v.id} xs={4} sm={3} md={3} lg={3} xl={3}>
@@ -66,6 +67,7 @@ const PaintGeneration = ({ handleGenerate }) => {
             </Grid>
           );
         })}
+        {/* </div> */}
       </Grid>
       <div className="generate-make-main">
         <p>Images To Make</p>

@@ -6,9 +6,6 @@ import ContactImg from "./../../assets/contact.png";
 import { MdWifiCalling3 } from "react-icons/md";
 import { MdEmail } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
-import { FaTwitter } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { FaDiscord } from "react-icons/fa";
 import { FaCircle } from "react-icons/fa";
 import { FaCircleCheck } from "react-icons/fa6";
 import { Button } from "@mui/material";
@@ -42,30 +39,29 @@ const ContactUs = () => {
                   <p>Say something to start a live chat!</p>
                   <div className="contact-left-section-data">
                     <MdWifiCalling3 />
-                    <p>+1012 3456 789</p>
+                    <p>+1 7273511108</p>
                   </div>
                   <div className="contact-left-section-data">
                     <MdEmail />
-                    <p>demo@gmail.com</p>
+                    <p>info@mypaintgenie.com</p>
                   </div>
                   <div className="contact-left-section-data">
                     <FaLocationDot />
                     <p>
-                      132 Dartmouth Street Boston, Massachusetts 02156 United
-                      States
+                      444 Alaska Avenue, Suite #BUT765, Torrance, CA 90503, USA
                     </p>
                   </div>
-                  <div className="contact-footer-socail">
-                    <a href="https://www.facebook.com/" target="_blank">
-                      <FaTwitter />
-                    </a>
-                    <a href="https://www.facebook.com/" target="_blank">
-                      <FaInstagram />
-                    </a>
-                    <a href="https://www.facebook.com/" target="_blank">
-                      <FaDiscord />
-                    </a>
-                  </div>
+                  {/* <div className="contact-footer-socail"> */}
+                  {/*   <a href="https://www.facebook.com/" target="_blank"> */}
+                  {/*     <FaTwitter /> */}
+                  {/*   </a> */}
+                  {/*   <a href="https://www.facebook.com/" target="_blank"> */}
+                  {/*     <FaInstagram /> */}
+                  {/*   </a> */}
+                  {/*   <a href="https://www.facebook.com/" target="_blank"> */}
+                  {/*     <FaDiscord /> */}
+                  {/*   </a> */}
+                  {/* </div> */}
                   <img src={ContactImg} className="contact-left-section-img" />
                 </div>
               </Grid>
@@ -77,13 +73,6 @@ const ContactUs = () => {
                         firstName === "" ? "#8D8D8D" : "#000000",
                     }}
                   >
-                    <p
-                      style={{
-                        color: firstName === "" ? "#8D8D8D" : "#000000",
-                      }}
-                    >
-                      Last Name
-                    </p>
                     <input
                       type="text"
                       placeholder="First Name"
@@ -97,13 +86,6 @@ const ContactUs = () => {
                         lastName === "" ? "#8D8D8D" : "#000000",
                     }}
                   >
-                    <p
-                      style={{
-                        color: lastName === "" ? "#8D8D8D" : "#000000",
-                      }}
-                    >
-                      Last Name
-                    </p>
                     <input
                       type="text"
                       placeholder="Last Name"
@@ -118,13 +100,6 @@ const ContactUs = () => {
                       borderBottomColor: email === "" ? "#8D8D8D" : "#000000",
                     }}
                   >
-                    <p
-                      style={{
-                        color: email === "" ? "#8D8D8D" : "#000000",
-                      }}
-                    >
-                      Email
-                    </p>
                     <input
                       type="email"
                       placeholder="Email"
@@ -137,13 +112,6 @@ const ContactUs = () => {
                       borderBottomColor: phone === "" ? "#8D8D8D" : "#000000",
                     }}
                   >
-                    <p
-                      style={{
-                        color: phone === "" ? "#8D8D8D" : "#000000",
-                      }}
-                    >
-                      Phone Number
-                    </p>
                     <input
                       type="text"
                       placeholder="Phone Number"
@@ -178,13 +146,6 @@ const ContactUs = () => {
                       width: "100%",
                     }}
                   >
-                    <p
-                      style={{
-                        color: message === "" ? "#8D8D8D" : "#000000",
-                      }}
-                    >
-                      Message
-                    </p>
                     <textarea
                       placeholder="Write your message.."
                       value={message}
