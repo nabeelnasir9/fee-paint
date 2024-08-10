@@ -23,7 +23,7 @@ export default function Cancel() {
             </div>
             <Link
               className="inline-flex w-full items-center justify-center rounded-md bg-[#587cdd] px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 "
-              href="/"
+              to="/"
             >
               Go back to homepage
             </Link>
