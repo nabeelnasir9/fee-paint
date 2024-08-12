@@ -18,9 +18,9 @@ const ContactUs = () => {
   const [subjectSelected, setSubjectSelected] = useState(0);
   const SubjectList = [
     "General Inquiry",
-    "General Inquiry",
-    "General Inquiry",
-    "General Inquiry",
+    "Order Status / Tracking",
+    "Product Support",
+    "Billings & Payments",
   ];
   return (
     <Layout>

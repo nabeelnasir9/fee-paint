@@ -8,7 +8,6 @@ import toast from "react-hot-toast";
 import "./index.css";
 import { Button } from "@mui/material";
 import HelpIcon from "./../../assets/svg/help.svg";
-import BlubIcon from "./../../assets/svg/blub.svg";
 import { BsCart } from "react-icons/bs";
 import { AuthContext } from "../../config/AuthContext";
 import { StyleList } from "../../utils/Utils";
@@ -168,14 +167,14 @@ const Generate = () => {
                           <img src={HelpIcon} alt="Help Icon" />
                         </Button>
                       </div>
-                      <Button variant="text" className="generate-idea-btn">
-                        <img
-                          src={BlubIcon}
-                          alt="Blub Icon"
-                          style={{ marginRight: "5px" }}
-                        />
-                        AI ideas
-                      </Button>
+                      {/* <Button variant="text" className="generate-idea-btn"> */}
+                      {/*   <img */}
+                      {/*     src={BlubIcon} */}
+                      {/*     alt="Blub Icon" */}
+                      {/*     style={{ marginRight: "5px" }} */}
+                      {/*   /> */}
+                      {/*   AI ideas */}
+                      {/* </Button> */}
                     </div>
 
                     {selectedType === "Paint Generation" ? (
