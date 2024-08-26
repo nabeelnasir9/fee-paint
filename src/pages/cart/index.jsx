@@ -28,6 +28,7 @@ export default function Cart() {
   const [frameOptions, setFrameOptions] = useState([]);
   const [mysteryPaintKitDiscount, setMysteryPaintKitDiscount] = useState(0);
   const [selectedSizes, setSelectedSizes] = useState({});
+  const [isShippingFree, setIsShippingFree] = useState(false);
 
   useEffect(() => {
     const defaultFrameOptions = orders.map(() => {
@@ -158,19 +159,38 @@ export default function Cart() {
       return 3400;
     }
   }, [mysteryPaintKit]);
+
   const totalPrice = useMemo(() => {
     let price = subtotal - discountAmount;
+
     if (warrantySelected) {
-      price += 500;
+      price += 500; // Adding warranty cost
     }
+
     if (mysteryPaintKit) {
-      price += pricing(); // Add mysteryPaintKit price
+      price += pricing(); // Adding mysteryPaintKit price
     }
 
     const totalDiscount = (price * mysteryPaintKitDiscount) / 100;
     price -= totalDiscount;
 
-    return price;
+    // Ensure price is not less than zero before adding shipping
+    if (price < 0) {
+      price = 0;
+    }
+
+    let shippingFee = 1000; // 10 dollars represented as cents
+
+    if (price > 5500) {
+      // 55 dollars represented as cents
+      setIsShippingFree(true); // Shipping becomes free
+      shippingFee = 0;
+    } else {
+      setIsShippingFree(false); // Shipping is not free
+    }
+
+    // Calculate final total price including shipping fee
+    return price + shippingFee;
   }, [
     subtotal,
     discountAmount,
@@ -408,6 +428,14 @@ export default function Cart() {
               </p>
               <h6 className="font-semibold text-xl leading-8 text-gray-900">
                 ${(subtotal / 100).toFixed(2)}
+              </h6>
+            </div>
+            <div className="flex items-center justify-between w-full mb-6 mt-2">
+              <p className="font-normal text-xl leading-8 text-gray-400">
+                Shipping costs
+              </p>
+              <h6 className="font-semibold text-xl leading-8 text-gray-900">
+                {isShippingFree ? "Free" : "$10"}
               </h6>
             </div>
             <div className="flex items-center justify-between w-full py-6">
