@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import { PopupContext } from "../../config/PopupContext";
 import img from "../../assets/popups/FirstImage.png";
 import logo from "../../assets/logo.png";
-import ReactGA from "react-ga4"
+import ReactGA from "react-ga4";
 import { trackFormSubmission } from "../../tracking/MetaEvents";
-import mixpanel from 'mixpanel-browser';
+import mixpanel from "mixpanel-browser";
 const FirstPopup = () => {
   const { popupState, setPopupState, resetPopupState, setEmail, setName } =
     useContext(PopupContext);
@@ -16,14 +16,13 @@ const FirstPopup = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-
     // Send to GA
-    ReactGA.event("First Popup Form Submission", "Form Submission")
+    ReactGA.event("First Popup Form Submission", "Form Submission");
     // Track with meta
-    trackFormSubmission()
+    trackFormSubmission();
 
     // Track with mixpanel
-    mixpanel.track('Form Submitted')
+    mixpanel.track("Form Submitted");
     setName(data.name);
     setEmail(data.email);
     setPopupState({
@@ -63,7 +62,7 @@ const FirstPopup = () => {
             <img src={logo} alt="" className="w-40 h-auto" />
             <div className="flex flex-col flex-1 text-center gap-4">
               <p className="lg:text-3xl text-2xl font-bold">
-                Unlock 15$ Discount!
+                Unlock 15% Discount!
               </p>
               <p className="text-sm">
                 Plus be the first to know about new arrivals,exclusive offers

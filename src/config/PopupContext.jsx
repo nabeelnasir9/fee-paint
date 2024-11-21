@@ -35,7 +35,7 @@ export const PopupProvider = ({ children }) => {
       toast.success("Coupon Generated!");
     },
     onError: () => {
-      toast.error("Something went wrong");
+      toast.error("Coupon already generated on email!");
     },
   });
 
