@@ -53,16 +53,17 @@ const Navbar = ({ contact }) => {
               </div>
             </Grid>
             <Grid item xs={1} sm={1} md={1} lg={1} xl={2}></Grid>
+            <div className="bg-[#587CDD] px-4 py-3 text-white w-full">
+        <p className="text-center text-md font-bold">
+          Hurry! First 100 Orders Get a Premium Paint Brush Free – Don’t Miss Out!
+        </p>
+      </div>
           </Grid>
         </div>
       </div>
 
       {/* Announcement Banner */}
-      <div className="bg-[#587CDD] px-4 py-3 text-white mt-[75px]">
-        <p className="text-center text-md font-bold">
-          Hurry! First 100 Orders Get a Premium Paint Brush Free – Don’t Miss Out!
-        </p>
-      </div>
+     
     </>
   );
 };

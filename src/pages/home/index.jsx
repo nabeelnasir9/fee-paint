@@ -52,7 +52,7 @@ const Home = () => {
                 MY PAINT GENIE */}
               <img
                 src={Logo}
-                className="w-44 h-auto mt-32 animate-wiggle animate-delay-500"
+                className="w-44 h-auto mt-44 animate-wiggle animate-delay-500"
               />
             </div>
             <h1 className="home-heading leading-tight animate-fade-down">
